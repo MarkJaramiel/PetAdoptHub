@@ -1,0 +1,1765 @@
+[2026-02-04 18:25:42] === New Pet Save Request ===
+[2026-02-04 18:25:42] Method: POST
+[2026-02-04 18:25:42] POST Data: Array
+(
+    [pet_id] => 
+    [name] => Cooper
+    [type] => Dog
+    [breed] => Aspin
+    [age] => 1
+    [weight] => 25lbs
+    [description] => Curious and vocal, enjoys human company.
+    [personality] => Playful
+    [health_status] => Healthy
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => PARAHavenShelter@gmail.com
+    [shelter_phone] => 09951279006
+    [shelter_address] => Pulo 4, Isla, Barangay Adlas, Dasmariñas, Cavite
+    [status] => Adopted
+)
+
+[2026-02-04 18:25:42] Pet ID: , Pet Name: Cooper, Type: Dog, Breed: Aspin, Age: 1, Status: 'Adopted'
+[2026-02-04 18:25:42] Image upload detected: Profile 5.jpg
+[2026-02-04 18:25:42] Image saved successfully: /uploads/pets/pet_1770225942_6983811644378.jpg
+[2026-02-04 18:25:42] Creating new pet
+[2026-02-04 18:25:42] New pet created successfully. ID: 1
+[2026-02-04 18:26:34] === New Pet Save Request ===
+[2026-02-04 18:26:34] Method: POST
+[2026-02-04 18:26:34] POST Data: Array
+(
+    [pet_id] => 
+    [name] => Cooper
+    [type] => Dog
+    [breed] => Aspin
+    [age] => 1
+    [weight] => 25lbs
+    [description] => Curious and vocal, enjoys human company.
+    [personality] => Playful
+    [health_status] => Healthy
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => PARAHavenShelter@gmail.com
+    [shelter_phone] => 09951279006
+    [shelter_address] => Pulo 4, Isla, Barangay Adlas, Dasmariñas, Cavite
+    [status] => Available
+)
+
+[2026-02-04 18:26:34] Pet ID: , Pet Name: Cooper, Type: Dog, Breed: Aspin, Age: 1, Status: 'Available'
+[2026-02-04 18:26:34] Image upload detected: Profile 5.jpg
+[2026-02-04 18:26:34] Image saved successfully: /uploads/pets/pet_1770225994_6983814a5bfd3.jpg
+[2026-02-04 18:26:34] Creating new pet
+[2026-02-04 18:26:34] New pet created successfully. ID: 2
+[2026-02-04 18:27:09] === New Pet Save Request ===
+[2026-02-04 18:27:09] Method: POST
+[2026-02-04 18:27:09] POST Data: Array
+(
+    [pet_id] => 
+    [name] => Bella
+    [type] => Dog
+    [breed] => Aspin
+    [age] => 1
+    [weight] => 25lbs
+    [description] => Affectionate and playful, loves swimming.
+    [personality] => Playful
+    [health_status] => Healthy
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => PARAHavenShelter@gmail.com
+    [shelter_phone] => 09951279006
+    [shelter_address] => Pulo 4, Isla, Barangay Adlas, Dasmariñas, Cavite
+    [status] => Available
+)
+
+[2026-02-04 18:27:09] Pet ID: , Pet Name: Bella, Type: Dog, Breed: Aspin, Age: 1, Status: 'Available'
+[2026-02-04 18:27:09] Image upload detected: Profile 3.jpg
+[2026-02-04 18:27:09] Image saved successfully: /uploads/pets/pet_1770226029_6983816d6c5e6.jpg
+[2026-02-04 18:27:09] Creating new pet
+[2026-02-04 18:27:09] New pet created successfully. ID: 3
+[2026-02-04 18:27:42] === New Pet Save Request ===
+[2026-02-04 18:27:42] Method: POST
+[2026-02-04 18:27:42] POST Data: Array
+(
+    [pet_id] => 
+    [name] => Milo
+    [type] => Dog
+    [breed] => Aspin
+    [age] => 1
+    [weight] => 25lbs
+    [description] => Loyal and protective, great for families.
+    [personality] => Playful
+    [health_status] => Healthy
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => PARAHavenShelter@gmail.com
+    [shelter_phone] => 09951279006
+    [shelter_address] => Pulo 4, Isla, Barangay Adlas, Dasmariñas, Cavite
+    [status] => Available
+)
+
+[2026-02-04 18:27:42] Pet ID: , Pet Name: Milo, Type: Dog, Breed: Aspin, Age: 1, Status: 'Available'
+[2026-02-04 18:27:42] Image upload detected: Profile 2.jpg
+[2026-02-04 18:27:42] Image saved successfully: /uploads/pets/pet_1770226062_6983818ec6581.jpg
+[2026-02-04 18:27:42] Creating new pet
+[2026-02-04 18:27:42] New pet created successfully. ID: 4
+[2026-02-05 17:15:00] === New Pet Save Request ===
+[2026-02-05 17:15:00] Method: POST
+[2026-02-05 17:15:00] POST Data: Array
+(
+    [pet_id] => 8
+    [name] => Bella
+    [type] => Dog
+    [breed] => 0
+    [age] => 1
+    [weight] => 25lbs
+    [description] => Affectionate and playful, loves swimming.
+    [personality] => Loyal and protective
+    [health_status] => health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => PARAHavenShelter@gmail.com
+    [shelter_phone] => 09951279006
+    [shelter_address] => Pulo 4, Isla, Barangay Adlas, Dasmariñas, Cavite
+    [status] => Available
+)
+
+[2026-02-05 17:15:00] Pet ID: 8, Pet Name: Bella, Type: Dog, Breed: 0, Age: 1, Status: 'Available'
+[2026-02-05 17:15:00] Multiple image upload detected: 3 file(s)
+[2026-02-05 17:15:00] Processing image 0: Profile 3.jpg
+[2026-02-05 17:15:00] Image 0 saved successfully: /uploads/pets/pet_1770308100_6984c2045a823.jpg
+[2026-02-05 17:15:00] Processing image 1: Profile 5.jpg
+[2026-02-05 17:15:00] Image 1 saved successfully: /uploads/pets/pet_1770308100_6984c2045ae1a.jpg
+[2026-02-05 17:15:00] Processing image 2: Profile 6.jpg
+[2026-02-05 17:15:00] Image 2 saved successfully: /uploads/pets/pet_1770308100_6984c2045b355.jpg
+[2026-02-05 17:15:00] Updating existing pet ID: 8
+[2026-02-05 17:15:00] Status value: 'Available' (lowercase: 'available')
+[2026-02-05 17:15:00] Old image deleted: /uploads/pets/pet_1770200379_69831d3b0a734.jpg
+[2026-02-05 17:15:00] Pet updated successfully with new image
+[2026-02-06 10:33:48] === New Pet Save Request ===
+[2026-02-06 10:33:48] Method: POST
+[2026-02-06 10:33:48] POST Data: Array
+(
+    [pet_id] => 10
+    [name] => Bella
+    [type] => Dog
+    [breed] => 0
+    [age] => 1
+    [weight] => 25lbs
+    [description] => Affectionate and playful, loves swimming.
+    [personality] => Loyal and protective
+    [health_status] => health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => PARAHavenShelter@gmail.com
+    [shelter_phone] => 09951279006
+    [shelter_address] => Pulo 4, Isla, Barangay Adlas, Dasmariñas, Cavite
+    [status] => Available
+)
+
+[2026-02-06 10:33:48] Pet ID: 10, Pet Name: Bella, Type: Dog, Breed: 0, Age: 1, Status: 'Available'
+[2026-02-06 10:33:48] Multiple image upload detected: 3 file(s)
+[2026-02-06 10:33:48] Processing image 0: Profile 4.jpg
+[2026-02-06 10:33:48] Image 0 saved successfully: /uploads/pets/pet_1770370428_6985b57c3b7e8.jpg
+[2026-02-06 10:33:48] Processing image 1: Profile 5.jpg
+[2026-02-06 10:33:48] Image 1 saved successfully: /uploads/pets/pet_1770370428_6985b57c3df9c.jpg
+[2026-02-06 10:33:48] Processing image 2: Profile 6.jpg
+[2026-02-06 10:33:48] Image 2 saved successfully: /uploads/pets/pet_1770370428_6985b57c3e628.jpg
+[2026-02-06 10:33:48] Updating existing pet ID: 10
+[2026-02-06 10:33:48] Status value: 'Available' (lowercase: 'available')
+[2026-02-06 10:33:48] Old image deleted: /uploads/pets/pet_1770308100_6984c2045a823.jpg
+[2026-02-06 10:33:48] Pet updated successfully with new images
+[2026-02-06 11:22:53] === New Pet Save Request ===
+[2026-02-06 11:22:53] Method: POST
+[2026-02-06 11:22:53] POST Data: Array
+(
+    [pet_id] => 
+    [name] => marc
+    [type] => Dog
+    [breed] => Aspin
+    [age] => 2
+    [weight] => 25lbs
+    [description] => qqeqe
+    [personality] => Playful and friendly
+    [health_status] => Vaccinated, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => marcusjaramiel27@gmail.com
+    [shelter_phone] => 09305625242
+    [shelter_address] => Bagtas Rd Carissa Blk18 Lt7
+    [status] => Available
+)
+
+[2026-02-06 11:22:53] Pet ID: , Pet Name: marc, Type: Dog, Breed: Aspin, Age: 2, Status: 'Available'
+[2026-02-06 11:22:53] Multiple image upload detected: 3 file(s)
+[2026-02-06 11:22:53] Processing image 0: Profile 4.jpg
+[2026-02-06 11:22:53] Image 0 saved successfully: /uploads/pets/pet_1770373373_6985c0fd0c812.jpg
+[2026-02-06 11:22:53] Processing image 1: Profile 5.jpg
+[2026-02-06 11:22:53] Image 1 saved successfully: /uploads/pets/pet_1770373373_6985c0fd0cf7b.jpg
+[2026-02-06 11:22:53] Processing image 2: Profile 6.jpg
+[2026-02-06 11:22:53] Image 2 saved successfully: /uploads/pets/pet_1770373373_6985c0fd0d4ba.jpg
+[2026-02-06 11:22:53] Creating new pet
+[2026-02-06 11:22:53] New pet created successfully. ID: 11
+[2026-02-06 11:30:16] === New Pet Save Request ===
+[2026-02-06 11:30:16] Method: POST
+[2026-02-06 11:30:16] POST Data: Array
+(
+    [pet_id] => 12
+    [name] => marc
+    [type] => Dog
+    [breed] => 0
+    [age] => 2
+    [weight] => 25lbs
+    [description] => qqeqe
+    [personality] => Playful and friendly
+    [health_status] => Vaccinated, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => marcusjaramiel27@gmail.com
+    [shelter_phone] => 09305625242
+    [shelter_address] => Bagtas Rd Carissa Blk18 Lt7
+    [status] => Available
+)
+
+[2026-02-06 11:30:16] Pet ID: 12, Pet Name: marc, Type: Dog, Breed: 0, Age: 2, Status: 'Available'
+[2026-02-06 11:30:16] Multiple image upload detected: 3 file(s)
+[2026-02-06 11:30:16] Processing image 0: Profile 1.jpg
+[2026-02-06 11:30:16] Image 0 saved successfully: /uploads/pets/pet_1770373816_6985c2b817e1a.jpg
+[2026-02-06 11:30:16] Processing image 1: Profile 2.jpg
+[2026-02-06 11:30:16] Image 1 saved successfully: /uploads/pets/pet_1770373816_6985c2b81842c.jpg
+[2026-02-06 11:30:16] Processing image 2: Profile 4.jpg
+[2026-02-06 11:30:16] Image 2 saved successfully: /uploads/pets/pet_1770373816_6985c2b818a5b.jpg
+[2026-02-06 11:30:16] Updating existing pet ID: 12
+[2026-02-06 11:30:16] Status value: 'Available' (lowercase: 'available')
+[2026-02-06 11:30:16] Old image deleted: /uploads/pets/pet_1770373373_6985c0fd0c812.jpg
+[2026-02-06 11:30:16] Old image deleted: /uploads/pets/pet_1770373373_6985c0fd0cf7b.jpg
+[2026-02-06 11:30:16] Old image deleted: /uploads/pets/pet_1770373373_6985c0fd0d4ba.jpg
+[2026-02-06 11:30:16] Pet updated successfully with new images
+[2026-02-06 13:36:19] === New Pet Save Request ===
+[2026-02-06 13:36:19] Method: POST
+[2026-02-06 13:36:19] POST Data: Array
+(
+    [pet_id] => 12
+    [name] => brownie
+    [type] => Dog
+    [breed] => 0
+    [age] => 2
+    [weight] => 25lbs
+    [description] => qqeqe
+    [personality] => Playful and friendly
+    [health_status] => Vaccinated, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => marcusjaramiel27@gmail.com
+    [shelter_phone] => 09305625242
+    [shelter_address] => Bagtas Rd Carissa Blk18 Lt7
+    [status] => Available
+)
+
+[2026-02-06 13:36:19] Pet ID: 12, Pet Name: brownie, Type: Dog, Breed: 0, Age: 2, Status: 'Available'
+[2026-02-06 13:36:19] Multiple image upload detected: 1 file(s)
+[2026-02-06 13:36:19] Updating existing pet ID: 12
+[2026-02-06 13:36:19] Status value: 'Available' (lowercase: 'available')
+[2026-02-06 13:36:19] Pet updated successfully (no image changes)
+[2026-02-26 05:43:24] === New Pet Save Request ===
+[2026-02-26 05:43:24] Method: POST
+[2026-02-26 05:43:24] POST Data: Array
+(
+    [pet_id] => 
+    [name] => pet1
+    [type] => Dog
+    [breed] => Aspin
+    [age] => 2
+    [weight] => 25lbs
+    [description] => adafsfsdgfg
+    [personality] => Loyal and protective
+    [health_status] => Vaccinated, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => PARAHavenShelter@gmail.com
+    [shelter_phone] => 09305625242
+    [shelter_address] => Bagtas Rd Carissa Blk18 Lt7
+    [status] => Available
+)
+
+[2026-02-26 05:43:24] Pet ID: , Pet Name: pet1, Type: Dog, Breed: Aspin, Age: 2, Status: 'Available'
+[2026-02-26 05:43:24] Multiple image upload detected: 3 file(s)
+[2026-02-26 05:43:24] Processing image 0: Profile 4.jpg
+[2026-02-26 05:43:24] Image 0 saved successfully: /uploads/pets/pet_1772081004_699fcf6c7c54a.jpg
+[2026-02-26 05:43:24] Processing image 1: Profile 5.jpg
+[2026-02-26 05:43:24] Image 1 saved successfully: /uploads/pets/pet_1772081004_699fcf6c7cca0.jpg
+[2026-02-26 05:43:24] Processing image 2: Profile 6.jpg
+[2026-02-26 05:43:24] Image 2 saved successfully: /uploads/pets/pet_1772081004_699fcf6c7d216.jpg
+[2026-02-26 05:43:24] Creating new pet
+[2026-02-26 05:43:24] New pet created successfully. ID: 13
+[2026-02-26 05:45:39] === New Pet Save Request ===
+[2026-02-26 05:45:39] Method: POST
+[2026-02-26 05:45:39] POST Data: Array
+(
+    [pet_id] => 
+    [name] => pet2
+    [type] => Dog
+    [breed] => Aspin
+    [age] => 2
+    [weight] => 25lbs
+    [description] => adafsfsfdsd
+    [personality] => Loyal and protective
+    [health_status] => Vaccinated, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => PARAHavenShelter@gmail.com
+    [shelter_phone] => 09305625242
+    [shelter_address] => Bagtas Rd Carissa Blk18 Lt7
+    [status] => Available
+)
+
+[2026-02-26 05:45:39] Pet ID: , Pet Name: pet2, Type: Dog, Breed: Aspin, Age: 2, Status: 'Available'
+[2026-02-26 05:45:39] Multiple image upload detected: 1 file(s)
+[2026-02-26 05:45:39] Processing image 0: Profile 6.jpg
+[2026-02-26 05:45:39] Image 0 saved successfully: /uploads/pets/pet_1772081139_699fcff31d194.jpg
+[2026-02-26 05:45:39] Creating new pet
+[2026-02-26 05:45:39] New pet created successfully. ID: 14
+[2026-02-26 05:46:16] === New Pet Save Request ===
+[2026-02-26 05:46:16] Method: POST
+[2026-02-26 05:46:16] POST Data: Array
+(
+    [pet_id] => 
+    [name] => pet2
+    [type] => Dog
+    [breed] => Aspin
+    [age] => 2
+    [weight] => 25lbs
+    [description] => adsadfisgfkjskjbfouis
+    [personality] => Curious and vocal
+    [health_status] => Vaccinated, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => PARAHavenShelter@gmail.com
+    [shelter_phone] => 09305625242
+    [shelter_address] => Bagtas Rd Carissa Blk18 Lt7
+    [status] => Available
+)
+
+[2026-02-26 05:46:16] Pet ID: , Pet Name: pet2, Type: Dog, Breed: Aspin, Age: 2, Status: 'Available'
+[2026-02-26 05:46:16] Multiple image upload detected: 1 file(s)
+[2026-02-26 05:46:16] Processing image 0: Profile 2.jpg
+[2026-02-26 05:46:16] Image 0 saved successfully: /uploads/pets/pet_1772081176_699fd018ec537.jpg
+[2026-02-26 05:46:16] Creating new pet
+[2026-02-26 05:46:16] New pet created successfully. ID: 15
+[2026-02-26 06:42:33] === New Pet Save Request ===
+[2026-02-26 06:42:33] Method: POST
+[2026-02-26 06:42:33] POST Data: Array
+(
+    [pet_id] => 15
+    [name] => snow
+    [type] => Dog
+    [breed] => Aspin
+    [age] => 2
+    [weight] => 25lbs
+    [description] => adsadfisgfkjskjbfouis
+    [personality] => Curious and vocal
+    [health_status] => Vaccinated, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => PARAHavenShelter@gmail.com
+    [shelter_phone] => 09305625242
+    [shelter_address] => Bagtas Rd Carissa Blk18 Lt7
+    [status] => Available
+)
+
+[2026-02-26 06:42:33] Pet ID: 15, Pet Name: snow, Type: Dog, Breed: Aspin, Age: 2, Status: 'Available'
+[2026-02-26 06:42:33] Multiple image upload detected: 1 file(s)
+[2026-02-26 06:42:33] Updating existing pet ID: 15
+[2026-02-26 06:42:33] Status value: 'Available' (lowercase: 'available')
+[2026-02-26 06:42:33] Pet updated successfully (no image changes)
+[2026-02-26 06:48:11] === New Pet Save Request ===
+[2026-02-26 06:48:11] Method: POST
+[2026-02-26 06:48:11] POST Data: Array
+(
+    [pet_id] => 
+    [name] => oreo
+    [type] => Cat
+    [breed] => Puspin
+    [age] => 1
+    [weight] => 15 lbs
+    [description] => well behave and loves petting her
+    [personality] => Playful and friendly
+    [health_status] => Vaccinated, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => PARAHavenShelter@gmail.com
+    [shelter_phone] => 09305625242
+    [shelter_address] => Bagtas Rd Carissa Blk18 Lt7
+    [status] => Available
+)
+
+[2026-02-26 06:48:11] Pet ID: , Pet Name: oreo, Type: Cat, Breed: Puspin, Age: 1, Status: 'Available'
+[2026-02-26 06:48:11] Multiple image upload detected: 1 file(s)
+[2026-02-26 06:48:11] Processing image 0: cat 2.jpeg
+[2026-02-26 06:48:11] Image 0 saved successfully: /uploads/pets/pet_1772084891_699fde9b1cee8.jpeg
+[2026-02-26 06:48:11] Creating new pet
+[2026-02-26 06:48:11] New pet created successfully. ID: 16
+[2026-02-26 07:13:28] === New Pet Save Request ===
+[2026-02-26 07:13:28] Method: POST
+[2026-02-26 07:13:28] POST Data: Array
+(
+    [pet_id] => 
+    [name] => cat
+    [type] => Cat
+    [breed] => Puspin
+    [age] => 1
+    [weight] => 15 lbs
+    [description] => kajdbjasjdkajf
+    [personality] => Playful and friendly
+    [health_status] => Vaccinated, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => PARAHavenShelter@gmail.com
+    [shelter_phone] => 09305625242
+    [shelter_address] => Bagtas Rd Carissa Blk18 Lt7
+    [status] => Available
+)
+
+[2026-02-26 07:13:28] Pet ID: , Pet Name: cat, Type: Cat, Breed: Puspin, Age: 1, Status: 'Available'
+[2026-02-26 07:13:28] Multiple image upload detected: 1 file(s)
+[2026-02-26 07:13:28] Processing image 0: cat.png
+[2026-02-26 07:13:28] Image 0 saved successfully: /uploads/pets/pet_1772086408_699fe488ae535.png
+[2026-02-26 07:13:28] Creating new pet
+[2026-02-26 07:13:28] New pet created successfully. ID: 17
+[2026-02-26 08:48:46] === New Pet Save Request ===
+[2026-02-26 08:48:46] Method: POST
+[2026-02-26 08:48:46] POST Data: Array
+(
+    [pet_id] => 
+    [name] => puss
+    [type] => Cat
+    [breed] => Puspin
+    [age] => 1
+    [weight] => 15 lbs
+    [description] => bavjhdslagldiugadj
+    [personality] => Curious and vocal
+    [health_status] => Vaccinated, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => PARAHavenShelter@gmail.com
+    [shelter_phone] => 09305625242
+    [shelter_address] => Bagtas Rd Carissa Blk18 Lt7
+    [status] => Available
+)
+
+[2026-02-26 08:48:46] Pet ID: , Pet Name: puss, Type: Cat, Breed: Puspin, Age: 1, Status: 'Available'
+[2026-02-26 08:48:46] Multiple image upload detected: 1 file(s)
+[2026-02-26 08:48:46] Processing image 0: cat 3.jpeg
+[2026-02-26 08:48:46] Image 0 saved successfully: /uploads/pets/pet_1772092126_699ffade23d2d.jpeg
+[2026-02-26 08:48:46] Creating new pet
+[2026-02-26 08:48:46] New pet created successfully. ID: 18
+[2026-02-26 08:49:51] === New Pet Save Request ===
+[2026-02-26 08:49:51] Method: POST
+[2026-02-26 08:49:51] POST Data: Array
+(
+    [pet_id] => 
+    [name] => doggo
+    [type] => Dog
+    [breed] => Aspin
+    [age] => 2
+    [weight] => 25lbs
+    [description] => adasdagdu
+    [personality] => Curious and vocal
+    [health_status] => Vaccinated, health
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => PARAHavenShelter@gmail.com
+    [shelter_phone] => 09305625242
+    [shelter_address] => Bagtas Rd Carissa Blk18 Lt7
+    [status] => Available
+)
+
+[2026-02-26 08:49:51] Pet ID: , Pet Name: doggo, Type: Dog, Breed: Aspin, Age: 2, Status: 'Available'
+[2026-02-26 08:49:51] Multiple image upload detected: 1 file(s)
+[2026-02-26 08:49:51] Processing image 0: Profile 6.jpg
+[2026-02-26 08:49:51] Image 0 saved successfully: /uploads/pets/pet_1772092191_699ffb1fbf1be.jpg
+[2026-02-26 08:49:51] Creating new pet
+[2026-02-26 08:49:51] New pet created successfully. ID: 19
+[2026-03-11 02:01:49] === New Pet Save Request ===
+[2026-03-11 02:01:49] Method: POST
+[2026-03-11 02:01:49] POST Data: Array
+(
+    [pet_id] => 
+    [name] => b
+    [type] => Cat
+    [breed] => Puspin
+    [age] => 1
+    [weight] => 15 lbs
+    [description] => asdasfjbkgbsbjdjndsfshfoinm
+    [personality] => Playful and friendly
+    [health_status] => Vaccinated, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => PARAHavenShelter@gmail.com
+    [shelter_phone] => 09305625242
+    [shelter_address] => Bagtas Rd Carissa Blk18 Lt7
+    [status] => Available
+)
+
+[2026-03-11 02:01:49] Pet ID: , Pet Name: b, Type: Cat, Breed: Puspin, Age: 1, Status: 'Available'
+[2026-03-11 02:01:49] Multiple image upload detected: 3 file(s)
+[2026-03-11 02:01:49] Processing image 0: cat 2.jpeg
+[2026-03-11 02:01:49] Image 0 saved successfully: /uploads/pets/pet_1773190909_69b0befd47646.jpeg
+[2026-03-11 02:01:49] Processing image 1: cat 3.jpeg
+[2026-03-11 02:01:49] Image 1 saved successfully: /uploads/pets/pet_1773190909_69b0befd4a656.jpeg
+[2026-03-11 02:01:49] Processing image 2: cat.png
+[2026-03-11 02:01:49] Image 2 saved successfully: /uploads/pets/pet_1773190909_69b0befd4acbe.png
+[2026-03-11 02:01:49] Creating new pet
+[2026-03-11 02:01:49] New pet created successfully. ID: 20
+[2026-03-11 12:13:05] === New Pet Save Request ===
+[2026-03-11 12:13:05] Method: POST
+[2026-03-11 12:13:05] POST Data: Array
+(
+    [pet_id] => 
+    [name] => a
+    [type] => Cat
+    [breed] => Puspin
+    [age] => 1
+    [weight] => 15 lbs
+    [description] => adasrwrwfsdf
+    [personality] => Playful and friendly
+    [health_status] => Vaccinated, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => paraheavenshleter@gmail.com
+    [shelter_phone] => 09305625242
+    [shelter_address] => Bagtas Rd Carissa Blk18 Lt7
+    [status] => Available
+)
+
+[2026-03-11 12:13:05] Pet ID: , Pet Name: a, Type: Cat, Breed: Puspin, Age: 1, Status: 'Available'
+[2026-03-11 12:13:05] Multiple image upload detected: 1 file(s)
+[2026-03-11 12:13:05] Processing image 0: cat 2.jpeg
+[2026-03-11 12:13:05] Image 0 saved successfully: uploads/pets/pet_1773227585_69b14e41d785c.jpeg
+[2026-03-11 12:13:05] Creating new pet
+[2026-03-11 12:13:05] New pet created successfully. ID: 23
+[2026-03-11 12:46:25] === New Pet Save Request ===
+[2026-03-11 12:46:25] Method: POST
+[2026-03-11 12:46:25] POST Data: Array
+(
+    [pet_id] => 25
+    [name] => a
+    [type] => Cat
+    [breed] => 0
+    [age] => 1
+    [weight] => 15 lbs
+    [description] => adasrwrwfsdf
+    [personality] => Playful and friendly
+    [health_status] => Vaccinated, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => paraheavenshleter@gmail.com
+    [shelter_phone] => 09305625242
+    [shelter_address] => Bagtas Rd Carissa Blk18 Lt7
+    [status] => Available
+)
+
+[2026-03-11 12:46:25] Pet ID: 25, Pet Name: a, Type: Cat, Breed: 0, Age: 1, Status: 'Available'
+[2026-03-11 12:46:25] Multiple image upload detected: 1 file(s)
+[2026-03-11 12:46:25] Processing image 0: cat.png
+[2026-03-11 12:46:25] Image 0 saved successfully: uploads/pets/pet_1773229585_69b15611b234f.png
+[2026-03-11 12:46:25] Updating existing pet ID: 25
+[2026-03-11 12:46:25] Status value: 'Available' (lowercase: 'available')
+[2026-03-11 12:46:25] Old image deleted: uploads/pets/pet_1773227585_69b14e41d785c.jpeg
+[2026-03-11 12:46:25] Pet updated successfully with new images
+[2026-03-12 08:52:57] === New Pet Save Request ===
+[2026-03-12 08:52:57] Method: POST
+[2026-03-12 08:52:57] POST Data: Array
+(
+    [pet_id] => 
+    [name] => hahaha
+    [type] => Dog
+    [breed] => Aspin
+    [age] => 1
+    [weight] => 25lbs
+    [description] => sfsagegrihiknpahndpig
+    [personality] => asifhpsm
+    [health_status] => ojpajspfmjsolgmj
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => PARAHavenShelter@gmail.com
+    [shelter_phone] => 09305625242
+    [shelter_address] => Bagtas Rd Carissa Blk18 Lt7
+    [status] => Available
+)
+
+[2026-03-12 08:52:57] Pet ID: , Pet Name: hahaha, Type: Dog, Breed: Aspin, Age: 1, Status: 'Available'
+[2026-03-12 08:52:57] Multiple image upload detected: 1 file(s)
+[2026-03-12 08:52:57] Processing image 0: Profile 4.jpg
+[2026-03-12 08:52:57] Image 0 saved successfully: uploads/pets/pet_1773301977_69b270d990ee1.jpg
+[2026-03-12 08:52:57] Creating new pet
+[2026-03-12 08:52:57] New pet created successfully. ID: 28
+[2026-03-12 09:10:00] === New Pet Save Request ===
+[2026-03-12 09:10:00] Method: POST
+[2026-03-12 09:10:00] POST Data: Array
+(
+    [pet_id] => 28
+    [name] => hahaha
+    [type] => Dog
+    [breed] => Aspin
+    [age] => 1
+    [weight] => 25lbs
+    [description] => sfsagegrihiknpahndpig
+    [personality] => asifhpsm
+    [health_status] => ojpajspfmjsolgmj
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => PARAHavenShelter@gmail.com
+    [shelter_phone] => 09305625242
+    [shelter_address] => Bagtas Rd Carissa Blk18 Lt7
+    [status] => Available
+)
+
+[2026-03-12 09:10:00] Pet ID: 28, Pet Name: hahaha, Type: Dog, Breed: Aspin, Age: 1, Status: 'Available'
+[2026-03-12 09:10:00] Multiple image upload detected: 1 file(s)
+[2026-03-12 09:10:00] Processing image 0: Profile 3.jpg
+[2026-03-12 09:10:00] Image 0 saved successfully: uploads/pets/pet_1773303000_69b274d816b73.jpg
+[2026-03-12 09:10:00] Updating existing pet ID: 28
+[2026-03-12 09:10:00] Status value: 'Available' (lowercase: 'available')
+[2026-03-12 09:10:00] Old image deleted: uploads/pets/pet_1773301977_69b270d990ee1.jpg
+[2026-03-12 09:10:00] Pet updated successfully with new images
+[2026-03-12 09:53:42] === New Pet Save Request ===
+[2026-03-12 09:53:42] Method: POST
+[2026-03-12 09:53:42] POST Data: Array
+(
+    [pet_id] => 28
+    [name] => hahaha
+    [type] => Dog
+    [breed] => Aspin
+    [age] => 1
+    [weight] => 25lbs
+    [description] => sfsagegrihiknpahndpig
+    [personality] => asifhpsm
+    [health_status] => ojpajspfmjsolgmj
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => PARAHavenShelter@gmail.com
+    [shelter_phone] => 09305625242
+    [shelter_address] => Bagtas Rd Carissa Blk18 Lt7
+    [status] => Available
+)
+
+[2026-03-12 09:53:42] Pet ID: 28, Pet Name: hahaha, Type: Dog, Breed: Aspin, Age: 1, Status: 'Available'
+[2026-03-12 09:53:42] Multiple image upload detected: 1 file(s)
+[2026-03-12 09:53:42] Processing image 0: Profile 4.jpg
+[2026-03-12 09:53:42] Image 0 saved successfully: uploads/pets/pet_1773305622_69b27f163207b.jpg
+[2026-03-12 09:53:42] Updating existing pet ID: 28
+[2026-03-12 09:53:42] Status value: 'Available' (lowercase: 'available')
+[2026-03-12 09:53:42] Old image deleted: uploads/pets/pet_1773303000_69b274d816b73.jpg
+[2026-03-12 09:53:42] Pet updated successfully with new images
+[2026-03-12 10:06:10] === New Pet Save Request ===
+[2026-03-12 10:06:10] Method: POST
+[2026-03-12 10:06:10] POST Data: Array
+(
+    [pet_id] => 28
+    [name] => hahaha
+    [type] => Dog
+    [breed] => Aspin
+    [age] => 1
+    [weight] => 25lbs
+    [description] => sfsagegrihiknpahndpig
+    [personality] => asifhpsm
+    [health_status] => ojpajspfmjsolgmj
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => PARAHavenShelter@gmail.com
+    [shelter_phone] => 09305625242
+    [shelter_address] => Bagtas Rd Carissa Blk18 Lt7
+    [status] => Available
+)
+
+[2026-03-12 10:06:10] Pet ID: 28, Pet Name: hahaha, Type: Dog, Breed: Aspin, Age: 1, Status: 'Available'
+[2026-03-12 10:06:10] Multiple image upload detected: 1 file(s)
+[2026-03-12 10:06:10] Processing image 0: Profile 6.jpg
+[2026-03-12 10:06:10] Image 0 saved successfully: uploads/pets/pet_1773306370_69b282027fc7a.jpg
+[2026-03-12 10:06:10] Updating existing pet ID: 28
+[2026-03-12 10:06:10] Status value: 'Available' (lowercase: 'available')
+[2026-03-12 10:06:10] Old image deleted: uploads/pets/pet_1773305622_69b27f163207b.jpg
+[2026-03-12 10:06:10] Pet updated successfully with new images
+[2026-03-26 15:49:35] === New Pet Save Request ===
+[2026-03-26 15:49:35] Method: POST
+[2026-03-26 15:49:35] POST Data: Array
+(
+    [pet_id] => 28
+    [name] => hahaha
+    [type] => Dog
+    [breed] => Aspin
+    [age] => 1
+    [weight] => 25lbs
+    [description] => sfsagegrihiknpahndpig
+    [personality] => asifhpsm
+    [health_status] => ojpajspfmjsolgmj
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => PARAHavenShelter@gmail.com
+    [shelter_phone] => 09305625242
+    [shelter_address] => Bagtas Rd Carissa Blk18 Lt7
+    [status] => Available
+)
+
+[2026-03-26 15:49:35] Pet ID: 28, Pet Name: hahaha, Type: Dog, Breed: Aspin, Age: 1, Status: 'Available'
+[2026-03-26 15:49:35] Multiple image upload detected: 1 file(s)
+[2026-03-26 15:49:35] Processing image 0: cat.png
+[2026-03-26 15:49:35] Image 0 saved successfully: uploads/pets/pet_1774536575_69c5477f7753f.png
+[2026-03-26 15:49:35] Updating existing pet ID: 28
+[2026-03-26 15:49:35] Status value: 'Available' (lowercase: 'available')
+[2026-03-26 15:49:35] Pet updated successfully with new images
+[2026-03-27 02:59:16] === New Pet Save Request ===
+[2026-03-27 02:59:16] Method: POST
+[2026-03-27 02:59:16] POST Data: Array
+(
+    [pet_id] => 19
+    [name] => doggo
+    [type] => Dog
+    [breed] => Aspin
+    [age] => 2
+    [weight] => 25lbs
+    [description] => adasdagdu
+    [personality] => Curious and vocal
+    [health_status] => Vaccinated, health
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => PARAHavenShelter@gmail.com
+    [shelter_phone] => 09305625242
+    [shelter_address] => Bagtas Rd Carissa Blk18 Lt7
+    [status] => Available
+)
+
+[2026-03-27 02:59:16] Pet ID: 19, Pet Name: doggo, Type: Dog, Breed: Aspin, Age: 2, Status: 'Available'
+[2026-03-27 02:59:16] Multiple image upload detected: 1 file(s)
+[2026-03-27 02:59:16] Processing image 0: cat.png
+[2026-03-27 02:59:16] Image 0 saved successfully: uploads/pets/pet_1774576756_69c5e47453fb3.png
+[2026-03-27 02:59:16] Updating existing pet ID: 19
+[2026-03-27 02:59:16] Status value: 'Available' (lowercase: 'available')
+[2026-03-27 02:59:16] Pet updated successfully with new images
+[2026-03-27 02:59:27] === New Pet Save Request ===
+[2026-03-27 02:59:27] Method: POST
+[2026-03-27 02:59:27] POST Data: Array
+(
+    [pet_id] => 19
+    [name] => doggo
+    [type] => Dog
+    [breed] => Aspin
+    [age] => 2
+    [weight] => 25lbs
+    [description] => adasdagdu
+    [personality] => Curious and vocal
+    [health_status] => Vaccinated, health
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => PARAHavenShelter@gmail.com
+    [shelter_phone] => 09305625242
+    [shelter_address] => Bagtas Rd Carissa Blk18 Lt7
+    [status] => Available
+)
+
+[2026-03-27 02:59:27] Pet ID: 19, Pet Name: doggo, Type: Dog, Breed: Aspin, Age: 2, Status: 'Available'
+[2026-03-27 02:59:27] Multiple image upload detected: 1 file(s)
+[2026-03-27 02:59:27] Processing image 0: cat 2.jpeg
+[2026-03-27 02:59:27] Image 0 saved successfully: uploads/pets/pet_1774576767_69c5e47f3b1a6.jpeg
+[2026-03-27 02:59:27] Updating existing pet ID: 19
+[2026-03-27 02:59:27] Status value: 'Available' (lowercase: 'available')
+[2026-03-27 02:59:27] Old image deleted: uploads/pets/pet_1774576756_69c5e47453fb3.png
+[2026-03-27 02:59:27] Pet updated successfully with new images
+[2026-03-27 02:59:37] === New Pet Save Request ===
+[2026-03-27 02:59:37] Method: POST
+[2026-03-27 02:59:37] POST Data: Array
+(
+    [pet_id] => 16
+    [name] => oreo
+    [type] => Cat
+    [breed] => Puspin
+    [age] => 1
+    [weight] => 15 lbs
+    [description] => well behave and loves petting her
+    [personality] => Playful and friendly
+    [health_status] => Vaccinated, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => PARAHavenShelter@gmail.com
+    [shelter_phone] => 09305625242
+    [shelter_address] => Bagtas Rd Carissa Blk18 Lt7
+    [status] => Available
+)
+
+[2026-03-27 02:59:37] Pet ID: 16, Pet Name: oreo, Type: Cat, Breed: Puspin, Age: 1, Status: 'Available'
+[2026-03-27 02:59:37] Multiple image upload detected: 1 file(s)
+[2026-03-27 02:59:37] Processing image 0: cat 3.jpeg
+[2026-03-27 02:59:37] Image 0 saved successfully: uploads/pets/pet_1774576777_69c5e48997545.jpeg
+[2026-03-27 02:59:37] Updating existing pet ID: 16
+[2026-03-27 02:59:37] Status value: 'Available' (lowercase: 'available')
+[2026-03-27 02:59:37] Pet updated successfully with new images
+[2026-03-27 02:59:53] === New Pet Save Request ===
+[2026-03-27 02:59:53] Method: POST
+[2026-03-27 02:59:53] POST Data: Array
+(
+    [pet_id] => 19
+    [name] => doggo
+    [type] => Dog
+    [breed] => Aspin
+    [age] => 2
+    [weight] => 25lbs
+    [description] => adasdagdu
+    [personality] => Curious and vocal
+    [health_status] => Vaccinated, health
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => PARAHavenShelter@gmail.com
+    [shelter_phone] => 09305625242
+    [shelter_address] => Bagtas Rd Carissa Blk18 Lt7
+    [status] => Available
+)
+
+[2026-03-27 02:59:53] Pet ID: 19, Pet Name: doggo, Type: Dog, Breed: Aspin, Age: 2, Status: 'Available'
+[2026-03-27 02:59:53] Multiple image upload detected: 1 file(s)
+[2026-03-27 02:59:53] Processing image 0: Profile 1.jpg
+[2026-03-27 02:59:53] Image 0 saved successfully: uploads/pets/pet_1774576793_69c5e4996bf6e.jpg
+[2026-03-27 02:59:53] Updating existing pet ID: 19
+[2026-03-27 02:59:53] Status value: 'Available' (lowercase: 'available')
+[2026-03-27 02:59:53] Old image deleted: uploads/pets/pet_1774576767_69c5e47f3b1a6.jpeg
+[2026-03-27 02:59:53] Pet updated successfully with new images
+[2026-03-27 03:00:01] === New Pet Save Request ===
+[2026-03-27 03:00:01] Method: POST
+[2026-03-27 03:00:01] POST Data: Array
+(
+    [pet_id] => 28
+    [name] => cutie
+    [type] => Dog
+    [breed] => Aspin
+    [age] => 1
+    [weight] => 25lbs
+    [description] => sfsagegrihiknpahndpig
+    [personality] => asifhpsm
+    [health_status] => ojpajspfmjsolgmj
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => PARAHavenShelter@gmail.com
+    [shelter_phone] => 09305625242
+    [shelter_address] => Bagtas Rd Carissa Blk18 Lt7
+    [status] => Available
+)
+
+[2026-03-27 03:00:01] Pet ID: 28, Pet Name: cutie, Type: Dog, Breed: Aspin, Age: 1, Status: 'Available'
+[2026-03-27 03:00:01] Multiple image upload detected: 1 file(s)
+[2026-03-27 03:00:01] Updating existing pet ID: 28
+[2026-03-27 03:00:01] Status value: 'Available' (lowercase: 'available')
+[2026-03-27 03:00:01] Pet updated successfully (no image changes)
+[2026-03-27 03:00:11] === New Pet Save Request ===
+[2026-03-27 03:00:11] Method: POST
+[2026-03-27 03:00:11] POST Data: Array
+(
+    [pet_id] => 15
+    [name] => snow
+    [type] => Dog
+    [breed] => Aspin
+    [age] => 2
+    [weight] => 25lbs
+    [description] => adsadfisgfkjskjbfouis
+    [personality] => Curious and vocal
+    [health_status] => Vaccinated, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => PARAHavenShelter@gmail.com
+    [shelter_phone] => 09305625242
+    [shelter_address] => Bagtas Rd Carissa Blk18 Lt7
+    [status] => Available
+)
+
+[2026-03-27 03:00:11] Pet ID: 15, Pet Name: snow, Type: Dog, Breed: Aspin, Age: 2, Status: 'Available'
+[2026-03-27 03:00:11] Multiple image upload detected: 1 file(s)
+[2026-03-27 03:00:11] Processing image 0: Profile 2.jpg
+[2026-03-27 03:00:11] Image 0 saved successfully: uploads/pets/pet_1774576811_69c5e4ab3e631.jpg
+[2026-03-27 03:00:11] Updating existing pet ID: 15
+[2026-03-27 03:00:11] Status value: 'Available' (lowercase: 'available')
+[2026-03-27 03:00:11] Pet updated successfully with new images
+[2026-03-27 03:00:21] === New Pet Save Request ===
+[2026-03-27 03:00:21] Method: POST
+[2026-03-27 03:00:21] POST Data: Array
+(
+    [pet_id] => 14
+    [name] => pet2
+    [type] => Dog
+    [breed] => Aspin
+    [age] => 2
+    [weight] => 25lbs
+    [description] => adafsfsfdsd
+    [personality] => Loyal and protective
+    [health_status] => Vaccinated, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => PARAHavenShelter@gmail.com
+    [shelter_phone] => 09305625242
+    [shelter_address] => Bagtas Rd Carissa Blk18 Lt7
+    [status] => Available
+)
+
+[2026-03-27 03:00:21] Pet ID: 14, Pet Name: pet2, Type: Dog, Breed: Aspin, Age: 2, Status: 'Available'
+[2026-03-27 03:00:21] Multiple image upload detected: 1 file(s)
+[2026-03-27 03:00:21] Processing image 0: Profile 5.jpg
+[2026-03-27 03:00:21] Image 0 saved successfully: uploads/pets/pet_1774576821_69c5e4b56f90a.jpg
+[2026-03-27 03:00:21] Updating existing pet ID: 14
+[2026-03-27 03:00:21] Status value: 'Available' (lowercase: 'available')
+[2026-03-27 03:00:21] Pet updated successfully with new images
+[2026-03-27 03:00:31] === New Pet Save Request ===
+[2026-03-27 03:00:31] Method: POST
+[2026-03-27 03:00:31] POST Data: Array
+(
+    [pet_id] => 13
+    [name] => pet1
+    [type] => Dog
+    [breed] => Aspin
+    [age] => 2
+    [weight] => 25lbs
+    [description] => adafsfsdgfg
+    [personality] => Loyal and protective
+    [health_status] => Vaccinated, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => PARAHavenShelter@gmail.com
+    [shelter_phone] => 09305625242
+    [shelter_address] => Bagtas Rd Carissa Blk18 Lt7
+    [status] => Available
+)
+
+[2026-03-27 03:00:31] Pet ID: 13, Pet Name: pet1, Type: Dog, Breed: Aspin, Age: 2, Status: 'Available'
+[2026-03-27 03:00:31] Multiple image upload detected: 1 file(s)
+[2026-03-27 03:00:31] Processing image 0: Profile 5.jpg
+[2026-03-27 03:00:31] Image 0 saved successfully: uploads/pets/pet_1774576831_69c5e4bf229b4.jpg
+[2026-03-27 03:00:31] Updating existing pet ID: 13
+[2026-03-27 03:00:31] Status value: 'Available' (lowercase: 'available')
+[2026-03-27 03:00:31] Pet updated successfully with new images
+[2026-03-27 03:00:43] === New Pet Save Request ===
+[2026-03-27 03:00:43] Method: POST
+[2026-03-27 03:00:43] POST Data: Array
+(
+    [pet_id] => 22
+    [name] => brownie
+    [type] => Dog
+    [breed] => 0
+    [age] => 2
+    [weight] => 25lbs
+    [description] => qqeqe
+    [personality] => Playful and friendly
+    [health_status] => Vaccinated, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => marcusjaramiel27@gmail.com
+    [shelter_phone] => 09305625242
+    [shelter_address] => Bagtas Rd Carissa Blk18 Lt7
+    [status] => Available
+)
+
+[2026-03-27 03:00:43] Pet ID: 22, Pet Name: brownie, Type: Dog, Breed: 0, Age: 2, Status: 'Available'
+[2026-03-27 03:00:43] Multiple image upload detected: 1 file(s)
+[2026-03-27 03:00:43] Processing image 0: Profile 3.jpg
+[2026-03-27 03:00:43] Image 0 saved successfully: uploads/pets/pet_1774576843_69c5e4cba0075.jpg
+[2026-03-27 03:00:43] Updating existing pet ID: 22
+[2026-03-27 03:00:43] Status value: 'Available' (lowercase: 'available')
+[2026-03-27 03:00:43] Pet updated successfully with new images
+[2026-03-27 03:00:53] === New Pet Save Request ===
+[2026-03-27 03:00:53] Method: POST
+[2026-03-27 03:00:53] POST Data: Array
+(
+    [pet_id] => 10
+    [name] => Bella
+    [type] => Dog
+    [breed] => 0
+    [age] => 1
+    [weight] => 25lbs
+    [description] => Affectionate and playful, loves swimming.
+    [personality] => Loyal and protective
+    [health_status] => health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => PARAHavenShelter@gmail.com
+    [shelter_phone] => 09951279006
+    [shelter_address] => Pulo 4, Isla, Barangay Adlas, Dasmariñas, Cavite
+    [status] => Available
+)
+
+[2026-03-27 03:00:53] Pet ID: 10, Pet Name: Bella, Type: Dog, Breed: 0, Age: 1, Status: 'Available'
+[2026-03-27 03:00:53] Multiple image upload detected: 1 file(s)
+[2026-03-27 03:00:53] Processing image 0: Profile 6.jpg
+[2026-03-27 03:00:53] Image 0 saved successfully: uploads/pets/pet_1774576853_69c5e4d5365e4.jpg
+[2026-03-27 03:00:53] Updating existing pet ID: 10
+[2026-03-27 03:00:53] Status value: 'Available' (lowercase: 'available')
+[2026-03-27 03:00:53] Pet updated successfully with new images
+[2026-03-27 03:01:02] === New Pet Save Request ===
+[2026-03-27 03:01:02] Method: POST
+[2026-03-27 03:01:02] POST Data: Array
+(
+    [pet_id] => 2
+    [name] => Max
+    [type] => Dog
+    [breed] => Aspin
+    [age] => 2
+    [weight] => 25lbs
+    [description] => Loyal and protective, great for families.
+    [personality] => Curious and vocal
+    [health_status] => Vaccinated, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => PARAHavenShelter@gmail.com
+    [shelter_phone] => 09951279006
+    [shelter_address] => Pulo 4, Isla, Barangay Adlas, Dasmariñas, Cavite
+    [status] => Available
+)
+
+[2026-03-27 03:01:02] Pet ID: 2, Pet Name: Max, Type: Dog, Breed: Aspin, Age: 2, Status: 'Available'
+[2026-03-27 03:01:02] Multiple image upload detected: 1 file(s)
+[2026-03-27 03:01:02] Processing image 0: Profile 1.jpg
+[2026-03-27 03:01:02] Image 0 saved successfully: uploads/pets/pet_1774576862_69c5e4de7b5a0.jpg
+[2026-03-27 03:01:02] Updating existing pet ID: 2
+[2026-03-27 03:01:02] Status value: 'Available' (lowercase: 'available')
+[2026-03-27 03:01:02] Pet updated successfully with new images
+[2026-03-27 03:01:10] === New Pet Save Request ===
+[2026-03-27 03:01:10] Method: POST
+[2026-03-27 03:01:10] POST Data: Array
+(
+    [pet_id] => 1
+    [name] => Buddy
+    [type] => Dog
+    [breed] => Aspin
+    [age] => 1
+    [weight] => 25lbs
+    [description] => Friendly and energetic, loves playing fetch.
+    [personality] => Playful and friendly
+    [health_status] => Vaccinated, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => PARAHavenShelter@gmail.com
+    [shelter_phone] => 09951279006
+    [shelter_address] => Pulo 4, Isla, Barangay Adlas, Dasmariñas, Cavite
+    [status] => Available
+)
+
+[2026-03-27 03:01:10] Pet ID: 1, Pet Name: Buddy, Type: Dog, Breed: Aspin, Age: 1, Status: 'Available'
+[2026-03-27 03:01:10] Multiple image upload detected: 1 file(s)
+[2026-03-27 03:01:10] Processing image 0: Profile 4.jpg
+[2026-03-27 03:01:10] Image 0 saved successfully: uploads/pets/pet_1774576870_69c5e4e682d7a.jpg
+[2026-03-27 03:01:10] Updating existing pet ID: 1
+[2026-03-27 03:01:10] Status value: 'Available' (lowercase: 'available')
+[2026-03-27 03:01:10] Pet updated successfully with new images
+[2026-03-27 03:21:50] === New Pet Save Request ===
+[2026-03-27 03:21:50] Method: POST
+[2026-03-27 03:21:50] POST Data: Array
+(
+    [pet_id] => 
+    [name] => bllue
+    [type] => Dog
+    [breed] => Aspin
+    [age] => 2
+    [weight] => 25lbs
+    [description] => happy dog
+    [personality] => Curious and vocal
+    [health_status] => Vaccinated, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => paraheavenshleter@gmail.com
+    [shelter_phone] => 09305625242
+    [shelter_address] => Bagtas Rd Carissa Blk18 Lt7
+    [status] => Available
+)
+
+[2026-03-27 03:21:50] Pet ID: , Pet Name: bllue, Type: Dog, Breed: Aspin, Age: 2, Status: 'Available'
+[2026-03-27 03:21:50] Multiple image upload detected: 3 file(s)
+[2026-03-27 03:21:50] Processing image 0: Profile 3.jpg
+[2026-03-27 03:21:50] Image 0 saved successfully: uploads/pets/pet_1774578110_69c5e9bee9a6e.jpg
+[2026-03-27 03:21:50] Processing image 1: Profile 4.jpg
+[2026-03-27 03:21:50] Image 1 saved successfully: uploads/pets/pet_1774578110_69c5e9beeeb43.jpg
+[2026-03-27 03:21:50] Processing image 2: Profile 5.jpg
+[2026-03-27 03:21:50] Image 2 saved successfully: uploads/pets/pet_1774578110_69c5e9beef230.jpg
+[2026-03-27 03:21:50] Creating new pet
+[2026-03-27 03:21:51] New pet created successfully. ID: 29
+[2026-03-27 03:22:04] === New Pet Save Request ===
+[2026-03-27 03:22:04] Method: POST
+[2026-03-27 03:22:04] POST Data: Array
+(
+    [pet_id] => 29
+    [name] => blue
+    [type] => Dog
+    [breed] => Aspin
+    [age] => 2
+    [weight] => 25lbs
+    [description] => happy dog
+    [personality] => Curious and vocal
+    [health_status] => Vaccinated, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => paraheavenshleter@gmail.com
+    [shelter_phone] => 09305625242
+    [shelter_address] => Bagtas Rd Carissa Blk18 Lt7
+    [status] => Available
+)
+
+[2026-03-27 03:22:04] Pet ID: 29, Pet Name: blue, Type: Dog, Breed: Aspin, Age: 2, Status: 'Available'
+[2026-03-27 03:22:04] Multiple image upload detected: 1 file(s)
+[2026-03-27 03:22:04] Updating existing pet ID: 29
+[2026-03-27 03:22:04] Status value: 'Available' (lowercase: 'available')
+[2026-03-27 03:22:04] Pet updated successfully (no image changes)
+[2026-05-22 09:38:50] === New Pet Save Request ===
+[2026-05-22 09:38:50] Method: POST
+[2026-05-22 09:38:50] POST Data: Array
+(
+    [pet_id] => 1
+    [name] => Buddy
+    [type] => Dog
+    [breed] => Aspin
+    [age] => 1
+    [weight] => 25lbs
+    [description] => Friendly and energetic, loves playing fetch.
+    [personality] => Playful and friendly
+    [health_status] => Vaccinated, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => PARAHavenShelter@gmail.com
+    [shelter_phone] => 09951279006
+    [shelter_address] => Pulo 4, Isla, Barangay Adlas, Dasmariñas, Cavite
+    [status] => Available
+)
+
+[2026-05-22 09:38:50] Pet ID: 1, Pet Name: Buddy, Type: Dog, Breed: Aspin, Age: 1, Status: 'Available'
+[2026-05-22 09:38:50] Multiple image upload detected: 1 file(s)
+[2026-05-22 09:38:50] Processing image 0: Profile 4.jpg
+[2026-05-22 09:38:50] Image 0 saved successfully: uploads/pets/pet_1779435530_6a10080a400b3.jpg
+[2026-05-22 09:38:50] Updating existing pet ID: 1
+[2026-05-22 09:38:50] Status value: 'Available' (lowercase: 'available')
+[2026-05-22 09:38:50] Old image deleted: uploads/pets/pet_1774576870_69c5e4e682d7a.jpg
+[2026-05-22 09:38:50] Pet updated successfully with new images
+[2026-05-22 09:38:58] === New Pet Save Request ===
+[2026-05-22 09:38:58] Method: POST
+[2026-05-22 09:38:58] POST Data: Array
+(
+    [pet_id] => 1
+    [name] => Buddy
+    [type] => Dog
+    [breed] => Aspin
+    [age] => 1
+    [weight] => 25lbs
+    [description] => Friendly and energetic, loves playing fetch.
+    [personality] => Playful and friendly
+    [health_status] => Vaccinated, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => PARAHavenShelter@gmail.com
+    [shelter_phone] => 09951279006
+    [shelter_address] => Pulo 4, Isla, Barangay Adlas, Dasmariñas, Cavite
+    [status] => Available
+)
+
+[2026-05-22 09:38:58] Pet ID: 1, Pet Name: Buddy, Type: Dog, Breed: Aspin, Age: 1, Status: 'Available'
+[2026-05-22 09:38:58] Multiple image upload detected: 1 file(s)
+[2026-05-22 09:38:58] Processing image 0: Profile 2.jpg
+[2026-05-22 09:38:58] Image 0 saved successfully: uploads/pets/pet_1779435538_6a100812d4c52.jpg
+[2026-05-22 09:38:58] Updating existing pet ID: 1
+[2026-05-22 09:38:58] Status value: 'Available' (lowercase: 'available')
+[2026-05-22 09:38:58] Old image deleted: uploads/pets/pet_1779435530_6a10080a400b3.jpg
+[2026-05-22 09:38:58] Pet updated successfully with new images
+[2026-09-05 15:51:28] === New Pet Save Request ===
+[2026-09-05 15:51:28] Method: POST
+[2026-09-05 15:51:28] POST Data: Array
+(
+    [pet_id] => 
+    [name] => Lucky
+    [type] => Dog
+    [breed] => Aspin
+    [age] => 1
+    [weight] => 17 kg
+    [description] => Friendly and energetic dog who loves playing outdoors and spending time with people.
+    [personality] => Playful and affectionate
+    [health_status] => Vaccinated, dewormed, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => paraheavenshleter@gmail.com
+    [shelter_phone] => 09951279006
+    [shelter_address] => Pulo 4, Isla, Barangay Adlas, Dasmariñas, Cavite
+    [status] => Available
+)
+
+[2026-09-05 15:51:28] Pet ID: , Pet Name: Lucky, Type: Dog, Breed: Aspin, Age: 1, Status: 'Available'
+[2026-09-05 15:51:28] Multiple image upload detected: 1 file(s)
+[2026-09-05 15:51:28] Processing image 0: Profile 6.jpg
+[2026-09-05 15:51:28] Image 0 saved successfully: uploads/pets/pet_1788616288_6a9c1e60b9870.jpg
+[2026-09-05 15:51:28] Creating new pet
+[2026-09-05 15:51:28] New pet created successfully. ID: 34
+[2026-09-05 15:57:17] === New Pet Save Request ===
+[2026-09-05 15:57:17] Method: POST
+[2026-09-05 15:57:17] POST Data: Array
+(
+    [pet_id] => 34
+    [name] => Lucky
+    [type] => Dog
+    [breed] => Aspin
+    [age] => 1
+    [weight] => 17 kg
+    [description] => Friendly and energetic dog who loves playing outdoors and spending time with people.
+    [personality] => Playful and affectionate
+    [health_status] => Vaccinated, dewormed, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => paraheavenshleter@gmail.com
+    [shelter_phone] => 09951279006
+    [shelter_address] => Pulo 4, Isla, Barangay Adlas, Dasmariñas, Cavite
+    [status] => Available
+)
+
+[2026-09-05 15:57:17] Pet ID: 34, Pet Name: Lucky, Type: Dog, Breed: Aspin, Age: 1, Status: 'Available'
+[2026-09-05 15:57:17] Multiple image upload detected: 2 file(s)
+[2026-09-05 15:57:17] Processing image 0: Profile 9.avif
+[2026-09-05 15:57:17] Invalid file type or size for file 0. Extension: avif, Size: 287780
+[2026-09-05 15:57:17] Processing image 1: Profile 10.jfif
+[2026-09-05 15:57:17] Invalid file type or size for file 1. Extension: jfif, Size: 14163
+[2026-09-05 15:57:17] Updating existing pet ID: 34
+[2026-09-05 15:57:17] Status value: 'Available' (lowercase: 'available')
+[2026-09-05 15:57:17] Pet updated successfully (no image changes)
+[2026-09-05 15:59:27] === New Pet Save Request ===
+[2026-09-05 15:59:27] Method: POST
+[2026-09-05 15:59:27] POST Data: Array
+(
+    [pet_id] => 34
+    [name] => Lucky
+    [type] => Dog
+    [breed] => Aspin
+    [age] => 1
+    [weight] => 17 kg
+    [description] => Friendly and energetic dog who loves playing outdoors and spending time with people.
+    [personality] => Playful and affectionate
+    [health_status] => Vaccinated, dewormed, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => paraheavenshleter@gmail.com
+    [shelter_phone] => 09951279006
+    [shelter_address] => Pulo 4, Isla, Barangay Adlas, Dasmariñas, Cavite
+    [status] => Available
+)
+
+[2026-09-05 15:59:27] Pet ID: 34, Pet Name: Lucky, Type: Dog, Breed: Aspin, Age: 1, Status: 'Available'
+[2026-09-05 15:59:27] Multiple image upload detected: 2 file(s)
+[2026-09-05 15:59:27] Processing image 0: Profile 9.avif
+[2026-09-05 15:59:28] Invalid file type or size for file 0. Extension: avif, Size: 287780
+[2026-09-05 15:59:28] Processing image 1: Profile 10.jfif
+[2026-09-05 15:59:28] Invalid file type or size for file 1. Extension: jfif, Size: 14163
+[2026-09-05 15:59:28] Updating existing pet ID: 34
+[2026-09-05 15:59:28] Status value: 'Available' (lowercase: 'available')
+[2026-09-05 15:59:28] Pet updated successfully (no image changes)
+[2026-09-05 16:01:19] === New Pet Save Request ===
+[2026-09-05 16:01:19] Method: POST
+[2026-09-05 16:01:19] POST Data: Array
+(
+    [pet_id] => 34
+    [name] => Lucky
+    [type] => Dog
+    [breed] => Aspin
+    [age] => 1
+    [weight] => 17 kg
+    [description] => Friendly and energetic dog who loves playing outdoors and spending time with people.
+    [personality] => Playful and affectionate
+    [health_status] => Vaccinated, dewormed, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => paraheavenshleter@gmail.com
+    [shelter_phone] => 09951279006
+    [shelter_address] => Pulo 4, Isla, Barangay Adlas, Dasmariñas, Cavite
+    [status] => Available
+)
+
+[2026-09-05 16:01:19] Pet ID: 34, Pet Name: Lucky, Type: Dog, Breed: Aspin, Age: 1, Status: 'Available'
+[2026-09-05 16:01:19] Multiple image upload detected: 2 file(s)
+[2026-09-05 16:01:19] Processing image 0: Profile 9.jpg
+[2026-09-05 16:01:19] Image 0 saved successfully: uploads/pets/pet_1788616879_6a9c20af8da04.jpg
+[2026-09-05 16:01:19] Processing image 1: Profile 10.jpg
+[2026-09-05 16:01:19] Image 1 saved successfully: uploads/pets/pet_1788616879_6a9c20af8e268.jpg
+[2026-09-05 16:01:19] Updating existing pet ID: 34
+[2026-09-05 16:01:19] Status value: 'Available' (lowercase: 'available')
+[2026-09-05 16:01:19] Old image deleted: uploads/pets/pet_1788616288_6a9c1e60b9870.jpg
+[2026-09-05 16:01:19] Pet updated successfully with new images
+[2026-09-05 16:18:48] === New Pet Save Request ===
+[2026-09-05 16:18:48] Method: POST
+[2026-09-05 16:18:48] POST Data: Array
+(
+    [pet_id] => 
+    [name] => Jack
+    [type] => Dog
+    [breed] => Aspin
+    [age] => 1
+    [weight] => 25lbs
+    [description] => Loyal dog who enjoys walks and spending time with his favorite people.
+    [personality] => Loyal and friendly
+    [health_status] => Vaccinated, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => paraheavenshleter@gmail.com
+    [shelter_phone] => 09951279006
+    [shelter_address] => Pulo 4, Isla, Barangay Adlas, Dasmariñas, Cavite
+    [status] => Available
+)
+
+[2026-09-05 16:18:48] Pet ID: , Pet Name: Jack, Type: Dog, Breed: Aspin, Age: 1, Status: 'Available'
+[2026-09-05 16:18:48] Multiple image upload detected: 1 file(s)
+[2026-09-05 16:18:48] Processing image 0: Profile 11.jpg
+[2026-09-05 16:18:48] Image 0 saved successfully: uploads/pets/pet_1788617928_6a9c24c815be8.jpg
+[2026-09-05 16:18:48] Creating new pet
+[2026-09-05 16:18:48] New pet created successfully. ID: 35
+[2026-09-05 16:23:53] === New Pet Save Request ===
+[2026-09-05 16:23:53] Method: POST
+[2026-09-05 16:23:53] POST Data: Array
+(
+    [pet_id] => 35
+    [name] => Jack
+    [type] => Dog
+    [gender] => Male
+    [breed] => Aspin
+    [age] => 1
+    [weight] => 25lbs
+    [description] => Loyal dog who enjoys walks and spending time with his favorite people.
+    [personality] => Loyal and friendly
+    [health_status] => Vaccinated, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => paraheavenshleter@gmail.com
+    [shelter_phone] => 09951279006
+    [shelter_address] => Pulo 4, Isla, Barangay Adlas, Dasmariñas, Cavite
+    [status] => Available
+)
+
+[2026-09-05 16:23:53] Pet ID: 35, Pet Name: Jack, Type: Dog, Breed: Aspin, Age: 1, Status: 'Available'
+[2026-09-05 16:23:53] Multiple image upload detected: 1 file(s)
+[2026-09-05 16:23:53] Updating existing pet ID: 35
+[2026-09-05 16:23:53] Status value: 'Available' (lowercase: 'available')
+[2026-09-05 16:23:53] Pet updated successfully (no image changes)
+[2026-09-05 16:34:00] === New Pet Save Request ===
+[2026-09-05 16:34:00] Method: POST
+[2026-09-05 16:34:00] POST Data: Array
+(
+    [pet_id] => 28
+    [name] => cutie
+    [type] => Dog
+    [gender] => Female
+    [breed] => Aspin
+    [age] => 1
+    [weight] => 25lbs
+    [description] => sfsagegrihiknpahndpig
+    [personality] => asifhpsm
+    [health_status] => ojpajspfmjsolgmj
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => PARAHavenShelter@gmail.com
+    [shelter_phone] => 09305625242
+    [shelter_address] => Bagtas Rd Carissa Blk18 Lt7
+    [status] => Available
+)
+
+[2026-09-05 16:34:00] Pet ID: 28, Pet Name: cutie, Type: Dog, Breed: Aspin, Age: 1, Status: 'Available'
+[2026-09-05 16:34:00] Multiple image upload detected: 1 file(s)
+[2026-09-05 16:34:00] Updating existing pet ID: 28
+[2026-09-05 16:34:00] Status value: 'Available' (lowercase: 'available')
+[2026-09-05 16:34:00] Pet updated successfully (no image changes)
+[2026-09-05 16:40:45] === New Pet Save Request ===
+[2026-09-05 16:40:45] Method: POST
+[2026-09-05 16:40:45] POST Data: Array
+(
+    [pet_id] => 19
+    [name] => doggo
+    [type] => Dog
+    [gender] => Male
+    [breed] => Aspin
+    [age] => 2
+    [weight] => 24 kg
+    [description] => Gentle dog who prefers calm environments and enjoys being around people.
+    [personality] => Curious and vocal
+    [health_status] => Vaccinated, health
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => PARAHavenShelter@gmail.com
+    [shelter_phone] => 09951279006
+    [shelter_address] => Pulo 4, Isla, Barangay Adlas, Dasmariñas, Cavite
+    [status] => Available
+)
+
+[2026-09-05 16:40:45] Pet ID: 19, Pet Name: doggo, Type: Dog, Breed: Aspin, Age: 2, Status: 'Available'
+[2026-09-05 16:40:45] Multiple image upload detected: 1 file(s)
+[2026-09-05 16:40:45] Updating existing pet ID: 19
+[2026-09-05 16:40:45] Status value: 'Available' (lowercase: 'available')
+[2026-09-05 16:40:45] Pet updated successfully (no image changes)
+[2026-09-05 16:42:11] === New Pet Save Request ===
+[2026-09-05 16:42:11] Method: POST
+[2026-09-05 16:42:11] POST Data: Array
+(
+    [pet_id] => 30
+    [name] => Bruno
+    [type] => Dog
+    [gender] => Male
+    [breed] => Aspin
+    [age] => 4
+    [weight] => 23 kg
+    [description] => Mature and well-mannered dog who enjoys relaxing and staying close to people.
+    [personality] => Calm and loyal
+    [health_status] => Vaccinated, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => paraheavenshleter@gmail.com
+    [shelter_phone] => 09951279006
+    [shelter_address] => Pulo 4, Isla, Barangay Adlas, Dasmariñas, Cavite
+    [status] => Available
+)
+
+[2026-09-05 16:42:11] Pet ID: 30, Pet Name: Bruno, Type: Dog, Breed: Aspin, Age: 4, Status: 'Available'
+[2026-09-05 16:42:11] Multiple image upload detected: 1 file(s)
+[2026-09-05 16:42:11] Updating existing pet ID: 30
+[2026-09-05 16:42:11] Status value: 'Available' (lowercase: 'available')
+[2026-09-05 16:42:11] Pet updated successfully (no image changes)
+[2026-09-05 16:44:42] === New Pet Save Request ===
+[2026-09-05 16:44:42] Method: POST
+[2026-09-05 16:44:42] POST Data: Array
+(
+    [pet_id] => 22
+    [name] => brownie
+    [type] => Dog
+    [gender] => Female
+    [breed] => Aspin
+    [age] => 2
+    [weight] => 20 kg
+    [description] => Friendly and active dog who enjoys playing outside and spending time with people.
+    [personality] => Playful and friendly
+    [health_status] => Vaccinated, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => paraheavenshleter@gmail.com
+    [shelter_phone] => 09951279006
+    [shelter_address] => Pulo 4, Isla, Barangay Adlas, Dasmariñas, Cavite
+    [status] => Available
+)
+
+[2026-09-05 16:44:42] Pet ID: 22, Pet Name: brownie, Type: Dog, Breed: Aspin, Age: 2, Status: 'Available'
+[2026-09-05 16:44:42] Multiple image upload detected: 1 file(s)
+[2026-09-05 16:44:42] Updating existing pet ID: 22
+[2026-09-05 16:44:42] Status value: 'Available' (lowercase: 'available')
+[2026-09-05 16:44:42] Pet updated successfully (no image changes)
+[2026-09-05 16:47:14] === New Pet Save Request ===
+[2026-09-05 16:47:14] Method: POST
+[2026-09-05 16:47:14] POST Data: Array
+(
+    [pet_id] => 10
+    [name] => Bella
+    [type] => Dog
+    [gender] => Female
+    [breed] => Aspin
+    [age] => 3
+    [weight] => 25lbs
+    [description] => Affectionate and playful, loves swimming.
+    [personality] => Loyal and protective
+    [health_status] => health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => PARAHavenShelter@gmail.com
+    [shelter_phone] => 09951279006
+    [shelter_address] => Pulo 4, Isla, Barangay Adlas, Dasmariñas, Cavite
+    [status] => Available
+)
+
+[2026-09-05 16:47:14] Pet ID: 10, Pet Name: Bella, Type: Dog, Breed: Aspin, Age: 3, Status: 'Available'
+[2026-09-05 16:47:14] Multiple image upload detected: 1 file(s)
+[2026-09-05 16:47:14] Updating existing pet ID: 10
+[2026-09-05 16:47:14] Status value: 'Available' (lowercase: 'available')
+[2026-09-05 16:47:14] Pet updated successfully (no image changes)
+[2026-09-05 16:48:22] === New Pet Save Request ===
+[2026-09-05 16:48:22] Method: POST
+[2026-09-05 16:48:22] POST Data: Array
+(
+    [pet_id] => 35
+    [name] => Jack
+    [type] => Dog
+    [gender] => Male
+    [breed] => Aspin
+    [age] => 2
+    [weight] => 25lbs
+    [description] => Loyal dog who enjoys walks and spending time with his favorite people.
+    [personality] => Loyal and friendly
+    [health_status] => Vaccinated, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => paraheavenshleter@gmail.com
+    [shelter_phone] => 09951279006
+    [shelter_address] => Pulo 4, Isla, Barangay Adlas, Dasmariñas, Cavite
+    [status] => Available
+)
+
+[2026-09-05 16:48:22] Pet ID: 35, Pet Name: Jack, Type: Dog, Breed: Aspin, Age: 2, Status: 'Available'
+[2026-09-05 16:48:22] Multiple image upload detected: 1 file(s)
+[2026-09-05 16:48:22] Updating existing pet ID: 35
+[2026-09-05 16:48:22] Status value: 'Available' (lowercase: 'available')
+[2026-09-05 16:48:22] Pet updated successfully (no image changes)
+[2026-09-05 16:48:28] === New Pet Save Request ===
+[2026-09-05 16:48:28] Method: POST
+[2026-09-05 16:48:28] POST Data: Array
+(
+    [pet_id] => 34
+    [name] => Lucky
+    [type] => Dog
+    [gender] => Male
+    [breed] => Aspin
+    [age] => 3
+    [weight] => 17 kg
+    [description] => Friendly and energetic dog who loves playing outdoors and spending time with people.
+    [personality] => Playful and affectionate
+    [health_status] => Vaccinated, dewormed, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => paraheavenshleter@gmail.com
+    [shelter_phone] => 09951279006
+    [shelter_address] => Pulo 4, Isla, Barangay Adlas, Dasmariñas, Cavite
+    [status] => Available
+)
+
+[2026-09-05 16:48:28] Pet ID: 34, Pet Name: Lucky, Type: Dog, Breed: Aspin, Age: 3, Status: 'Available'
+[2026-09-05 16:48:28] Multiple image upload detected: 1 file(s)
+[2026-09-05 16:48:28] Updating existing pet ID: 34
+[2026-09-05 16:48:28] Status value: 'Available' (lowercase: 'available')
+[2026-09-05 16:48:28] Pet updated successfully (no image changes)
+[2026-09-05 16:48:34] === New Pet Save Request ===
+[2026-09-05 16:48:34] Method: POST
+[2026-09-05 16:48:34] POST Data: Array
+(
+    [pet_id] => 28
+    [name] => cutie
+    [type] => Dog
+    [gender] => Female
+    [breed] => Aspin
+    [age] => 3
+    [weight] => 25lbs
+    [description] => sfsagegrihiknpahndpig
+    [personality] => asifhpsm
+    [health_status] => ojpajspfmjsolgmj
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => PARAHavenShelter@gmail.com
+    [shelter_phone] => 09305625242
+    [shelter_address] => Bagtas Rd Carissa Blk18 Lt7
+    [status] => Available
+)
+
+[2026-09-05 16:48:34] Pet ID: 28, Pet Name: cutie, Type: Dog, Breed: Aspin, Age: 3, Status: 'Available'
+[2026-09-05 16:48:34] Multiple image upload detected: 1 file(s)
+[2026-09-05 16:48:34] Updating existing pet ID: 28
+[2026-09-05 16:48:34] Status value: 'Available' (lowercase: 'available')
+[2026-09-05 16:48:34] Pet updated successfully (no image changes)
+[2026-09-06 02:23:30] === New Pet Save Request ===
+[2026-09-06 02:23:30] Method: POST
+[2026-09-06 02:23:30] POST Data: Array
+(
+    [pet_id] => 
+    [name] => Kiko
+    [type] => Dog
+    [gender] => Male
+    [breed] => 3
+    [age] => 16
+    [weight] => 
+    [description] => Cheerful and playful dog who loves running, playing with toys, and meeting people.
+    [personality] => Cheerful and sociable
+    [health_status] => Vaccinated, dewormed, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => paraheavenshleter@gmail.com
+    [shelter_phone] => 09951279006
+    [shelter_address] => Pulo 4, Isla, Barangay Adlas, Dasmariñas, Cavite
+    [status] => Available
+)
+
+[2026-09-06 02:23:30] Pet ID: , Pet Name: Kiko, Type: Dog, Breed: 3, Age: 16, Status: 'Available'
+[2026-09-06 02:23:30] Multiple image upload detected: 1 file(s)
+[2026-09-06 02:23:30] Processing image 0: Profile 11.jpg
+[2026-09-06 02:23:30] Image 0 saved successfully: uploads/pets/pet_1788654210_6a9cb282a98a4.jpg
+[2026-09-06 02:23:30] Creating new pet
+[2026-09-06 02:23:30] New pet created successfully. ID: 1
+[2026-09-06 02:25:24] === New Pet Save Request ===
+[2026-09-06 02:25:24] Method: POST
+[2026-09-06 02:25:24] POST Data: Array
+(
+    [pet_id] => 
+    [name] => Suki
+    [type] => Cat
+    [gender] => Male
+    [breed] => Puspin
+    [age] => 2
+    [weight] => 3.6 kg
+    [description] => Loving and playful cat who enjoys being around people and exploring new places.
+    [personality] => Loving and curious
+    [health_status] => Vaccinated, dewormed, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => paraheavenshleter@gmail.com
+    [shelter_phone] => 09951279006
+    [shelter_address] => Pulo 4, Isla, Barangay Adlas, Dasmariñas, Cavite
+    [status] => Available
+)
+
+[2026-09-06 02:25:24] Pet ID: , Pet Name: Suki, Type: Cat, Breed: Puspin, Age: 2, Status: 'Available'
+[2026-09-06 02:25:24] Multiple image upload detected: 1 file(s)
+[2026-09-06 02:25:24] Processing image 0: cat 3.jpeg
+[2026-09-06 02:25:24] Image 0 saved successfully: uploads/pets/pet_1788654324_6a9cb2f4182ac.jpeg
+[2026-09-06 02:25:24] Creating new pet
+[2026-09-06 02:25:24] New pet created successfully. ID: 2
+[2026-09-06 02:25:51] === New Pet Save Request ===
+[2026-09-06 02:25:51] Method: POST
+[2026-09-06 02:25:51] POST Data: Array
+(
+    [pet_id] => 1
+    [name] => Kiko
+    [type] => Dog
+    [gender] => Male
+    [breed] => Aspin
+    [age] => 3
+    [weight] => 
+    [description] => Cheerful and playful dog who loves running, playing with toys, and meeting people.
+    [personality] => Cheerful and sociable
+    [health_status] => Vaccinated, dewormed, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => paraheavenshleter@gmail.com
+    [shelter_phone] => 09951279006
+    [shelter_address] => Pulo 4, Isla, Barangay Adlas, Dasmariñas, Cavite
+    [status] => Available
+)
+
+[2026-09-06 02:25:51] Pet ID: 1, Pet Name: Kiko, Type: Dog, Breed: Aspin, Age: 3, Status: 'Available'
+[2026-09-06 02:25:51] Multiple image upload detected: 1 file(s)
+[2026-09-06 02:25:51] Updating existing pet ID: 1
+[2026-09-06 02:25:51] Status value: 'Available' (lowercase: 'available')
+[2026-09-06 02:25:51] Pet updated successfully (no image changes)
+[2026-09-06 02:28:21] === New Pet Save Request ===
+[2026-09-06 02:28:21] Method: POST
+[2026-09-06 02:28:21] POST Data: Array
+(
+    [pet_id] => 
+    [name] => Simba
+    [type] => Cat
+    [gender] => Male
+    [breed] => Puspin
+    [age] => 2
+    [weight] => 5 kg
+    [description] => Calm and affectionate cat who enjoys sleeping in cozy places and receiving attention
+    [personality] => Calm and loving
+    [health_status] => Vaccinated, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => paraheavenshleter@gmail.com
+    [shelter_phone] => 09951279006
+    [shelter_address] => Pulo 4, Isla, Barangay Adlas, Dasmariñas, Cavite
+    [status] => Available
+)
+
+[2026-09-06 02:28:21] Pet ID: , Pet Name: Simba, Type: Cat, Breed: Puspin, Age: 2, Status: 'Available'
+[2026-09-06 02:28:21] Multiple image upload detected: 1 file(s)
+[2026-09-06 02:28:21] Processing image 0: cat.png
+[2026-09-06 02:28:21] Image 0 saved successfully: uploads/pets/pet_1788654501_6a9cb3a584570.png
+[2026-09-06 02:28:21] Creating new pet
+[2026-09-06 02:28:21] New pet created successfully. ID: 3
+[2026-09-06 02:38:06] === New Pet Save Request ===
+[2026-09-06 02:38:06] Method: POST
+[2026-09-06 02:38:06] POST Data: Array
+(
+    [pet_id] => 
+    [name] => Brown
+    [type] => Dog
+    [gender] => Male
+    [breed] => Aspin
+    [age] => 3
+    [weight] => 25 kg
+    [description] => Gentle and mature dog who enjoys peaceful surroundings and human companionship.
+    [personality] => Gentle and patient
+    [health_status] => Vaccinated, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => paraheavenshleter@gmail.com
+    [shelter_phone] => 09951279006
+    [shelter_address] => Pulo 4, Isla, Barangay Adlas, Dasmariñas, Cavite
+    [status] => Available
+)
+
+[2026-09-06 02:38:06] Pet ID: , Pet Name: Brown, Type: Dog, Breed: Aspin, Age: 3, Status: 'Available'
+[2026-09-06 02:38:06] Multiple image upload detected: 2 file(s)
+[2026-09-06 02:38:06] Processing image 0: Profile 9.jpg
+[2026-09-06 02:38:06] Image 0 saved successfully: uploads/pets/pet_1788655086_6a9cb5ee5ebe9.jpg
+[2026-09-06 02:38:06] Processing image 1: Profile 10.jpg
+[2026-09-06 02:38:06] Image 1 saved successfully: uploads/pets/pet_1788655086_6a9cb5ee61030.jpg
+[2026-09-06 02:38:06] Creating new pet
+[2026-09-06 02:38:06] New pet created successfully. ID: 4
+[2026-09-06 02:44:29] === New Pet Save Request ===
+[2026-09-06 02:44:29] Method: POST
+[2026-09-06 02:44:29] POST Data: Array
+(
+    [pet_id] => 
+    [name] => Bantay
+    [type] => Dog
+    [gender] => Male
+    [breed] => Aspin
+    [age] => 3
+    [weight] => 22 kg
+    [description] => Loyal and well-mannered dog who enjoys staying close to people and going for walks.
+    [personality] => Loyal and protective
+    [health_status] => Vaccinated, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => paraheavenshleter@gmail.com
+    [shelter_phone] => 09951279006
+    [shelter_address] => Pulo 4, Isla, Barangay Adlas, Dasmariñas, Cavite
+    [status] => Available
+)
+
+[2026-09-06 02:44:29] Pet ID: , Pet Name: Bantay, Type: Dog, Breed: Aspin, Age: 3, Status: 'Available'
+[2026-09-06 02:44:29] Multiple image upload detected: 1 file(s)
+[2026-09-06 02:44:29] Processing image 0: Profile 2.jpg
+[2026-09-06 02:44:29] Image 0 saved successfully: uploads/pets/pet_1788655469_6a9cb76dd66e5.jpg
+[2026-09-06 02:44:29] Creating new pet
+[2026-09-06 02:44:29] New pet created successfully. ID: 5
+[2026-09-06 02:46:36] === New Pet Save Request ===
+[2026-09-06 02:46:36] Method: POST
+[2026-09-06 02:46:36] POST Data: Array
+(
+    [pet_id] => 
+    [name] => Snowball
+    [type] => Cat
+    [gender] => Male
+    [breed] => Puspin
+    [age] => 2
+    [weight] => 5 kg
+    [description] => Sweet and gentle cat who enjoys quiet spaces and being around caring people.
+    [personality] => Gentle and affectionate
+    [health_status] => Vaccinated, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => paraheavenshleter@gmail.com
+    [shelter_phone] => 09951279006
+    [shelter_address] => Pulo 4, Isla, Barangay Adlas, Dasmariñas, Cavite
+    [status] => Available
+)
+
+[2026-09-06 02:46:36] Pet ID: , Pet Name: Snowball, Type: Cat, Breed: Puspin, Age: 2, Status: 'Available'
+[2026-09-06 02:46:36] Multiple image upload detected: 1 file(s)
+[2026-09-06 02:46:36] Processing image 0: cat 2.jpeg
+[2026-09-06 02:46:36] Image 0 saved successfully: uploads/pets/pet_1788655596_6a9cb7eca4c76.jpeg
+[2026-09-06 02:46:36] Creating new pet
+[2026-09-06 02:46:36] New pet created successfully. ID: 6
+[2026-09-06 02:49:37] === New Pet Save Request ===
+[2026-09-06 02:49:37] Method: POST
+[2026-09-06 02:49:37] POST Data: Array
+(
+    [pet_id] => 
+    [name] => Bella
+    [type] => Dog
+    [gender] => Female
+    [breed] => Aspin
+    [age] => 3
+    [weight] => 25 kg
+    [description] => Friendly and active dog who enjoys playing outside and spending time with people.
+    [personality] => Energetic and friendly
+    [health_status] => Vaccinated, dewormed, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => paraheavenshleter@gmail.com
+    [shelter_phone] => 09951279006
+    [shelter_address] => Pulo 4, Isla, Barangay Adlas, Dasmariñas, Cavite
+    [status] => Available
+)
+
+[2026-09-06 02:49:37] Pet ID: , Pet Name: Bella, Type: Dog, Breed: Aspin, Age: 3, Status: 'Available'
+[2026-09-06 02:49:37] Multiple image upload detected: 1 file(s)
+[2026-09-06 02:49:37] Processing image 0: Profile 3.jpg
+[2026-09-06 02:49:37] Image 0 saved successfully: uploads/pets/pet_1788655777_6a9cb8a126619.jpg
+[2026-09-06 02:49:37] Creating new pet
+[2026-09-06 02:49:37] New pet created successfully. ID: 7
+[2026-09-06 04:42:57] === New Pet Save Request ===
+[2026-09-06 04:42:57] Method: POST
+[2026-09-06 04:42:57] POST Data: Array
+(
+    [pet_id] => 
+    [name] => Max
+    [type] => Dog
+    [gender] => Male
+    [breed] => Aspin
+    [age] => 2
+    [weight] => 22 kg
+    [description] => Friendly and playful dog who enjoys outdoor activities and spending time with people.
+    [personality] => Friendly and energetic
+    [health_status] => Vaccinated, dewormed, health checked
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => paraheavenshleter@gmail.com
+    [shelter_phone] => 09951279006
+    [shelter_address] => Pulo 4, Isla, Barangay Adlas, Dasmariñas, Cavite
+    [status] => Available
+)
+
+[2026-09-06 04:42:57] Pet ID: , Pet Name: Max, Type: Dog, Breed: Aspin, Age: 2, Status: 'Available'
+[2026-09-06 04:42:57] Multiple image upload detected: 1 file(s)
+[2026-09-06 04:42:57] Processing image 0: Profile 5.jpg
+[2026-09-06 04:42:57] Image 0 saved successfully: uploads/pets/pet_1788662577_6a9cd33163888.jpg
+[2026-09-06 04:42:57] Creating new pet
+[2026-09-06 04:42:57] New pet created successfully. ID: 8
+[2026-10-20 12:02:38] === New Pet Save Request ===
+[2026-10-20 12:02:38] Method: POST
+[2026-10-20 12:02:38] POST Data: Array
+(
+    [pet_id] => 
+    [name] => Bantay
+    [type] => Dog
+    [gender] => Male
+    [breed] => Aspin
+    [age] => 2
+    [weight] => 14 kg
+    [description] => A friendly brown dog rescued from the streets of Tanza, Cavite.
+    [personality] => Friendly, playful, and loyal
+    [health_status] => Healthy
+    [shelter_name] => PARA Haven Shelter
+    [shelter_email] => parahaven@gmail.com
+    [shelter_phone] => 09951279006
+    [shelter_address] => Pulo 4, Isla, Barangay Adlas, Dasmariñas, Cavite
+    [status] => Available
+)
+
+[2026-10-20 12:02:38] Pet ID: , Pet Name: Bantay, Type: Dog, Breed: Aspin, Age: 2, Status: 'Available'
+[2026-10-20 12:02:38] Multiple image upload detected: 1 file(s)
+[2026-10-20 12:02:38] Processing image 0: Profile 12.jpg
+[2026-10-20 12:02:38] Image 0 saved successfully: uploads/pets/pet_1792490558_6ad73c3eb94a4.jpg
+[2026-10-20 12:02:38] Creating new pet
+[2026-10-20 12:02:38] New pet created successfully. ID: 9
