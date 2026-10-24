@@ -1,0 +1,169 @@
+/* Responsive Design */
+
+/* Tablet Screens */
+@media (max-width: 768px) {
+    .navbar-container {
+        gap: 15px;
+    }
+
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background-color: #f8f9fa;
+        padding: 20px;
+        gap: 0;
+        transform: none;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links a {
+        color: #1a3a52;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-links a:hover {
+        color: #ff8a5b;
+    }
+
+    .hamburger {
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
+        gap: 5px;
+        order: 3;
+    }
+
+    .hamburger span {
+        width: 25px;
+        height: 3px;
+        background-color: #1a3a52;
+        border-radius: 2px;
+        transition: all 0.3s ease;
+    }
+
+    .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(8px, 8px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(8px, -8px);
+    }
+
+    .navbar-container {
+        position: relative;
+    }
+
+    .navbar-auth {
+        margin-left: auto;
+        order: 2;
+    }
+
+    .user-dropdown {
+        right: auto;
+        left: 0;
+    }
+}
+
+/* Universal box-sizing for easier responsive layouts */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
+img, video {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Responsive containers */
+.container, .navbar-container, .content, .main, .footer {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+/* Responsive text */
+h1 {
+    font-size: 2.5rem;
+}
+h2 {
+    font-size: 2rem;
+}
+h3 {
+    font-size: 1.5rem;
+}
+p, a, li, label, input, button {
+    font-size: 1rem;
+}
+
+@media (min-width: 1200px) {
+    html {
+        font-size: 18px;
+    }
+    .container, .navbar-container, .content, .main, .footer {
+        max-width: 1400px;
+    }
+    h1 { font-size: 3rem; }
+    h2 { font-size: 2.5rem; }
+    h3 { font-size: 2rem; }
+}
+/* Mobile Screens */
+@media (max-width: 480px) {
+    .navbar-container {
+        padding: 10px 15px;
+        gap: 10px;
+    }
+
+    .navbar .logo a {
+        font-size: 20px;
+    }
+
+    .user-icon-btn {
+        font-size: 28px;
+    }
+
+    .hamburger span {
+        width: 22px;
+        height: 2.5px;
+    }
+
+    .nav-links {
+        padding: 15px;
+    }
+
+    .nav-links a {
+        font-size: 14px;
+    }
+
+    .user-dropdown {
+        min-width: 150px;
+    }
+
+    .user-dropdown a {
+        padding: 10px 15px;
+        font-size: 13px;
+    }
+}
