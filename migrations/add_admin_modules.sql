@@ -1,7 +1,7 @@
 -- Migration: Supply Inventory, Donations, Medical Records modules
 -- Run this on the petadopthub database
 
-USE petadopthub;
+USE u699742298_petadopthub;
 
 -- Supply Inventory
 CREATE TABLE IF NOT EXISTS supplies (

@@ -21,16 +21,19 @@ function isAdmin() {
     return isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
 }
 
-function ensureAdminUserExists() {
+function getExistingAdminUserId() {
     global $conn;
 
-    $email = 'admin@petadopthub.com';
-    $stmt = $conn->prepare("SELECT id FROM users WHERE email = ? LIMIT 1");
+    $stmt = $conn->prepare("SELECT id FROM users WHERE role = 'admin' AND account_status = 'Approved' ORDER BY id LIMIT 1");
     if (!$stmt) {
+        error_log('Admin lookup prepare failed: ' . $conn->error);
         return 0;
     }
-    $stmt->bind_param('s', $email);
-    $stmt->execute();
+    if (!$stmt->execute()) {
+        error_log('Admin lookup failed: ' . $stmt->error);
+        $stmt->close();
+        return 0;
+    }
     $result = $stmt->get_result();
     $existing = $result->fetch_assoc();
     $stmt->close();
@@ -39,20 +42,7 @@ function ensureAdminUserExists() {
         return (int)$existing['id'];
     }
 
-    $admin_name = 'Admin';
-    $password_hash = password_hash('admin12345', PASSWORD_DEFAULT);
-    $create = $conn->prepare("INSERT INTO users (fullname, email, password, role, account_status) VALUES (?, ?, ?, 'admin', 'Approved')");
-    if (!$create) {
-        return 0;
-    }
-    $create->bind_param('sss', $admin_name, $email, $password_hash);
-    if (!$create->execute()) {
-        $create->close();
-        return 0;
-    }
-    $new_id = (int)$conn->insert_id;
-    $create->close();
-    return $new_id;
+    return 0;
 }
 
 // Guard: redirect to login page for non-authenticated users.

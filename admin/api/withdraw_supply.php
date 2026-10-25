@@ -62,7 +62,7 @@ try {
 
     $tx_admin_id = (int)($_SESSION['user_id'] ?? 0);
     if ($tx_admin_id <= 0) {
-        $tx_admin_id = ensureAdminUserExists();
+        $tx_admin_id = getExistingAdminUserId();
     }
 
     if ($tx_admin_id > 0) {

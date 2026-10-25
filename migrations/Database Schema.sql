@@ -1,6 +1,6 @@
 -- Database creation
-CREATE DATABASE IF NOT EXISTS petadopthub;
-USE petadopthub;
+CREATE DATABASE IF NOT EXISTS u699742298_petadopthub;
+USE u699742298_petadopthub;
 
 -- Users table
 CREATE TABLE IF NOT EXISTS users (
