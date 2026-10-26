@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_id'], $_POST['de
 }
 
 $pending_users = [];
-$stmt = $conn->prepare("SELECT id, fullname, email, username, phone, created_at, account_status FROM users WHERE role = 'user' ORDER BY created_at DESC");
+$stmt = $conn->prepare("SELECT id, fullname, email, username, phone, created_at, account_status FROM users WHERE role = 'user' AND account_status IN ('Pending', 'Approved') ORDER BY created_at DESC");
 $stmt->execute();
 $result = $stmt->get_result();
 if ($result) {

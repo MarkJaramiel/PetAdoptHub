@@ -16,8 +16,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $fullname = trim($_POST['fullname']);
     $email = trim($_POST['email']);
     $username = trim($_POST['username']);
-    $password = trim($_POST['password']);
-    $confirm_password = trim($_POST['confirm_password']);
+    $password = (string)($_POST['password'] ?? '');
+    $confirm_password = (string)($_POST['confirm_password'] ?? '');
     $phone = trim($_POST['phone'] ?? '');
     $location = trim($_POST['location'] ?? '');
     $bio = trim($_POST['bio'] ?? '');
@@ -31,9 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } elseif ($password !== $confirm_password) {
         // Confirm password matches.
         $error = "Passwords do not match.";
-    } elseif (strlen($password) < 6) {
-        // Enforce minimum password length.
-        $error = "Password must be at least 6 characters long.";
+    } elseif (strlen($password) < 12) {
+        $error = "Password must be at least 12 characters long.";
     } else {
         // Check if email or username already exists to avoid duplicates in users table.
         $stmt = $conn->prepare("SELECT id FROM users WHERE email = ? OR username = ?");
@@ -509,7 +508,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="input-wrapper">
                             <i class="fas fa-lock left-icon"></i>
                             <div class="password-input-wrapper" style="flex: 1;">
-                                <input type="password" id="password" name="password" placeholder="Min. 6 characters" required>
+                                <input type="password" id="password" name="password" placeholder="At least 12 characters" minlength="12" required>
                                 <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('password', 'toggle-pwd-1')">
                                     <i id="toggle-pwd-1" class="fas fa-eye"></i>
                                 </button>

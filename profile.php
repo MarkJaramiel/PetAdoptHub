@@ -192,8 +192,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_profile'])) {
 
 <!-- Profile Picture Upload Script -->
 <script>
-// SITE_URL provided from server for consistent absolute path building
-const SITE_URL = '<?php echo rtrim(SITE_URL, "/"); ?>';
 // Auto-hide success message after 3 seconds
 document.addEventListener('DOMContentLoaded', function() {
     const messageDiv = document.querySelector('[style*="d4edda"], [style*="f8d7da"]');
@@ -402,8 +400,9 @@ function uploadProfilePicture(file) {
             showMessage('Profile picture updated successfully!', 'success');
             // Reload the image from the new path with a cache buster
             setTimeout(() => {
-                // Build absolute URL using SITE_URL to support subfolder deployments
-                profileImage.src = SITE_URL + '/' + data.path.replace(/^\/+/, '') + '?t=' + new Date().getTime();
+                const imageUrl = new URL(data.path.replace(/^\/+/, ''), window.location.href);
+                imageUrl.searchParams.set('t', Date.now());
+                profileImage.src = imageUrl.href;
             }, 500);
         } else {
             console.error('Upload failed:', data.message);

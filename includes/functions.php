@@ -1,13 +1,21 @@
 <?php
 if (!defined('SITE_URL')) {
-    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || ($_SERVER['SERVER_PORT'] ?? null) == 443) ? 'https://' : 'http://';
-    $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
-    $base = rtrim(dirname($_SERVER['SCRIPT_NAME'] ?? ''), '/\\');
-    $base = preg_replace('#/admin$#', '', $base);
-    if ($base === '/' || $base === '\\' || $base === '') {
-        $base = '';
+    $configuredUrl = getenv('PETADOPTHUB_SITE_URL');
+    $configuredParts = $configuredUrl ? parse_url($configuredUrl) : false;
+    if (is_array($configuredParts) && in_array(strtolower($configuredParts['scheme'] ?? ''), ['http', 'https'], true) && !empty($configuredParts['host']) && empty($configuredParts['user']) && empty($configuredParts['pass'])) {
+        $siteUrl = rtrim($configuredUrl, '/');
+    } else {
+        $https = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || (int)($_SERVER['SERVER_PORT'] ?? 0) === 443;
+        $protocol = $https ? 'https://' : 'http://';
+        $host = $_SERVER['SERVER_NAME'] ?? 'localhost';
+        $base = rtrim(dirname($_SERVER['SCRIPT_NAME'] ?? ''), '/\\');
+        $base = preg_replace('#/admin$#', '', $base);
+        if ($base === '/' || $base === '\\' || $base === '') {
+            $base = '';
+        }
+        $siteUrl = $protocol . $host . $base;
     }
-    define('SITE_URL', $protocol . $host . $base);
+    define('SITE_URL', $siteUrl);
 }
 
 // Authentication helpers
@@ -142,18 +150,18 @@ function getUserProfilePictureUrl($profilePicture, $fullname = 'User') {
     }
 
     $path = str_replace('\\', '/', $path);
-    $baseUrl = defined('SITE_URL') ? rtrim(SITE_URL, '/') : ((($_SERVER['HTTPS'] ?? '') === 'on' || ($_SERVER['SERVER_PORT'] ?? '') == '443') ? 'https://' : 'http://') . ($_SERVER['HTTP_HOST'] ?? 'localhost');
-
-    $docRoot = str_replace('\\', '/', rtrim($_SERVER['DOCUMENT_ROOT'] ?? '', '/\\'));
     $relativePath = ltrim($path, '/');
-    $absolutePath = $docRoot !== '' ? $docRoot . '/' . $relativePath : $relativePath;
-
-    if ($docRoot !== '' && file_exists($absolutePath) && is_file($absolutePath)) {
-        return $baseUrl . '/' . ltrim(str_replace($docRoot, '', $absolutePath), '/\\');
-    }
 
     if (preg_match('#^(uploads|images|profile_pictures|pets)(/|$)#i', $relativePath)) {
-        return $baseUrl . '/' . $relativePath;
+        $absolutePath = dirname(__DIR__) . DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, $relativePath);
+        if (is_file($absolutePath)) {
+            $sitePath = parse_url(SITE_URL, PHP_URL_PATH) ?: '';
+            $basePath = '/' . trim($sitePath, '/');
+            if ($basePath === '/') {
+                $basePath = '';
+            }
+            return $basePath . '/' . $relativePath;
+        }
     }
 
     return buildInitialsAvatarDataUri($fullname);
@@ -386,12 +394,17 @@ function normalizePetImagePath($path, $default = DEFAULT_PET_IMAGE_URL) {
         }
     }
 
-    // construct a full URL using the host/scheme from current request so that cases
-    // where the page is reached via IP, host alias or port remain consistent.
-    $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
-    $host   = $_SERVER['HTTP_HOST'] ?? 'localhost';
+    $sitePath = parse_url(SITE_URL, PHP_URL_PATH) ?: '';
+    $basePath = '/' . trim($sitePath, '/');
+    if ($basePath === '/') {
+        $basePath = '';
+    }
+    $relativePath = '/' . ltrim($relative, '/');
+    if ($basePath !== '' && ($relativePath === $basePath || strpos($relativePath, $basePath . '/') === 0)) {
+        return $relativePath;
+    }
 
-    return $scheme . $host . $relative;
+    return $basePath . $relativePath;
 }
 
 // Extract the first image from a pet record (handles JSON array or single value).

@@ -1,7 +1,7 @@
 -- Migration: Supply Inventory, Donations, Medical Records modules
 -- Run this on the petadopthub database
 
-USE u699742298_petadopthub;
+USE petadopthub;
 
 -- Supply Inventory
 CREATE TABLE IF NOT EXISTS supplies (
@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS supply_transactions (
     admin_name VARCHAR(100) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (supply_id) REFERENCES supplies(id) ON DELETE CASCADE,
+    FOREIGN KEY (admin_id) REFERENCES users(id),
     INDEX idx_supply_id (supply_id),
     INDEX idx_created_at (created_at)
 );

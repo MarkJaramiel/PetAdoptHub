@@ -4,71 +4,79 @@
 $page_title = "Sign In - PetAdoptHub";
 include_once 'config/config.php';
 include_once 'config/database.php';
+include_once 'includes/header.php';
 
 // Track an error message for display in the form
 $error = '';
 $success = isset($_GET['password_reset']) ? 'Your password has been changed. You can now sign in.' : '';
 
 // Single-step login: handle form submission (email + password together).
+// Performs minimal validation then authenticates either admin or user.
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = isset($_POST['email']) ? trim($_POST['email']) : '';
-    $password = isset($_POST['password']) ? trim($_POST['password']) : '';
+    $password = isset($_POST['password']) ? (string)$_POST['password'] : '';
 
     if (empty($email)) {
         $error = "Please enter your email.";
     } elseif (empty($password)) {
         $error = "Please enter your password.";
     } else {
-        $stmt = $conn->prepare("SELECT id, fullname, email, password, role, account_status FROM users WHERE email = ?");
+        $stmt = $conn->prepare("SELECT user_id, display_name, email, password_hash, account_status FROM admin_accounts WHERE email = ? LIMIT 1");
         if (!$stmt) {
-            error_log("Login query prepare failed: " . $conn->error);
-            $error = "Unable to sign in right now. Please try again later.";
+            error_log('Login query preparation failed: ' . $conn->error);
+            $error = "Sign in is temporarily unavailable. Please try again later.";
         } else {
             $stmt->bind_param("s", $email);
-            if (!$stmt->execute()) {
-                error_log("Login query failed: " . $stmt->error);
-                $error = "Unable to sign in right now. Please try again later.";
+            $stmt->execute();
+            $admin = $stmt->get_result()->fetch_assoc();
+            $stmt->close();
+
+            if ($admin) {
+                if (password_verify($password, $admin['password_hash']) && $admin['account_status'] === 'Approved') {
+                    session_regenerate_id(true);
+                    $_SESSION['user_id'] = (int)$admin['user_id'];
+                    $_SESSION['admin_account_id'] = (int)$admin['user_id'];
+                    $_SESSION['user_email'] = $admin['email'];
+                    $_SESSION['user_name'] = $admin['display_name'];
+                    $_SESSION['user_role'] = 'admin';
+                    header('Location: admin/dashboard.php');
+                    exit();
+                }
+                $error = "Invalid email or password.";
             } else {
-                $result = $stmt->get_result();
-                if ($result && $result->num_rows === 1) {
-                    $user = $result->fetch_assoc();
-
-                    if (password_verify($password, $user['password'])) {
-                        if ($user['role'] === 'admin' && password_verify('admin12345', $user['password'])) {
-                            error_log('Blocked administrator login using the retired default password for user id ' . $user['id']);
-                            $error = "This administrator account still uses a retired default password. Please contact the site owner to reset it.";
-                        } elseif (($user['account_status'] ?? 'Approved') === 'Pending') {
-                            $error = "Your account is pending admin approval. You will be able to apply for adoption after approval.";
-                        } elseif (($user['account_status'] ?? 'Approved') === 'Rejected') {
-                            $error = "Your account was rejected. Please contact the shelter for more information.";
-                        } else {
-                            session_regenerate_id(true);
-                            $_SESSION['user_id'] = $user['id'];
-                            $_SESSION['user_email'] = $user['email'];
-                            $_SESSION['user_name'] = $user['fullname'];
-                            $_SESSION['user_role'] = $user['role'];
-
-                            if ($user['role'] === 'admin') {
-                                header('Location: admin/dashboard.php');
-                            } else {
-                                header('Location: index.php');
-                            }
-                            exit();
-                        }
-                    } else {
-                        $error = "Invalid email or password.";
-                    }
+                $stmt = $conn->prepare("SELECT id, fullname, email, password, account_status FROM users WHERE email = ? AND role = 'user' LIMIT 1");
+                if (!$stmt) {
+                    error_log('User login query preparation failed: ' . $conn->error);
+                    $error = "Sign in is temporarily unavailable. Please try again later.";
                 } else {
-                    $error = "Invalid email or password.";
+                    $stmt->bind_param("s", $email);
+                    $stmt->execute();
+                    $user = $stmt->get_result()->fetch_assoc();
+                    $stmt->close();
+
+                    if (!$user || !password_verify($password, $user['password'])) {
+                        $error = "Invalid email or password.";
+                    } elseif (($user['account_status'] ?? 'Approved') === 'Pending') {
+                        $error = "Your account is pending admin approval. You will be able to apply for adoption after approval.";
+                    } elseif (($user['account_status'] ?? 'Approved') === 'Rejected') {
+                        $error = "Your account was rejected. Please contact the shelter for more information.";
+                    } else {
+                        session_regenerate_id(true);
+                        unset($_SESSION['admin_account_id']);
+                        $_SESSION['user_id'] = (int)$user['id'];
+                        $_SESSION['user_email'] = $user['email'];
+                        $_SESSION['user_name'] = $user['fullname'];
+                        $_SESSION['user_role'] = 'user';
+                        header('Location: index.php');
+                        exit();
+                    }
                 }
             }
-            $stmt->close();
         }
     }
 }
 ?>
 
-<?php include_once 'includes/header.php'; ?>
 <style>
     .login-container {
         min-height: calc(100vh - 200px);

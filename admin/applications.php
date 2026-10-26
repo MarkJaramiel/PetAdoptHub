@@ -95,13 +95,6 @@ if (isset($_GET['action']) && $_GET['action'] == 'update' && isset($_GET['app_id
                             if ($archive_stmt->execute()) {
                                 $archive_stmt->close();
 
-                                $delete_apps = $conn->prepare("DELETE FROM applications WHERE pet_id = ?");
-                                if ($delete_apps) {
-                                    $delete_apps->bind_param("i", $pet_id);
-                                    $delete_apps->execute();
-                                    $delete_apps->close();
-                                }
-
                                 $delete_favs = $conn->prepare("DELETE FROM favorites WHERE pet_id = ?");
                                 if ($delete_favs) {
                                     $delete_favs->bind_param("i", $pet_id);
@@ -109,10 +102,10 @@ if (isset($_GET['action']) && $_GET['action'] == 'update' && isset($_GET['app_id
                                     $delete_favs->close();
                                 }
 
-                                $delete_stmt = $conn->prepare("DELETE FROM pets WHERE id = ?");
-                                $delete_stmt->bind_param("i", $pet_id);
-                                $delete_stmt->execute();
-                                $delete_stmt->close();
+                                $adopted_stmt = $conn->prepare("UPDATE pets SET status = 'Adopted' WHERE id = ?");
+                                $adopted_stmt->bind_param("i", $pet_id);
+                                $adopted_stmt->execute();
+                                $adopted_stmt->close();
                             } else {
                                 $archive_stmt->close();
                                 error_log("[applications.php] Failed to archive pet_id={$pet_id} for Approved application");
@@ -140,16 +133,20 @@ $where_clause = '';
 
 if ($search_query) {
     // Search by pet name or applicant name with wildcard matching
-    $where_clause = " WHERE p.name LIKE ? OR u.fullname LIKE ?";
+    $where_clause = " WHERE a.status <> 'Approved' AND (p.name LIKE ? OR u.fullname LIKE ?)";
+} else {
+    $where_clause = " WHERE a.status <> 'Approved'";
 }
 
 $sql = "
     SELECT a.id, a.status, a.applied_at, a.pet_experience, a.home_type, a.other_pets, a.work_schedule, a.reason_for_adoption,
            a.valid_id, a.willing_vet, a.fb_profile, a.interview_type, a.interview_date, a.interview_time, a.meeting_link,
-           u.fullname, u.email, u.phone, p.name, p.description
+            u.fullname, u.email, u.phone, p.name, p.description,
+            rr.request_status, rr.requested_date, rr.requested_time, rr.reason AS reschedule_reason
     FROM applications a 
     JOIN users u ON a.user_id = u.id 
     JOIN pets p ON a.pet_id = p.id 
+        LEFT JOIN interview_reschedule_requests rr ON rr.application_id = a.id
     $where_clause
     ORDER BY a.applied_at DESC
 ";
@@ -336,6 +333,10 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             font-size: 14px;
             text-transform: capitalize;
         }
+        .sortable-header { cursor: pointer; user-select: none; white-space: nowrap; position: relative; padding-right: 42px; }
+        .sortable-header:hover, .sortable-header.active { color: #ff8a5b; }
+        .sortable-header .sort-indicator { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); display: inline-flex; flex-direction: column; gap: 2px; color: #6b7280; font-size: 11px; line-height: 1; }
+        .sortable-header .sort-indicator i.active { color: #ff8a5b; }
         td {
             padding: 20px;
             border-bottom: 1px solid #f0f0f0;
@@ -382,6 +383,48 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             text-transform: capitalize;
             width: fit-content;
         }
+        .reschedule-review-modal { display:none; position:fixed; inset:0; z-index:1200; align-items:center; justify-content:center; padding:20px; background:rgba(16,27,38,.58); }
+        .reschedule-review-modal.active { display:flex; }
+        .reschedule-review-dialog { width:min(440px,100%); max-height:90vh; overflow-y:auto; border:1px solid #dce3e8; border-radius:8px; background:#fff; box-shadow:0 20px 60px rgba(16,27,38,.28); }
+        .reschedule-review-dialog-header { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:18px 22px; border-bottom:1px solid #e5eaee; }
+        .reschedule-review-title-wrap { display:flex; align-items:center; gap:12px; min-width:0; }
+        .reschedule-review-title-icon { display:grid; width:38px; height:38px; flex:0 0 38px; place-items:center; border-radius:50%; background:#eaf1f6; color:#1a3a52; }
+        .reschedule-review-title { margin:0; color:#1a3a52; font-size:19px; font-weight:700; }
+        .reschedule-review-close { width:34px; height:34px; border:0; border-radius:6px; background:transparent; color:#52616e; font-size:25px; cursor:pointer; }
+        .reschedule-review-close:hover { background:#f0f3f5; }
+        .reschedule-review-body { display:grid; gap:16px; padding:20px 22px; }
+        .reschedule-review-people { display:grid; grid-template-columns:1fr 1fr; gap:12px; padding:13px; border-radius:6px; background:#f7f9fa; }
+        .reschedule-review-person-label { display:block; margin-bottom:6px; color:#71808c; font-size:10px; font-weight:700; text-transform:uppercase; }
+        .reschedule-review-person-value { color:#243746; font-size:13px; font-weight:700; overflow-wrap:anywhere; }
+        .reschedule-review-schedules { display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:8px; }
+        .reschedule-review-schedule { min-height:82px; padding:12px; border:1px solid #e2e8ec; border-radius:6px; background:#fafbfc; }
+        .reschedule-review-schedule.requested { border-color:#cbdce9; background:#f0f6fa; }
+        .reschedule-review-schedule-label { display:flex; align-items:center; gap:7px; margin-bottom:8px; color:#405564; font-size:11px; font-weight:700; }
+        .reschedule-review-schedule.requested .reschedule-review-schedule-label { color:#245779; }
+        .reschedule-review-schedule-value { color:#263746; font-size:12px; font-weight:600; line-height:1.5; }
+        .reschedule-review-schedule-value { color:#263746; font-size:12px; font-weight:600; line-height:1.5; white-space:pre-line; }
+        .reschedule-review-arrow { color:#71808c; font-size:16px; }
+        .reschedule-review-reason { padding:13px; border-radius:6px; background:#f7f9fa; }
+        .reschedule-review-reason h3 { margin:0 0 7px; color:#405564; font-size:12px; }
+        .reschedule-review-reason p { margin:0; color:#344553; font-size:13px; line-height:1.5; overflow-wrap:anywhere; white-space:pre-wrap; }
+        .reschedule-review-requested-at { display:flex; align-items:center; justify-content:space-between; gap:10px; color:#71808c; font-size:11px; }
+        .reschedule-review-actions { display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:16px 22px 20px; border-top:1px solid #e5eaee; }
+        .reschedule-review-actions form { margin:0; }
+        .reschedule-review-action { display:flex; width:100%; min-height:42px; align-items:center; justify-content:center; gap:7px; border:1px solid; border-radius:6px; background:#fff; font-size:13px; font-weight:700; cursor:pointer; }
+        .reschedule-review-action.reject { border-color:#bd5660; color:#a83d45; }
+        .reschedule-review-action.reject:hover { background:#fff3f3; }
+        .reschedule-review-action.approve { border-color:#287747; background:#287747; color:#fff; }
+        .reschedule-review-action.approve:hover { background:#205f39; }
+        .reschedule-decision-confirm { display:none; position:fixed; inset:0; z-index:1300; align-items:center; justify-content:center; padding:20px; background:rgba(16,27,38,.66); }
+        .reschedule-decision-confirm.active { display:flex; }
+        .reschedule-decision-confirm-card { width:min(390px,100%); padding:24px; border:1px solid #dce3e8; border-radius:8px; background:#fff; box-shadow:0 20px 60px rgba(16,27,38,.3); }
+        .reschedule-decision-confirm-card h3 { margin:0 0 9px; color:#1a3a52; font-size:18px; }
+        .reschedule-decision-confirm-card p { margin:0; color:#596773; font-size:13px; line-height:1.5; }
+        .reschedule-decision-confirm-actions { display:flex; justify-content:flex-end; gap:9px; margin-top:22px; }
+        .reschedule-decision-confirm-actions button { min-height:38px; padding:9px 14px; border:1px solid #cbd3da; border-radius:5px; background:#fff; color:#344553; font-weight:700; cursor:pointer; }
+        .reschedule-decision-confirm-actions .confirm-action { border-color:#287747; background:#287747; color:#fff; }
+        .reschedule-decision-confirm-actions .confirm-action.reject { border-color:#a83d45; background:#a83d45; }
+        @media(max-width:480px) { .reschedule-review-modal { padding:12px; } .reschedule-review-dialog-header,.reschedule-review-body { padding-left:16px; padding-right:16px; } .reschedule-review-actions { padding-left:16px; padding-right:16px; } .reschedule-review-schedules { grid-template-columns:1fr; } .reschedule-review-arrow { justify-self:center; transform:rotate(90deg); } }
         .status-pending {
             background-color: #ffb399;
             color: white;
@@ -393,6 +436,10 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         .status-rejected {
             background-color: #ffb3c1;
             color: white;
+        }
+        .status-reschedule {
+            background-color: #f6e7bd;
+            color: #765719;
         }
         .no-results {
             text-align: center;
@@ -412,7 +459,9 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             color: #555;
             transition: color 0.3s ease;
             padding: 5px;
+            position: relative;
         }
+        .action-pending-dot { position:absolute; top:0; right:0; width:7px; height:7px; border:1px solid #fff; border-radius:50%; background:#c64747; }
         .action-btn:hover {
             color: #ff8a5b;
         }
@@ -984,6 +1033,7 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             <div class="success-message" id="successMsg">
                 Application updated successfully!
             </div>
+            <div class="success-message" id="rescheduleReviewMsg"></div>
 
             <!-- Search Box -->
             <div class="search-box">
@@ -1004,17 +1054,17 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                     <table>
                         <thead>
                             <tr>
-                                <th>Applicant</th>
-                                <th>Pet</th>
+                                <th class="sortable-header" data-sort="applicant"><span class="sortable-label">Applicant</span><span class="sort-indicator"><i class="fas fa-chevron-up"></i><i class="fas fa-chevron-down"></i></span></th>
+                                <th class="sortable-header" data-sort="pet"><span class="sortable-label">Pet</span><span class="sort-indicator"><i class="fas fa-chevron-up"></i><i class="fas fa-chevron-down"></i></span></th>
                                 <th>Contact</th>
-                                <th>Date</th>
-                                <th>Status</th>
+                                <th class="sortable-header" data-sort="date"><span class="sortable-label">Date</span><span class="sort-indicator"><i class="fas fa-chevron-up"></i><i class="fas fa-chevron-down"></i></span></th>
+                                <th class="sortable-header" data-sort="status"><span class="sortable-label">Status</span><span class="sort-indicator"><i class="fas fa-chevron-up"></i><i class="fas fa-chevron-down"></i></span></th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($applications as $app): ?>
-                                <tr>
+                                <tr data-application-id="<?php echo (int)$app['id']; ?>" data-applicant="<?php echo htmlspecialchars($app['fullname'], ENT_QUOTES, 'UTF-8'); ?>" data-email="<?php echo htmlspecialchars($app['email'], ENT_QUOTES, 'UTF-8'); ?>" data-pet="<?php echo htmlspecialchars($app['name'], ENT_QUOTES, 'UTF-8'); ?>" data-date="<?php echo htmlspecialchars(date('Y-m-d', strtotime($app['applied_at'])), ENT_QUOTES, 'UTF-8'); ?>" data-status="<?php echo htmlspecialchars($app['status'], ENT_QUOTES, 'UTF-8'); ?>" data-interview-date="<?php echo htmlspecialchars($app['interview_date'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" data-interview-time="<?php echo htmlspecialchars($app['interview_time'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" data-request-status="<?php echo htmlspecialchars($app['request_status'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" data-requested-date="<?php echo htmlspecialchars($app['requested_date'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" data-requested-time="<?php echo htmlspecialchars($app['requested_time'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" data-request-reason="<?php echo htmlspecialchars($app['reschedule_reason'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
                                     <td>
                                         <div class="applicant-info">
                                             <span class="applicant-name"><?php echo htmlspecialchars($app['fullname']); ?></span>
@@ -1035,8 +1085,8 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                                     </td>
                                     <td><?php echo date('Y-m-d', strtotime($app['applied_at'])); ?></td>
                                     <td>
-                                        <span class="status-badge status-<?php echo strtolower($app['status']); ?>">
-                                            <?php echo htmlspecialchars($app['status']); ?>
+                                        <span class="status-badge status-<?php echo ($app['request_status'] ?? '') === 'Pending' ? 'reschedule' : strtolower($app['status']); ?>">
+                                            <?php echo ($app['request_status'] ?? '') === 'Pending' ? 'Reschedule Pending' : htmlspecialchars($app['status']); ?>
                                         </span>
                                     </td>
                                     <td>
@@ -1066,8 +1116,9 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                                             <button class="action-btn" title="Edit" onclick="editApplication(<?php echo $app['id']; ?>, '<?php echo htmlspecialchars(addslashes($app['fullname'])); ?>', '<?php echo htmlspecialchars(addslashes($app['name'])); ?>', '<?php echo htmlspecialchars(addslashes($app['status'])); ?>')">
                                                 <i class="fas fa-edit"></i>
                                             </button>
-                                            <button class="action-btn" title="Set Interview" onclick="openInterviewModal(<?php echo $app['id']; ?>, '<?php echo htmlspecialchars(addslashes($app['fullname'])); ?>', '<?php echo htmlspecialchars(addslashes($app['name'])); ?>')">
+                                            <button class="action-btn" title="<?php echo ($app['request_status'] ?? '') === 'Pending' ? 'Review reschedule request' : 'Set interview'; ?>" aria-label="<?php echo ($app['request_status'] ?? '') === 'Pending' ? 'Review reschedule request' : 'Set interview'; ?>" onclick="openInterviewForRow(this.closest('tr'))">
                                                 <i class="fas fa-calendar-alt"></i>
+                                                <?php if (($app['request_status'] ?? '') === 'Pending'): ?><span class="action-pending-dot" aria-label="Pending reschedule request"></span><?php endif; ?>
                                             </button>
                                         </div>
                                     </td>
@@ -1133,7 +1184,75 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         </div>
     </div>
 
-    <!-- Set Interview Modal (single instance, outside table loop) -->
+    <!-- Pending reschedule review modal -->
+    <div class="reschedule-review-modal" id="rescheduleReviewModal" role="dialog" aria-modal="true" aria-labelledby="rescheduleReviewTitle">
+        <div class="reschedule-review-dialog">
+            <header class="reschedule-review-dialog-header">
+                <div class="reschedule-review-title-wrap">
+                    <span class="reschedule-review-title-icon"><i class="fas fa-calendar-alt" aria-hidden="true"></i></span>
+                    <h2 class="reschedule-review-title" id="rescheduleReviewTitle">Reschedule Request</h2>
+                </div>
+                <button type="button" class="reschedule-review-close" onclick="closeRescheduleReviewModal()" aria-label="Close">&times;</button>
+            </header>
+            <div class="reschedule-review-body">
+                <div class="reschedule-review-people">
+                    <div>
+                        <span class="reschedule-review-person-label">Applicant</span>
+                        <div class="reschedule-review-person-value" id="reviewApplicantName"></div>
+                        <div class="reschedule-review-person-value" id="reviewApplicantEmail" style="margin-top:3px;font-size:11px;font-weight:400;"></div>
+                    </div>
+                    <div>
+                        <span class="reschedule-review-person-label">Pet</span>
+                        <div class="reschedule-review-person-value" id="reviewPetName"></div>
+                    </div>
+                </div>
+                <div class="reschedule-review-schedules">
+                    <div class="reschedule-review-schedule">
+                        <div class="reschedule-review-schedule-label"><i class="fas fa-calendar" aria-hidden="true"></i> Current schedule</div>
+                        <div class="reschedule-review-schedule-value" id="reviewCurrentSchedule"></div>
+                    </div>
+                    <i class="fas fa-arrow-right reschedule-review-arrow" aria-hidden="true"></i>
+                    <div class="reschedule-review-schedule requested">
+                        <div class="reschedule-review-schedule-label"><i class="fas fa-calendar-alt" aria-hidden="true"></i> Requested schedule</div>
+                        <div class="reschedule-review-schedule-value" id="reviewRequestedSchedule"></div>
+                    </div>
+                </div>
+                <section class="reschedule-review-reason">
+                    <h3><i class="fas fa-file-alt" aria-hidden="true"></i> Reason for rescheduling</h3>
+                    <p id="reviewRescheduleReason"></p>
+                </section>
+                <div class="reschedule-review-requested-at">
+                    <span><i class="far fa-clock" aria-hidden="true"></i> Request pending admin review</span>
+                    <span class="reschedule-pending-label">Reschedule pending</span>
+                </div>
+            </div>
+            <footer class="reschedule-review-actions">
+                <form method="post" action="api/review_reschedule_request.php" id="reviewRejectForm">
+                    <input type="hidden" name="app_id" id="reviewRejectAppId">
+                    <input type="hidden" name="decision" value="Rejected">
+                    <button type="button" class="reschedule-review-action reject" onclick="openRescheduleDecisionConfirm('Rejected')"><i class="fas fa-times" aria-hidden="true"></i> Reject request</button>
+                </form>
+                <form method="post" action="api/review_reschedule_request.php" id="reviewApproveForm">
+                    <input type="hidden" name="app_id" id="reviewApproveAppId">
+                    <input type="hidden" name="decision" value="Approved">
+                    <button type="button" class="reschedule-review-action approve" onclick="openRescheduleDecisionConfirm('Approved')"><i class="fas fa-check" aria-hidden="true"></i> Approve request</button>
+                </form>
+            </footer>
+        </div>
+    </div>
+
+    <div class="reschedule-decision-confirm" id="rescheduleDecisionConfirm" role="dialog" aria-modal="true" aria-labelledby="rescheduleDecisionConfirmTitle">
+        <div class="reschedule-decision-confirm-card">
+            <h3 id="rescheduleDecisionConfirmTitle">Confirm decision</h3>
+            <p id="rescheduleDecisionConfirmMessage"></p>
+            <div class="reschedule-decision-confirm-actions">
+                <button type="button" onclick="closeRescheduleDecisionConfirm()">Go back</button>
+                <button type="button" class="confirm-action" id="confirmRescheduleDecisionButton" onclick="submitRescheduleDecision()">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Set Interview Modal (used when no reschedule request is pending) -->
     <div class="modal" id="interviewModal">
         <div class="modal-content" style="padding:0;">
             <div class="modal-header" style="background: linear-gradient(135deg, #ff8a5b 0%, #ff6b42 100%); border-radius: 16px 16px 0 0;">
@@ -1208,12 +1327,78 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
     <script>
                 // Interview Modal Logic
+                function openInterviewForRow(row) {
+                    if (!row) return;
+                    const data = row.dataset;
+                    if (data.requestStatus === 'Pending') {
+                        document.getElementById('reviewApplicantName').textContent = data.applicant || 'Applicant';
+                        document.getElementById('reviewApplicantEmail').textContent = data.email || '';
+                        document.getElementById('reviewPetName').textContent = data.pet || 'Pet';
+                        document.getElementById('reviewCurrentSchedule').textContent = formatInterviewSchedule(data.interviewDate, data.interviewTime);
+                        document.getElementById('reviewRequestedSchedule').textContent = formatInterviewSchedule(data.requestedDate, data.requestedTime);
+                        document.getElementById('reviewRescheduleReason').textContent = data.requestReason || 'No reason provided.';
+                        document.getElementById('reviewApproveAppId').value = data.applicationId || '';
+                        document.getElementById('reviewRejectAppId').value = document.getElementById('reviewApproveAppId').value;
+                        document.getElementById('rescheduleReviewModal').classList.add('active');
+                        return;
+                    }
+                    openInterviewModal(data.applicationId, data.applicant, data.pet);
+                }
+
+                function formatInterviewSchedule(dateValue, timeValue) {
+                    if (!dateValue) return 'No confirmed schedule';
+                    const parts = dateValue.split('-').map(Number);
+                    const dateLabel = new Date(parts[0], parts[1] - 1, parts[2]).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+                    const timeLabel = timeValue ? new Date('2000-01-01T' + timeValue).toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' }) : '';
+                    return dateLabel + (timeLabel ? '\\n' + timeLabel : '');
+                }
+
+                function closeRescheduleReviewModal() {
+                    document.getElementById('rescheduleReviewModal').classList.remove('active');
+                }
+
+                let pendingRescheduleDecision = null;
+
+                function openRescheduleDecisionConfirm(decision) {
+                    pendingRescheduleDecision = decision;
+                    const isApproval = decision === 'Approved';
+                    const title = document.getElementById('rescheduleDecisionConfirmTitle');
+                    const message = document.getElementById('rescheduleDecisionConfirmMessage');
+                    const confirmButton = document.getElementById('confirmRescheduleDecisionButton');
+                    title.textContent = isApproval ? 'Approve new interview time?' : 'Reject reschedule request?';
+                    message.textContent = isApproval
+                        ? 'The requested date and time will replace the current confirmed interview.'
+                        : 'The request will be declined and the current confirmed interview will remain scheduled.';
+                    confirmButton.textContent = isApproval ? 'Approve schedule' : 'Reject request';
+                    confirmButton.classList.toggle('reject', !isApproval);
+                    document.getElementById('rescheduleDecisionConfirm').classList.add('active');
+                }
+
+                function closeRescheduleDecisionConfirm() {
+                    document.getElementById('rescheduleDecisionConfirm').classList.remove('active');
+                    pendingRescheduleDecision = null;
+                }
+
+                function submitRescheduleDecision() {
+                    if (!pendingRescheduleDecision) return;
+                    const formId = pendingRescheduleDecision === 'Approved' ? 'reviewApproveForm' : 'reviewRejectForm';
+                    const form = document.getElementById(formId);
+                    if (form) form.submit();
+                }
+
+                document.getElementById('rescheduleDecisionConfirm').addEventListener('click', function(event) {
+                    if (event.target === this) closeRescheduleDecisionConfirm();
+                });
+
                 function openInterviewModal(appId, applicant, pet) {
                     document.getElementById('interviewAppId').value = appId;
                     document.getElementById('interviewApplicant').value = applicant;
                     document.getElementById('interviewPet').value = pet;
                     document.getElementById('interviewTypeSelect').value = '';
                     document.getElementById('meetingLink').value = '';
+                    document.querySelector('#interviewForm input[name="interview_date"]').value = '';
+                    document.querySelector('#interviewForm input[name="interview_time"]').value = '';
+                    document.getElementById('meetingLink').required = false;
                     document.getElementById('meetingLinkGroup').style.display = 'none';
                     document.getElementById('interviewModal').classList.add('active');
                 }
@@ -1247,13 +1432,19 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                     document.getElementById('interviewNoticePopup').classList.remove('active');
                 }
 
-                function showInterviewNotice(success) {
+                function showInterviewNotice(success, slotFull = false) {
                     const popup = document.getElementById('interviewNoticePopup');
                     const title = document.getElementById('interviewNoticeTitle');
                     const message = document.getElementById('interviewNoticeMessage');
                     const icon = popup.querySelector('.notice-popup-icon');
 
-                    if (success) {
+                    if (slotFull) {
+                        title.textContent = 'Time Slot Full';
+                        message.textContent = 'This date and time already has three interviews. Choose another slot.';
+                        icon.innerHTML = '<i class="fas fa-clock"></i>';
+                        icon.style.background = '#fff1e8';
+                        icon.style.color = '#d96835';
+                    } else if (success) {
                         title.textContent = 'Interview Scheduled';
                         message.textContent = 'The interview date and time were saved successfully.';
                         icon.innerHTML = '<i class="fas fa-check"></i>';
@@ -1556,6 +1747,23 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         }
 
         const interviewParams = new URLSearchParams(window.location.search);
+        const rescheduleReviewMessage = document.getElementById('rescheduleReviewMsg');
+        const reviewResult = interviewParams.get('reschedule_review');
+        if (reviewResult && rescheduleReviewMessage) {
+            const reviewMessages = {
+                approved: 'Reschedule request approved. The confirmed interview has been updated.',
+                rejected: 'Reschedule request rejected. The existing interview remains unchanged.',
+                full: 'That date and time already has three interviews. The request remains pending.',
+                error: 'Could not process the reschedule request. The current interview remains unchanged.'
+            };
+            rescheduleReviewMessage.textContent = reviewMessages[reviewResult] || reviewMessages.error;
+            rescheduleReviewMessage.classList.add('show');
+            interviewParams.delete('reschedule_review');
+            const cleanQuery = interviewParams.toString();
+            const cleanUrl = window.location.pathname + (cleanQuery ? '?' + cleanQuery : '');
+            window.history.replaceState({}, document.title, cleanUrl);
+        }
+
         if (interviewParams.get('interview_set') === '1') {
             showInterviewNotice(true);
             interviewParams.delete('interview_set');
@@ -1568,15 +1776,74 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             const cleanQuery = interviewParams.toString();
             const cleanUrl = window.location.pathname + (cleanQuery ? '?' + cleanQuery : '');
             window.history.replaceState({}, document.title, cleanUrl);
+        } else if (interviewParams.get('interview_set') === 'full') {
+            showInterviewNotice(false, true);
+            interviewParams.delete('interview_set');
+            const cleanQuery = interviewParams.toString();
+            const cleanUrl = window.location.pathname + (cleanQuery ? '?' + cleanQuery : '');
+            window.history.replaceState({}, document.title, cleanUrl);
         }
 
         // Close modal on Escape key
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
-                closeViewModal();
-                closeEditModal();
+                        const decisionConfirm = document.getElementById('rescheduleDecisionConfirm');
+                        if (decisionConfirm.classList.contains('active')) {
+                            closeRescheduleDecisionConfirm();
+                        } else {
+                            closeViewModal();
+                            closeEditModal();
+                            closeRescheduleReviewModal();
+                        }
             }
         });
+    </script>
+    <script>
+        const applicationTableBody = document.querySelector('.applications-table tbody');
+        const applicationSortHeaders = document.querySelectorAll('.applications-table .sortable-header');
+        let applicationSortKey = null;
+        let applicationSortDirection = 'asc';
+
+        function updateApplicationSortIndicators(activeKey) {
+            applicationSortHeaders.forEach(function(header) {
+                const isActive = header.dataset.sort === activeKey;
+                const indicator = header.querySelector('.sort-indicator');
+                header.classList.toggle('active', isActive);
+                if (!indicator) return;
+                indicator.innerHTML = isActive
+                    ? (applicationSortDirection === 'asc'
+                        ? '<i class="fas fa-chevron-up active"></i><i class="fas fa-chevron-down"></i>'
+                        : '<i class="fas fa-chevron-up"></i><i class="fas fa-chevron-down active"></i>')
+                    : '<i class="fas fa-chevron-up"></i><i class="fas fa-chevron-down"></i>';
+            });
+        }
+
+        function sortApplicationsTable(key) {
+            if (!applicationTableBody) return;
+            const rows = Array.from(applicationTableBody.querySelectorAll('tr[data-applicant]'));
+            if (!rows.length) return;
+
+            applicationSortDirection = applicationSortKey === key && applicationSortDirection === 'asc' ? 'desc' : 'asc';
+            applicationSortKey = key;
+            const direction = applicationSortDirection === 'asc' ? 1 : -1;
+
+            rows.sort(function(first, second) {
+                const firstValue = (first.dataset[key] || '').toLocaleLowerCase();
+                const secondValue = (second.dataset[key] || '').toLocaleLowerCase();
+                return firstValue.localeCompare(secondValue, undefined, { numeric: true, sensitivity: 'base' }) * direction;
+            });
+
+            rows.forEach(function(row) { applicationTableBody.appendChild(row); });
+            updateApplicationSortIndicators(key);
+        }
+
+        applicationSortHeaders.forEach(function(header) {
+            header.addEventListener('click', function() {
+                sortApplicationsTable(this.dataset.sort);
+            });
+        });
+
+        updateApplicationSortIndicators(applicationSortKey);
     </script>
 </body>
 </html>

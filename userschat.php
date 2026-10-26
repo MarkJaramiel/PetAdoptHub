@@ -29,28 +29,16 @@ $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $user = $stmt->get_result()->fetch_assoc();
 
-// Get or create admin user for support chat.
-// If no admin user exists, create a safe default admin account.
+// Resolve an existing admin account for support chat.
 $stmt = $conn->prepare("SELECT id FROM users WHERE role = 'admin' LIMIT 1");
 $stmt->execute();
 $admin_result = $stmt->get_result()->fetch_assoc();
 
 if (!$admin_result) {
-    // Create a default admin if none exists
-    $default_email = 'admin@petadopthub.com';
-    $default_password = password_hash('admin123', PASSWORD_BCRYPT);
-    
-    $insert_stmt = $conn->prepare("INSERT INTO users (fullname, email, username, password, role) VALUES (?, ?, ?, ?, 'admin')");
-    $insert_stmt->bind_param("ssss", $fullname, $default_email, $username, $default_password);
-    $fullname = "PetAdoptHub Admin";
-    $username = "admin";
-    $insert_stmt->execute();
-    $insert_stmt->close();
-    
-    $admin_id = $conn->insert_id;
-} else {
-    $admin_id = $admin_result['id'];
+    http_response_code(503);
+    exit('Shelter chat is temporarily unavailable. Please contact the shelter through the Contact Us page.');
 }
+$admin_id = (int)$admin_result['id'];
 
 // Create messages table if it doesn't exist
 $create_table = "

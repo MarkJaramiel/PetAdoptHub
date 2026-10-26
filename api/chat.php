@@ -44,43 +44,17 @@ if ($check_table->num_rows === 0) {
     }
 }
 
-// Get or create admin user so that user can always chat with admin
+// Resolve the configured admin account without creating credentials on demand.
 $stmt = $conn->prepare("SELECT id FROM users WHERE role = 'admin' LIMIT 1");
 $stmt->execute();
 $admin = $stmt->get_result()->fetch_assoc();
 
 if (!$admin) {
-    // Create a default admin if none exists
-    $default_email = 'admin@petadopthub.com';
-    $default_password = password_hash('admin123', PASSWORD_BCRYPT);
-    $fullname = "PetAdoptHub Admin";
-    
-    // Check if email already exists (avoid duplicate key error)
-    $check_stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
-    $check_stmt->bind_param("s", $default_email);
-    $check_stmt->execute();
-    $check_result = $check_stmt->get_result();
-    
-    if ($check_result->num_rows === 0) {
-        $insert_stmt = $conn->prepare("INSERT INTO users (fullname, email, password, role) VALUES (?, ?, ?, 'admin')");
-        $insert_stmt->bind_param("sss", $fullname, $default_email, $default_password);
-        
-        if (!$insert_stmt->execute()) {
-            http_response_code(500);
-            echo json_encode(['success' => false, 'error' => 'Failed to create admin user: ' . $insert_stmt->error]);
-            exit();
-        }
-        
-        $admin_id = $insert_stmt->insert_id;
-        $insert_stmt->close();
-    } else {
-        // Email exists, get the admin ID
-        $existing = $check_result->fetch_assoc();
-        $admin_id = $existing['id'];
-    }
-} else {
-    $admin_id = $admin['id'];
+    http_response_code(503);
+    echo json_encode(['success' => false, 'error' => 'Shelter chat is temporarily unavailable.']);
+    exit();
 }
+$admin_id = (int)$admin['id'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Send message state: validate payload and user IDs.

@@ -7,50 +7,56 @@ include_once '../includes/functions.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Sanitize raw input.
     $email = trim($_POST['email']);
-    $password = trim($_POST['password']);
+    $password = (string)($_POST['password'] ?? '');
     
     if (empty($email) || empty($password)) {
         // Required fields missing
         echo json_encode(['success' => false, 'message' => 'Please enter both email and password.']);
         exit();
     } else {
-        // Check if user exists by email (unique indexed field)
-        $stmt = $conn->prepare("SELECT id, fullname, email, username, password, role, account_status FROM users WHERE email = ?");
+        $stmt = $conn->prepare("SELECT user_id, display_name, email, password_hash, account_status FROM admin_accounts WHERE email = ? LIMIT 1");
         $stmt->bind_param("s", $email);
         $stmt->execute();
-        $result = $stmt->get_result();
-        
-        if ($result->num_rows === 1) {
-            $user = $result->fetch_assoc();
-            
-            // Verify password hash from database.
-            if (password_verify($password, $user['password'])) {
-                $status = $user['account_status'] ?? 'Approved';
-                if ($status === 'Pending') {
-                    echo json_encode(['success' => false, 'message' => 'Your account is pending admin approval. You cannot apply for adoption yet.']);
-                    exit();
-                }
-                if ($status === 'Rejected') {
-                    echo json_encode(['success' => false, 'message' => 'Your account was rejected. Please contact the shelter.']);
-                    exit();
-                }
+        $admin = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
 
-                // Authentication success: set session variables for auth state.
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['user_email'] = $user['email'];
-                $_SESSION['user_name'] = $user['fullname'];
-                $_SESSION['user_role'] = $user['role'];
-                
-                echo json_encode(['success' => true, 'message' => 'Login successful!']);
-                exit();
-            } else {
-                // Incorrect password
+        if ($admin) {
+            if (!password_verify($password, $admin['password_hash']) || $admin['account_status'] !== 'Approved') {
                 echo json_encode(['success' => false, 'message' => 'Invalid email or password.']);
                 exit();
             }
-        } else {
-            // No matching account for this email
+            session_regenerate_id(true);
+            $_SESSION['user_id'] = (int)$admin['user_id'];
+            $_SESSION['admin_account_id'] = (int)$admin['user_id'];
+            $_SESSION['user_email'] = $admin['email'];
+            $_SESSION['user_name'] = $admin['display_name'];
+            $_SESSION['user_role'] = 'admin';
+            echo json_encode(['success' => true, 'message' => 'Login successful!']);
+            exit();
+        }
+
+        $stmt = $conn->prepare("SELECT id, fullname, email, password, account_status FROM users WHERE email = ? AND role = 'user' LIMIT 1");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $user = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
+
+        if (!$user || !password_verify($password, $user['password'])) {
             echo json_encode(['success' => false, 'message' => 'Invalid email or password.']);
+            exit();
+        }
+        $status = $user['account_status'] ?? 'Approved';
+        if ($status === 'Pending' || $status === 'Rejected') {
+            echo json_encode(['success' => false, 'message' => $status === 'Pending' ? 'Your account is pending admin approval. You cannot apply for adoption yet.' : 'Your account was rejected. Please contact the shelter.']);
+            exit();
+        } else {
+            session_regenerate_id(true);
+            unset($_SESSION['admin_account_id']);
+            $_SESSION['user_id'] = (int)$user['id'];
+            $_SESSION['user_email'] = $user['email'];
+            $_SESSION['user_name'] = $user['fullname'];
+            $_SESSION['user_role'] = 'user';
+            echo json_encode(['success' => true, 'message' => 'Login successful!']);
             exit();
         }
     }

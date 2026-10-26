@@ -24,77 +24,31 @@ if ($check_column->num_rows === 0) {
     $conn->query("ALTER TABLE messages ADD INDEX idx_is_read (is_read)");
 }
 
-// Retrieve admin user account from database. If no admin exists, create default admin account.
-$admin_stmt = $conn->prepare("SELECT id FROM users WHERE role = 'admin' LIMIT 1");
-$admin_stmt->execute();
-$admin_result = $admin_stmt->get_result();
-
-if ($admin_result->num_rows === 0) {
-    // Create fallback admin user to prevent lockout in new installs
-    $admin_email = 'admin@petadopthub.com';
-    $admin_password = password_hash('admin123', PASSWORD_BCRYPT);
-    $admin_name = 'Admin';
-    
-    $create_admin = $conn->prepare("
-        INSERT INTO users (fullname, email, password, role) 
-        VALUES (?, ?, ?, 'admin')
-    ");
-    
-    if (!$create_admin) {
-        die("Prepare failed: " . $conn->error);
-    }
-    
-    $create_admin->bind_param("sss", $admin_name, $admin_email, $admin_password);
-    
-    if (!$create_admin->execute()) {
-        die("Execute failed: " . $create_admin->error);
-    }
-    
-    $admin_id = $create_admin->insert_id;
-    $create_admin->close();
-    
-    if ($admin_id === 0) {
-        die("Failed to get insert ID for new admin");
-    }
-} else {
-    $admin_data = $admin_result->fetch_assoc();
-    $admin_id = $admin_data['id'];
-}
-
-// Sanity check for admin row ID
-if (!$admin_id || $admin_id <= 0) {
-    die("Invalid admin ID: " . $admin_id);
-}
-
 // Enforce admin-only access to this chat panel
 $verify_stmt = $conn->prepare("SELECT role FROM users WHERE id = ?");
 $verify_stmt->bind_param("i", $user_id);
 $verify_stmt->execute();
-$verify_result = $verify_stmt->get_result();
-
-if ($verify_result->num_rows > 0) {
-    $verify_user = $verify_result->fetch_assoc();
-    if ($verify_user['role'] !== 'admin') {
-        header('Location: ../index.php');
-        exit();
-    }
+$verify_user = $verify_stmt->get_result()->fetch_assoc();
+if (!$verify_user || $verify_user['role'] !== 'admin') {
+    header('Location: ../index.php');
+    exit();
 }
+$admin_id = (int)$user_id;
 
-// Get list of users who have sent messages to this admin
 $stmt = $conn->prepare("
-    SELECT DISTINCT u.id, u.fullname, u.profile_picture, 
-    (SELECT message FROM messages WHERE (sender_id = u.id AND receiver_id = ?) OR (sender_id = ? AND receiver_id = u.id) ORDER BY created_at DESC LIMIT 1) as last_message,
-    (SELECT created_at FROM messages WHERE (sender_id = u.id AND receiver_id = ?) OR (sender_id = ? AND receiver_id = u.id) ORDER BY created_at DESC LIMIT 1) as last_message_time,
-    (SELECT COALESCE(COUNT(*), 0) FROM messages WHERE sender_id = u.id AND receiver_id = ? AND is_read = 0) as unread_count
-    FROM users u 
+    SELECT DISTINCT u.id, u.fullname, u.profile_picture,
+    (SELECT message FROM messages WHERE (sender_id = u.id AND receiver_id = ?) OR (sender_id = ? AND receiver_id = u.id) ORDER BY created_at DESC LIMIT 1) AS last_message,
+    (SELECT created_at FROM messages WHERE (sender_id = u.id AND receiver_id = ?) OR (sender_id = ? AND receiver_id = u.id) ORDER BY created_at DESC LIMIT 1) AS last_message_time,
+    (SELECT COUNT(*) FROM messages WHERE sender_id = u.id AND receiver_id = ? AND is_read = 0) AS unread_count
+    FROM users u
     WHERE u.role = 'user' AND u.id IN (
-        SELECT DISTINCT sender_id FROM messages WHERE receiver_id = ?
+        SELECT sender_id FROM messages WHERE receiver_id = ?
         UNION
-        SELECT DISTINCT receiver_id FROM messages WHERE sender_id = ?
+        SELECT receiver_id FROM messages WHERE sender_id = ?
     )
     ORDER BY last_message_time DESC
 ");
-$stmt->bind_param("iiiiiii", $admin_id, $admin_id, $admin_id, $admin_id, $admin_id, $admin_id, $admin_id);
+$stmt->bind_param('iiiiiii', $admin_id, $admin_id, $admin_id, $admin_id, $admin_id, $admin_id, $admin_id);
 $stmt->execute();
 $users = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
@@ -102,6 +56,7 @@ $users = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 $selected_user_id = isset($_GET['user_id']) ? intval($_GET['user_id']) : (count($users) > 0 ? $users[0]['id'] : null);
 
 $messages = [];
+$selected_user = null;
 if ($selected_user_id) {
     // Mark messages from user as read
     $mark_read = $conn->prepare("

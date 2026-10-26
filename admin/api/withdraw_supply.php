@@ -61,10 +61,6 @@ try {
     }
 
     $tx_admin_id = (int)($_SESSION['user_id'] ?? 0);
-    if ($tx_admin_id <= 0) {
-        $tx_admin_id = getExistingAdminUserId();
-    }
-
     if ($tx_admin_id > 0) {
         $tx_stmt = $conn->prepare("INSERT INTO supply_transactions (supply_id, transaction_type, quantity, notes, admin_id, admin_name) VALUES (?, 'Stock Out', ?, ?, ?, ?)");
         $tx_admin_name = $_SESSION['user_name'] ?? 'Admin';

@@ -31,9 +31,11 @@ $user = $stmt->get_result()->fetch_assoc();
 // Get user applications with pet details.
 // Join applications to pets to display useful info like name/type/shelter and optional image.
 $stmt = $conn->prepare("
-    SELECT a.id, a.pet_id, a.status, a.applied_at, a.interview_date, a.interview_time, a.meeting_link, p.name, p.type, p.shelter_name, p.image 
+        SELECT a.id, a.pet_id, a.status, a.applied_at, a.interview_date, a.interview_time, a.meeting_link, p.name, p.type, p.shelter_name, p.image,
+            rr.request_status, rr.requested_date, rr.requested_time, rr.reason AS reschedule_reason
     FROM applications a 
     JOIN pets p ON a.pet_id = p.id 
+        LEFT JOIN interview_reschedule_requests rr ON rr.application_id = a.id
     WHERE a.user_id = ? 
     ORDER BY a.applied_at DESC
 ");
@@ -179,10 +181,23 @@ $current_tab = 'applications';
                                 <i class="fas fa-video"></i> Join Meeting
                             </a>
                             <?php endif; ?>
+                            <?php if (($app['request_status'] ?? '') === 'Pending'): ?>
+                            <span style="background:#fff3cd; color:#856404; padding:3px 8px; border-radius:4px; font-size:11px;">Reschedule awaiting approval</span>
+                            <?php elseif (($app['request_status'] ?? '') === 'Rejected'): ?>
+                            <span style="background:#f8d7da; color:#721c24; padding:3px 8px; border-radius:4px; font-size:11px;">Reschedule declined</span>
+                            <?php endif; ?>
+                            <?php if (($app['request_status'] ?? '') !== 'Pending'): ?>
                             <button onclick="openRescheduleModal(<?php echo $app['id']; ?>, '<?php echo htmlspecialchars(addslashes($app['name'])); ?>', '<?php echo $app['interview_date']; ?>', '<?php echo $app['interview_time']; ?>')" style="background:#27ae60; color:white; border:none; padding:3px 8px; border-radius:4px; cursor:pointer; font-size:11px; font-weight:600; transition:all 0.3s ease;">
                                 <i class="fas fa-edit"></i> Reschedule
                             </button>
+                            <?php endif; ?>
                         </div>
+                        <?php if (($app['request_status'] ?? '') === 'Pending'): ?>
+                        <p style="margin:6px 0 0 30px; color:#856404; font-size:12px;">Requested <?php echo date('F j, Y', strtotime($app['requested_date'])); ?> at <?php echo date('g:i A', strtotime($app['requested_time'])); ?>. The current interview remains scheduled until the admin reviews it.</p>
+                        <p style="margin:4px 0 0 30px; color:#856404; font-size:12px;">Your reason: <?php echo nl2br(htmlspecialchars($app['reschedule_reason'] ?? '')); ?></p>
+                        <?php elseif (($app['request_status'] ?? '') === 'Rejected'): ?>
+                        <p style="margin:6px 0 0 30px; color:#721c24; font-size:12px;">Your reschedule request was declined. Your original interview time remains scheduled; you may submit a new request.</p>
+                        <?php endif; ?>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -195,35 +210,129 @@ $current_tab = 'applications';
     </main>
 </div>
 
+<style>
+    .reschedule-modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        background: rgba(20, 31, 42, 0.58);
+        backdrop-filter: blur(4px);
+    }
+    .reschedule-modal-card {
+        width: min(480px, 100%);
+        max-height: min(90vh, 760px);
+        overflow-y: auto;
+        border-radius: 12px;
+        background: #fff;
+        box-shadow: 0 24px 70px rgba(15, 35, 50, 0.28);
+        animation: rescheduleModalIn 180ms ease-out;
+    }
+    .reschedule-modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 20px 24px;
+        color: #fff;
+        background: #1a3a52;
+    }
+    .reschedule-modal-header h2 { margin: 0; font-size: 20px; font-weight: 700; }
+    .reschedule-modal-close {
+        display: inline-flex;
+        width: 36px;
+        height: 36px;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid rgba(255,255,255,.35);
+        border-radius: 6px;
+        background: transparent;
+        color: #fff;
+        font-size: 24px;
+        cursor: pointer;
+    }
+    .reschedule-modal-body { display: grid; gap: 18px; padding: 24px; }
+    .reschedule-current-slot {
+        padding: 14px 16px;
+        border-left: 3px solid #27834a;
+        border-radius: 4px;
+        background: #f2f8f4;
+        color: #294b38;
+    }
+    .reschedule-current-slot strong { display: block; margin-bottom: 5px; font-size: 11px; text-transform: uppercase; }
+    .reschedule-current-slot span { font-size: 14px; font-weight: 600; }
+    .reschedule-guidance { margin: 0; color: #596773; font-size: 13px; line-height: 1.55; }
+    .reschedule-form { display: grid; gap: 16px; }
+    .reschedule-field { display: grid; gap: 7px; }
+    .reschedule-field label { color: #1a3a52; font-size: 12px; font-weight: 700; }
+    .reschedule-field input, .reschedule-field textarea {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 11px 12px;
+        border: 1px solid #cbd3da;
+        border-radius: 6px;
+        background: #fff;
+        color: #263746;
+        font: inherit;
+        font-size: 14px;
+    }
+    .reschedule-field input:focus, .reschedule-field textarea:focus {
+        outline: 3px solid rgba(255,138,91,.2);
+        border-color: #e77b4d;
+    }
+    .reschedule-field textarea { min-height: 96px; resize: vertical; }
+    .reschedule-feedback { display: none; padding: 11px 13px; border-radius: 6px; font-size: 13px; line-height: 1.45; }
+    .reschedule-feedback.visible { display: block; }
+    .reschedule-feedback.error { background: #fff0ef; color: #8e302b; }
+    .reschedule-feedback.success { background: #edf8f0; color: #23623a; }
+    .reschedule-modal-actions { display: flex; justify-content: flex-end; gap: 10px; padding-top: 4px; }
+    .reschedule-modal-actions button { min-height: 42px; padding: 10px 16px; border: 0; border-radius: 6px; font-weight: 700; cursor: pointer; }
+    .reschedule-cancel { background: #edf0f2; color: #344553; }
+    .reschedule-submit { background: #e97849; color: #fff; }
+    .reschedule-submit:disabled { opacity: .65; cursor: wait; }
+    @keyframes rescheduleModalIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 520px) {
+        .reschedule-modal-overlay { padding: 12px; }
+        .reschedule-modal-header, .reschedule-modal-body { padding: 18px; }
+        .reschedule-modal-actions { flex-direction: column-reverse; }
+        .reschedule-modal-actions button { width: 100%; }
+    }
+</style>
+
 <!-- Reschedule Interview Modal -->
-<div id="rescheduleModal" style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5); align-items:center; justify-content:center;">
-    <div style="background-color:white; padding:0; border-radius:12px; width:90%; max-width:450px; box-shadow:0 10px 40px rgba(0,0,0,0.15);">
-        <!-- Modal Header -->
-        <div style="background:linear-gradient(135deg, #ff8a5b 0%, #ff6b42 100%); padding:20px 25px; border-radius:12px 12px 0 0; display:flex; justify-content:space-between; align-items:center;">
-            <h2 style="font-size:18px; font-weight:700; color:white; margin:0;">Reschedule Interview</h2>
-            <button onclick="closeRescheduleModal()" style="background:rgba(255,255,255,0.2); border:none; font-size:28px; color:white; cursor:pointer; padding:0; width:35px; height:35px; display:flex; align-items:center; justify-content:center; border-radius:50%; transition:all 0.3s ease;">&times;</button>
-        </div>
-
-        <!-- Modal Content -->
-        <div style="padding:25px;">
-            <p style="color:#666; margin-bottom:18px; font-size:13px;">Update your interview date and time.</p>
-            
-            <form id="rescheduleForm" onsubmit="submitRescheduleForm(event)" style="display:flex; flex-direction:column; gap:15px;">
+<div id="rescheduleModal" class="reschedule-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="rescheduleModalTitle">
+    <div class="reschedule-modal-card">
+        <header class="reschedule-modal-header">
+            <h2 id="rescheduleModalTitle">Request a new interview time</h2>
+            <button type="button" class="reschedule-modal-close" onclick="closeRescheduleModal()" aria-label="Close dialog">&times;</button>
+        </header>
+        <div class="reschedule-modal-body">
+            <div class="reschedule-current-slot">
+                <strong>Confirmed appointment</strong>
+                <span id="rescheduleCurrentSlot"></span>
+            </div>
+            <p class="reschedule-guidance">Your confirmed time stays active until the shelter reviews and approves your request.</p>
+            <div id="rescheduleFeedback" class="reschedule-feedback" role="status" aria-live="polite"></div>
+            <form id="rescheduleForm" class="reschedule-form" onsubmit="submitRescheduleForm(event)">
                 <input type="hidden" id="reschedulAppId" name="app_id" value="">
-                
-                <div>
-                    <label style="display:block; font-weight:600; color:#1a3a52; font-size:11px; text-transform:uppercase; margin-bottom:6px; letter-spacing:0.5px;">New Interview Date</label>
-                    <input type="date" id="rescheduleDate" name="interview_date" required style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px; font-size:13px; box-sizing:border-box;">
+                <div class="reschedule-field">
+                    <label for="rescheduleDate">Preferred date</label>
+                    <input type="date" id="rescheduleDate" name="interview_date" required>
                 </div>
-
-                <div>
-                    <label style="display:block; font-weight:600; color:#1a3a52; font-size:11px; text-transform:uppercase; margin-bottom:6px; letter-spacing:0.5px;">New Interview Time</label>
-                    <input type="time" id="rescheduleTime" name="interview_time" required style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px; font-size:13px; box-sizing:border-box;">
+                <div class="reschedule-field">
+                    <label for="rescheduleTime">Preferred time</label>
+                    <input type="time" id="rescheduleTime" name="interview_time" required>
                 </div>
-
-                <div style="display:flex; gap:10px; margin-top:15px;">
-                    <button type="button" onclick="closeRescheduleModal()" style="flex:1; background-color:#f0f0f0; color:#333; border:none; padding:10px; border-radius:6px; cursor:pointer; font-weight:600; font-size:13px; transition:all 0.3s ease;">Cancel</button>
-                    <button type="submit" style="flex:1; background:linear-gradient(135deg, #ff8a5b 0%, #ff6b42 100%); color:white; border:none; padding:10px; border-radius:6px; cursor:pointer; font-weight:600; font-size:13px; transition:all 0.3s ease; box-shadow:0 4px 12px rgba(255,138,91,0.2);">Update Interview</button>
+                <div class="reschedule-field">
+                    <label for="rescheduleReason">Why do you need to reschedule?</label>
+                    <textarea id="rescheduleReason" name="reason" minlength="10" maxlength="1000" required placeholder="Briefly explain why this change is needed."></textarea>
+                </div>
+                <div class="reschedule-modal-actions">
+                    <button type="button" class="reschedule-cancel" onclick="closeRescheduleModal()">Keep current time</button>
+                    <button type="submit" class="reschedule-submit" id="rescheduleSubmit">Send request</button>
                 </div>
             </form>
         </div>
@@ -233,13 +342,31 @@ $current_tab = 'applications';
 <script>
     function openRescheduleModal(appId, petName, currentDate, currentTime) {
         document.getElementById('reschedulAppId').value = appId;
+        document.getElementById('rescheduleModalTitle').textContent = 'Reschedule interview for ' + petName;
         document.getElementById('rescheduleDate').value = currentDate;
         document.getElementById('rescheduleTime').value = currentTime;
+        document.getElementById('rescheduleReason').value = '';
+        const [year, month, day] = currentDate.split('-').map(Number);
+        const confirmedDate = new Date(year, month - 1, day).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+        const confirmedTime = currentTime ? new Date('2000-01-01T' + currentTime).toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' }) : '';
+        document.getElementById('rescheduleCurrentSlot').textContent = confirmedDate + (confirmedTime ? ' at ' + confirmedTime : '');
+        setRescheduleFeedback('', '');
+        document.getElementById('rescheduleSubmit').disabled = false;
+        document.getElementById('rescheduleSubmit').textContent = 'Send request';
         document.getElementById('rescheduleModal').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        document.getElementById('rescheduleDate').focus();
     }
 
     function closeRescheduleModal() {
         document.getElementById('rescheduleModal').style.display = 'none';
+        document.body.style.overflow = '';
+    }
+
+    function setRescheduleFeedback(message, type) {
+        const feedback = document.getElementById('rescheduleFeedback');
+        feedback.textContent = message;
+        feedback.className = 'reschedule-feedback' + (message ? ' visible ' + type : '');
     }
 
     function submitRescheduleForm(event) {
@@ -248,30 +375,46 @@ $current_tab = 'applications';
         const appId = document.getElementById('reschedulAppId').value;
         const newDate = document.getElementById('rescheduleDate').value;
         const newTime = document.getElementById('rescheduleTime').value;
+        const reason = document.getElementById('rescheduleReason').value.trim();
+        const submitButton = document.getElementById('rescheduleSubmit');
+
+        if (reason.length < 10) {
+            setRescheduleFeedback('Please provide a little more detail (at least 10 characters).', 'error');
+            document.getElementById('rescheduleReason').focus();
+            return;
+        }
 
         // Build FormData payload and send to reschedule API endpoint.
-        // This is asynchronous and refreshes page on success for instant latest timeline.
         const formData = new FormData();
         formData.append('app_id', appId);
         formData.append('interview_date', newDate);
         formData.append('interview_time', newTime);
+        formData.append('reason', reason);
 
-        // Submit to API
+        submitButton.disabled = true;
+        submitButton.textContent = 'Sending...';
+        setRescheduleFeedback('', '');
         fetch('api/reschedule_interview.php', {
             method: 'POST',
             body: formData
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                location.reload();
-            } else {
-                alert('Error: ' + (data.message || 'Failed to reschedule interview'));
+        .then(response => response.json().then(data => ({ response, data })))
+        .then(({ response, data }) => {
+            submitButton.disabled = false;
+            submitButton.textContent = 'Send request';
+            if (!response.ok || !data.success) {
+                setRescheduleFeedback(data.message || 'Could not send your request. Please try again.', 'error');
+                return;
             }
+
+            setRescheduleFeedback(data.message || 'Request sent. Your current interview remains scheduled pending approval.', 'success');
+            setTimeout(() => location.reload(), 1200);
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('An error occurred. Please try again.');
+            submitButton.disabled = false;
+            submitButton.textContent = 'Send request';
+            setRescheduleFeedback('A network error occurred. Please check your connection and try again.', 'error');
         });
     }
 

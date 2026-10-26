@@ -10,10 +10,16 @@ $token_record = null;
 
 if (preg_match('/^[a-f0-9]{64}$/', $token)) {
     $token_hash = hash('sha256', $token);
-    $stmt = $conn->prepare('SELECT id, user_id FROM password_reset_tokens WHERE token_hash = ? AND used_at IS NULL AND expires_at > NOW() LIMIT 1');
-    $stmt->bind_param('s', $token_hash);
-    $stmt->execute();
-    $token_record = $stmt->get_result()->fetch_assoc();
+    $table_check = $conn->query("SHOW TABLES LIKE 'password_reset_tokens'");
+    if ($table_check && $table_check->num_rows > 0) {
+        $stmt = $conn->prepare('SELECT id, user_id FROM password_reset_tokens WHERE token_hash = ? AND used_at IS NULL AND expires_at > NOW() LIMIT 1');
+        if ($stmt) {
+            $stmt->bind_param('s', $token_hash);
+            $stmt->execute();
+            $token_record = $stmt->get_result()->fetch_assoc();
+            $stmt->close();
+        }
+    }
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -22,8 +28,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$token_record) {
         $error = 'This reset link is invalid or has expired.';
-    } elseif (strlen($password) < 6) {
-        $error = 'Password must be at least 6 characters long.';
+    } elseif (strlen($password) < 12) {
+        $error = 'Password must be at least 12 characters long.';
     } elseif ($password !== $confirm_password) {
         $error = 'Passwords do not match.';
     } else {
@@ -65,9 +71,9 @@ include_once 'includes/header.php';
         <form method="post">
             <input type="hidden" name="token" value="<?php echo htmlspecialchars($token); ?>">
             <label for="password">New password</label>
-            <input type="password" id="password" name="password" minlength="6" required>
+            <input type="password" id="password" name="password" minlength="12" required>
             <label for="confirm_password">Confirm new password</label>
-            <input type="password" id="confirm_password" name="confirm_password" minlength="6" required>
+            <input type="password" id="confirm_password" name="confirm_password" minlength="12" required>
             <?php if ($error): ?><div class="auth-error"><?php echo htmlspecialchars($error); ?></div><?php endif; ?>
             <button type="submit">Reset password</button>
         </form>

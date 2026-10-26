@@ -9,8 +9,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $fullname = trim($_POST['fullname']);
     $email = trim($_POST['email']);
     $username = trim($_POST['username']);
-    $password = trim($_POST['password']);
-    $confirm_password = trim($_POST['confirm_password']);
+    $password = (string)($_POST['password'] ?? '');
+    $confirm_password = (string)($_POST['confirm_password'] ?? '');
     $phone = trim($_POST['phone'] ?? '');
     $location = trim($_POST['location'] ?? '');
     $bio = trim($_POST['bio'] ?? '');
@@ -25,8 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } elseif ($password !== $confirm_password) {
         echo json_encode(['success' => false, 'message' => 'Passwords do not match.']);
         exit();
-    } elseif (strlen($password) < 6) {
-        echo json_encode(['success' => false, 'message' => 'Password must be at least 6 characters long.']);
+    } elseif (strlen($password) < 12) {
+        echo json_encode(['success' => false, 'message' => 'Password must be at least 12 characters long.']);
         exit();
     } else {
         // Check if email or username already exists in users table.
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
             // Insert new user record into database.
-            $stmt = $conn->prepare("INSERT INTO users (fullname, email, username, password, phone, location, bio) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $stmt = $conn->prepare("INSERT INTO users (fullname, email, username, password, phone, location, bio, account_status) VALUES (?, ?, ?, ?, ?, ?, ?, 'Pending')");
             $stmt->bind_param("sssssss", $fullname, $email, $username, $hashed_password, $phone, $location, $bio);
 
             if ($stmt->execute()) {

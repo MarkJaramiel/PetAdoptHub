@@ -1,6 +1,6 @@
 -- Database creation
-CREATE DATABASE IF NOT EXISTS u699742298_petadopthub;
-USE u699742298_petadopthub;
+CREATE DATABASE IF NOT EXISTS petadopthub;
+USE petadopthub;
 
 -- Users table
 CREATE TABLE IF NOT EXISTS users (
@@ -26,6 +26,30 @@ CREATE TABLE IF NOT EXISTS users (
     deleted_at TIMESTAMP NULL DEFAULT NULL,
     INDEX idx_role (role)
 );
+
+-- Admin credentials are stored separately; user_id links to the legacy identity
+-- retained for chat and audit records.
+CREATE TABLE IF NOT EXISTS admin_accounts (
+    user_id INT PRIMARY KEY,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    display_name VARCHAR(100) NOT NULL,
+    account_status ENUM('Pending', 'Approved', 'Rejected') NOT NULL DEFAULT 'Approved',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT fk_admin_accounts_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- Copy legacy admin credentials into the dedicated admin table when present.
+INSERT INTO admin_accounts (user_id, email, password_hash, display_name, account_status)
+SELECT id, email, password, fullname, COALESCE(account_status, 'Approved')
+FROM users
+WHERE role = 'admin'
+ON DUPLICATE KEY UPDATE
+    email = VALUES(email),
+    password_hash = VALUES(password_hash),
+    display_name = VALUES(display_name),
+    account_status = VALUES(account_status);
 
 -- Pets table
 CREATE TABLE IF NOT EXISTS pets (
@@ -77,6 +101,22 @@ CREATE TABLE IF NOT EXISTS applications (
     FOREIGN KEY (pet_id) REFERENCES pets(id),
     INDEX idx_status (status),
     INDEX idx_applied_at (applied_at)
+);
+
+-- Applicant-requested interview changes; confirmed interview remains in applications
+-- until an administrator approves the proposed replacement slot.
+CREATE TABLE IF NOT EXISTS interview_reschedule_requests (
+    application_id INT PRIMARY KEY,
+    requested_date DATE NOT NULL,
+    requested_time TIME NOT NULL,
+    reason VARCHAR(1000) NOT NULL,
+    request_status ENUM('Pending', 'Approved', 'Rejected') NOT NULL DEFAULT 'Pending',
+    requested_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    reviewed_at TIMESTAMP NULL DEFAULT NULL,
+    CONSTRAINT fk_reschedule_request_application
+        FOREIGN KEY (application_id) REFERENCES applications(id) ON DELETE CASCADE,
+    INDEX idx_reschedule_status (request_status),
+    INDEX idx_reschedule_slot (requested_date, requested_time)
 );
 
 -- Favorite Pets table

@@ -24,13 +24,13 @@ $notif_counts = getAdminNotificationCounts();
 ?>
 <aside class="sidebar">
     <div class="sidebar-logo">
-        <img src="<?php echo SITE_URL; ?>/images/icon%20logo.png" alt="PetAdoptHub logo">
+        <img src="../images/icon%20logo.png" alt="PetAdoptHub logo">
         <div class="sidebar-logo-text">Admin Panel</div>
     </div>
     <ul class="sidebar-menu" style="margin-bottom: 0;">
         <li>
             <a href="dashboard.php" class="<?php echo $active_page === 'dashboard' ? 'active' : ''; ?>">
-                <img src="<?php echo SITE_URL; ?>/images/iconhouse.png" alt="Dashboard" style="width:20px;height:20px;">
+                <img src="../images/iconhouse.png" alt="Dashboard" style="width:20px;height:20px;">
                 Dashboard
             </a>
         </li>
@@ -63,25 +63,25 @@ $notif_counts = getAdminNotificationCounts();
         </li>
         <li>
             <a href="manage_pets.php" class="<?php echo $active_page === 'pets' ? 'active' : ''; ?>">
-                <img src="<?php echo SITE_URL; ?>/images/iconFavorite.png" alt="Pets" style="width:20px;height:20px;">
+                <img src="../images/iconFavorite.png" alt="Pets" style="width:20px;height:20px;">
                 Pets
             </a>
         </li>
         <li>
             <a href="archive.php" class="<?php echo $active_page === 'archive' ? 'active' : ''; ?>">
-                <img src="<?php echo SITE_URL; ?>/images/iconarchive.png" alt="Archive" style="width:20px;height:20px;">
+                <img src="../images/iconarchive.png" alt="Archive" style="width:20px;height:20px;">
                 Archive
             </a>
         </li>
         <li>
             <a href="user_approvals.php" class="<?php echo $active_page === 'user_approvals' ? 'active' : ''; ?>">
-                <img src="<?php echo SITE_URL; ?>/images/iconperson2.png" alt="User Approval" style="width:20px;height:20px;">
+                <img src="../images/iconperson2.png" alt="User Approval" style="width:20px;height:20px;">
                 User Approval
             </a>
         </li>
         <li>
             <a href="applications.php" class="<?php echo $active_page === 'applications' ? 'active' : ''; ?>">
-                <img src="<?php echo SITE_URL; ?>/images/icondocuments.png" alt="Applications" style="width:20px;height:20px;">
+                <img src="../images/icondocuments.png" alt="Applications" style="width:20px;height:20px;">
                 Application
             </a>
         </li>
@@ -105,14 +105,14 @@ $notif_counts = getAdminNotificationCounts();
         </li>
         <li>
             <a href="chat.php" class="<?php echo $active_page === 'chat' ? 'active' : ''; ?>">
-                <img src="<?php echo SITE_URL; ?>/images/iconchat.png" alt="Messages" style="width:20px;height:20px;">
+                <img src="../images/iconchat.png" alt="Messages" style="width:20px;height:20px;">
                 Messages
             </a>
         </li>
     </ul>
     <div class="sign-out-section">
         <a href="../api/logout.php">
-            <img src="<?php echo SITE_URL; ?>/images/iconlogout.png" alt="Logout" style="width:20px;height:20px;">
+            <img src="../images/iconlogout.png" alt="Logout" style="width:20px;height:20px;">
             Logout
         </a>
     </div>

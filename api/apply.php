@@ -35,57 +35,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Handle valid_id file upload and save to designated folder.
-    $upload_dir = dirname(__DIR__) . '/uploads/valid_ids/';
+    $upload_dir = '../uploads/valid_ids/';
     if (!is_dir($upload_dir)) {
-        if (!mkdir($upload_dir, 0755, true) && !is_dir($upload_dir)) {
-            http_response_code(500);
-            echo json_encode(['success' => false, 'message' => 'Unable to prepare ID upload storage.']);
-            exit();
-        }
-    }
-    if (!is_writable($upload_dir)) {
-        http_response_code(500);
-        echo json_encode(['success' => false, 'message' => 'ID upload storage is not writable.']);
-        exit();
+        mkdir($upload_dir, 0777, true);
     }
 
     // Validate file type and size for security and storage limits.
     $file = $_FILES['valid_id'];
-    $allowed_extensions = [
-        'image/jpeg' => 'jpg',
-        'image/png' => 'png',
-        'image/gif' => 'gif',
-        'application/pdf' => 'pdf',
-    ];
-    if ($file['size'] <= 0 || $file['size'] > 5 * 1024 * 1024 || !is_uploaded_file($file['tmp_name'])) {
-        http_response_code(400);
-        echo json_encode(['success' => false, 'message' => 'Invalid file upload or valid ID exceeds 5MB.']);
-        exit();
-    }
-    $finfo = finfo_open(FILEINFO_MIME_TYPE);
-    if ($finfo === false) {
-        http_response_code(500);
-        echo json_encode(['success' => false, 'message' => 'Unable to validate uploaded file.']);
-        exit();
-    }
-    $mime_type = finfo_file($finfo, $file['tmp_name']);
-    finfo_close($finfo);
-    if (!isset($allowed_extensions[$mime_type])) {
+    $allowed_types = ['image/jpeg', 'image/png', 'image/gif', 'application/pdf'];
+    if (!in_array($file['type'], $allowed_types)) {
         http_response_code(400);
         echo json_encode(['success' => false, 'message' => 'Invalid file type for valid ID. Allowed: JPG, PNG, GIF, PDF.']);
         exit();
     }
-    if (strpos($mime_type, 'image/') === 0) {
-        $image_info = getimagesize($file['tmp_name']);
-        if ($image_info === false || ($image_info['mime'] ?? '') !== $mime_type) {
-            http_response_code(400);
-            echo json_encode(['success' => false, 'message' => 'Invalid image file.']);
-            exit();
-        }
+    if ($file['size'] > 5 * 1024 * 1024) {
+        http_response_code(400);
+        echo json_encode(['success' => false, 'message' => 'Valid ID file size must be 5MB or less.']);
+        exit();
     }
 
-    // Generate the extension from the server-detected MIME type, never the client filename.
-    $new_filename = 'validid_' . $user_id . '_' . bin2hex(random_bytes(16)) . '.' . $allowed_extensions[$mime_type];
+    // Rename file to ensure unique naming and move to upload location.
+    $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+    $new_filename = 'validid_' . $user_id . '_' . time() . '.' . $ext;
     $destination = $upload_dir . $new_filename;
     if (!move_uploaded_file($file['tmp_name'], $destination)) {
         http_response_code(500);

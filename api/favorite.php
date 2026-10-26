@@ -30,15 +30,26 @@ if ($result->num_rows === 0) {
     exit();
 }
 
+$return_url = '../index.php';
+$referer = parse_url($_SERVER['HTTP_REFERER'] ?? '');
+$referer_host = is_array($referer) ? strtolower($referer['host'] ?? '') : '';
+$referer_authority = $referer_host . (isset($referer['port']) ? ':' . $referer['port'] : '');
+$request_host = strtolower($_SERVER['HTTP_HOST'] ?? '');
+$referer_path = is_array($referer) ? ($referer['path'] ?? '') : '';
+if ($referer_authority !== '' && $referer_authority === $request_host && $referer_path !== '' && $referer_path[0] === '/' && substr($referer_path, 0, 2) !== '//') {
+    $return_url = $referer_path;
+    if (!empty($referer['query'])) {
+        $return_url .= '?' . $referer['query'];
+    }
+}
+
 if ($remove) {
     // Remove from favorites branch.
     $stmt = $conn->prepare("DELETE FROM favorites WHERE user_id = ? AND pet_id = ?");
     $stmt->bind_param("ii", $user_id, $pet_id);
     
     if ($stmt->execute()) {
-        // Use referrer to return user to previous page after action.
-        $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'index.php';
-        header("Location: " . $referrer);
+        header('Location: ' . $return_url);
         exit();
     } else {
         echo json_encode(['success' => false, 'message' => 'Failed to remove from favorites.']);
@@ -50,9 +61,7 @@ if ($remove) {
     $stmt->bind_param("ii", $user_id, $pet_id);
     
     if ($stmt->execute()) {
-        // Return user to previous page.
-        $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'index.php';
-        header("Location: " . $referrer);
+        header('Location: ' . $return_url);
         exit();
     } else {
         echo json_encode(['success' => false, 'message' => 'Failed to add to favorites.']);

@@ -1,9 +1,9 @@
 <?php
 // Database configuration
 define('DB_HOST', 'localhost');
-define('DB_USER', 'u699742298_root');
-define('DB_PASS', 'A6p^gwD68I');
-define('DB_NAME', 'u699742298_petadopthub');
+define('DB_USER', 'root');
+define('DB_PASS', '');
+define('DB_NAME', 'petadopthub');
 
 // Create connection
 $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
