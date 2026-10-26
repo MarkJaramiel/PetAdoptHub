@@ -402,12 +402,12 @@ if ($shelter_result->num_rows > 0) {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 
 <!-- Blurred Background Overlay (except modal) -->
-<div id="backgroundBlurOverlay" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:999; pointer-events:none; backdrop-filter: blur(14px) brightness(0.95); -webkit-backdrop-filter: blur(14px) brightness(0.95);"></div>
+<!-- <div id="backgroundBlurOverlay" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:999; pointer-events:none; backdrop-filter: blur(14px) brightness(0.95); -webkit-backdrop-filter: blur(14px) brightness(0.95);"></div> -->
 <!-- Modal Backdrop Overlay -->
-<div id="modalBackdrop"></div>
+<!-- <div id="modalBackdrop"></div> -->
 
 <!-- Pet Details Modal -->
-<div id="petModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: transparent; z-index: 1000; align-items: center; justify-content: center; display: flex; padding: 20px; overflow-y: auto;">
+<div id="petModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: transparent; z-index: 1000; align-items: center; justify-content: center; padding: 20px; overflow-y: auto;">
     <div style="max-width: 900px; width: 90%; max-height: 90vh; background-color: white; border-radius: 16px; overflow: hidden; box-shadow: 0 12px 40px rgba(255,138,91,0.15), 0 4px 16px rgba(0,0,0,0.1); position: relative; border: none; display: grid; grid-template-columns: 45% 55%;">
         <!-- Close Button -->
         <button id="closePetModalBtn" class="close-x-btn" title="Close">×</button>
@@ -1711,6 +1711,6 @@ function getAIResponse(userMsg) {
 
 
 <!-- Application Modal -->
-<div id="applicationModalOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 20px; overflow-y: auto;">
+<div id="applicationModalOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 2000; align-items: center; justify-content: center; padding: 20px; overflow-y: auto;">
     <div id="applicationModalContent" style="max-height: 90vh; overflow-y: auto;"></div>
 </div>

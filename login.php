@@ -4,7 +4,7 @@
 $page_title = "Sign In - PetAdoptHub";
 include_once 'config/config.php';
 include_once 'config/database.php';
-include_once 'includes/header.php';
+include_once 'includes/functions.php';
 
 // Track an error message for display in the form
 $error = '';
@@ -21,7 +21,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } elseif (empty($password)) {
         $error = "Please enter your password.";
     } else {
-        $stmt = $conn->prepare("SELECT user_id, display_name, email, password_hash, account_status FROM admin_accounts WHERE email = ? LIMIT 1");
+        try {
+            $stmt = $conn->prepare("SELECT user_id, fullname, email, password FROM admins WHERE email = ? LIMIT 1");
+        } catch (mysqli_sql_exception $exception) {
+            error_log('Admin login query preparation failed: ' . $exception->getMessage());
+            $stmt = false;
+        }
         if (!$stmt) {
             error_log('Login query preparation failed: ' . $conn->error);
             $error = "Sign in is temporarily unavailable. Please try again later.";
@@ -32,12 +37,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt->close();
 
             if ($admin) {
-                if (password_verify($password, $admin['password_hash']) && $admin['account_status'] === 'Approved') {
+                if (password_verify($password, $admin['password'])) {
                     session_regenerate_id(true);
                     $_SESSION['user_id'] = (int)$admin['user_id'];
                     $_SESSION['admin_account_id'] = (int)$admin['user_id'];
                     $_SESSION['user_email'] = $admin['email'];
-                    $_SESSION['user_name'] = $admin['display_name'];
+                    $_SESSION['user_name'] = $admin['fullname'];
                     $_SESSION['user_role'] = 'admin';
                     header('Location: admin/dashboard.php');
                     exit();
@@ -76,6 +81,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
+
+<?php include_once 'includes/header.php'; ?>
 
 <style>
     .login-container {
@@ -416,7 +423,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="form-group">
                         <label for="email"><img src="images/iconmail.png" alt="Mail" style="width: 20px; height: 20px; object-fit: contain; margin-right: 6px; display: inline-block; vertical-align: middle;">Email Address</label>
                         <div class="input-wrapper">
-                            <input type="email" id="email" name="email" placeholder="you@example.com" required value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
+                            <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="off" required value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
                         </div>
                     </div>
 

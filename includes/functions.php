@@ -38,7 +38,7 @@ function isAdmin() {
         return $adminStatusByUserId[$userId];
     }
 
-    $stmt = $conn->prepare("SELECT role, account_status FROM users WHERE id = ? LIMIT 1");
+    $stmt = $conn->prepare("SELECT user_id FROM admins WHERE user_id = ? LIMIT 1");
     if (!$stmt) {
         error_log('Admin authorization prepare failed: ' . $conn->error);
         return $adminStatusByUserId[$userId] = false;
@@ -51,20 +51,16 @@ function isAdmin() {
         return $adminStatusByUserId[$userId] = false;
     }
 
-    $user = $stmt->get_result()->fetch_assoc();
+    $admin = $stmt->get_result()->fetch_assoc();
     $stmt->close();
 
-    return $adminStatusByUserId[$userId] = (
-        $user !== null
-        && $user['role'] === 'admin'
-        && $user['account_status'] === 'Approved'
-    );
+    return $adminStatusByUserId[$userId] = ($admin !== null);
 }
 
 function getExistingAdminUserId() {
     global $conn;
 
-    $stmt = $conn->prepare("SELECT id FROM users WHERE role = 'admin' AND account_status = 'Approved' ORDER BY id LIMIT 1");
+    $stmt = $conn->prepare("SELECT user_id FROM admins ORDER BY user_id LIMIT 1");
     if (!$stmt) {
         error_log('Admin lookup prepare failed: ' . $conn->error);
         return 0;
@@ -78,8 +74,8 @@ function getExistingAdminUserId() {
     $existing = $result->fetch_assoc();
     $stmt->close();
 
-    if ($existing && !empty($existing['id'])) {
-        return (int)$existing['id'];
+    if ($existing && !empty($existing['user_id'])) {
+        return (int)$existing['user_id'];
     }
 
     return 0;

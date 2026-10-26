@@ -14,14 +14,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo json_encode(['success' => false, 'message' => 'Please enter both email and password.']);
         exit();
     } else {
-        $stmt = $conn->prepare("SELECT user_id, display_name, email, password_hash, account_status FROM admin_accounts WHERE email = ? LIMIT 1");
+        $stmt = $conn->prepare("SELECT user_id, fullname, email, password FROM admins WHERE email = ? LIMIT 1");
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $admin = $stmt->get_result()->fetch_assoc();
         $stmt->close();
 
         if ($admin) {
-            if (!password_verify($password, $admin['password_hash']) || $admin['account_status'] !== 'Approved') {
+            if (!password_verify($password, $admin['password'])) {
                 echo json_encode(['success' => false, 'message' => 'Invalid email or password.']);
                 exit();
             }
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['user_id'] = (int)$admin['user_id'];
             $_SESSION['admin_account_id'] = (int)$admin['user_id'];
             $_SESSION['user_email'] = $admin['email'];
-            $_SESSION['user_name'] = $admin['display_name'];
+            $_SESSION['user_name'] = $admin['fullname'];
             $_SESSION['user_role'] = 'admin';
             echo json_encode(['success' => true, 'message' => 'Login successful!']);
             exit();
