@@ -25,14 +25,6 @@ $veterinarian = htmlspecialchars(trim($_POST['veterinarian'] ?? ''));
 $weight = htmlspecialchars(trim($_POST['weight'] ?? ''));
 $notes = htmlspecialchars(trim($_POST['notes'] ?? ''));
 $created_by = (int)($_SESSION['user_id'] ?? 0);
-if ($created_by <= 0) {
-    $created_by = getExistingAdminUserId();
-    if ($created_by > 0) {
-        $_SESSION['user_id'] = $created_by;
-        $_SESSION['user_name'] = 'Admin';
-        $_SESSION['user_role'] = 'admin';
-    }
-}
 
 if ($created_by <= 0) {
     header('Location: ../medical_records.php?error=save_failed');

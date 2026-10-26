@@ -2,6 +2,9 @@
 // Load global configuration and database connection
 include_once '../../config/config.php';
 include_once '../../config/database.php';
+include_once '../../includes/functions.php';
+
+requireAdmin();
 
 // Set up logging infrastructure for debugging pet save operations
 $log_file = '../../logs/pet_save.log';

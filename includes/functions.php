@@ -16,9 +16,41 @@ function isLoggedIn() {
     return isset($_SESSION['user_id']);
 }
 
-// Check if user is admin (session role should be explicitly 'admin')
+// Verify admin privileges against the current user record.
 function isAdmin() {
-    return isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
+    global $conn;
+
+    $userId = filter_var($_SESSION['user_id'] ?? null, FILTER_VALIDATE_INT);
+    if ($userId === false || $userId <= 0 || !isset($conn) || !($conn instanceof mysqli)) {
+        return false;
+    }
+
+    static $adminStatusByUserId = [];
+    if (array_key_exists($userId, $adminStatusByUserId)) {
+        return $adminStatusByUserId[$userId];
+    }
+
+    $stmt = $conn->prepare("SELECT role, account_status FROM users WHERE id = ? LIMIT 1");
+    if (!$stmt) {
+        error_log('Admin authorization prepare failed: ' . $conn->error);
+        return $adminStatusByUserId[$userId] = false;
+    }
+
+    $stmt->bind_param("i", $userId);
+    if (!$stmt->execute()) {
+        error_log('Admin authorization lookup failed: ' . $stmt->error);
+        $stmt->close();
+        return $adminStatusByUserId[$userId] = false;
+    }
+
+    $user = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+
+    return $adminStatusByUserId[$userId] = (
+        $user !== null
+        && $user['role'] === 'admin'
+        && $user['account_status'] === 'Approved'
+    );
 }
 
 function getExistingAdminUserId() {
@@ -53,10 +85,11 @@ function requireAuth() {
     }
 }
 
-// Guard: redirect to root index for non-admin access to admin-only pages.
+// Guard admin-only pages and redirect unauthenticated users to sign in.
 function requireAdmin() {
     if (!isAdmin()) {
-        header('Location: ../index.php');
+        $destination = isLoggedIn() ? '../index.php' : '../login.php';
+        header('Location: ' . $destination);
         exit();
     }
 }

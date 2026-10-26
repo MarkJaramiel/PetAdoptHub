@@ -13,6 +13,8 @@ include_once '../config/config.php';
 include_once '../config/database.php';
 include_once '../includes/functions.php';
 
+requireAdmin();
+
 $active_page = 'pets';
 
 // Process archive request early (before fetching pet list).

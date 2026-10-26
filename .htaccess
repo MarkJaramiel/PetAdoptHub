@@ -1,0 +1,2 @@
+RewriteEngine On
+RewriteRule ^uploads/valid_ids(/|$) - [F,L,NC]

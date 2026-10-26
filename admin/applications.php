@@ -4,6 +4,8 @@ include_once '../config/config.php';
 include_once '../config/database.php';
 include_once '../includes/functions.php';
 
+requireAdmin();
+
 $active_page = 'applications';
 
 // Handle status update from admin actions in URL (update, approve, reject)

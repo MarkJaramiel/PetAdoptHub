@@ -7,6 +7,8 @@ include_once '../config/config.php';
 include_once '../config/database.php';
 include_once '../includes/functions.php';
 
+requireAdmin();
+
 $active_page = 'archive';
 
 // Fetch archived pets with optional filtering and search

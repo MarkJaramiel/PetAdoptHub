@@ -12,11 +12,7 @@ include_once '../includes/functions.php';
 
 $active_page = 'chat';
 
-// Guard page for authenticated users only
-if (!isset($_SESSION['user_id'])) {
-    header('Location: ../login.php');
-    exit();
-}
+requireAdmin();
 
 $user_id = $_SESSION['user_id'];
 

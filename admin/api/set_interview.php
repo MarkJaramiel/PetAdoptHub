@@ -5,6 +5,8 @@ include_once '../../config/config.php';
 include_once '../../config/database.php';
 include_once '../../includes/functions.php';
 
+requireAdmin();
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Extract and validate interview scheduling parameters from POST
     $app_id = isset($_POST['app_id']) ? (int)$_POST['app_id'] : 0;

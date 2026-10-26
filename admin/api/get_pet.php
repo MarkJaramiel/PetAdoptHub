@@ -7,6 +7,12 @@ include_once '../../includes/functions.php';
 // Set JSON response header for client-side parsing
 header('Content-Type: application/json');
 
+if (!isLoggedIn() || !isAdmin()) {
+    http_response_code(403);
+    echo json_encode(['success' => false, 'message' => 'Unauthorized']);
+    exit();
+}
+
 // Fetch a single pet by ID for edit modal or view modal
 if (isset($_GET['id'])) {
     $pet_id = (int)$_GET['id'];

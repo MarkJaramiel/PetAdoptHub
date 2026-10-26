@@ -7,38 +7,7 @@ include_once '../config/config.php';
 include_once '../config/database.php';
 include_once '../includes/functions.php';
 
-// Debug logs provide audit trails and help trace auth failures.
-error_log("Admin Dashboard Access Attempt - Session ID: " . session_id());
-error_log("User ID: " . ($_SESSION['user_id'] ?? 'NOT SET'));
-error_log("User Role: " . ($_SESSION['user_role'] ?? 'NOT SET'));
-
-// Verify user session exists before showing admin
-if (!isLoggedIn()) {
-    error_log("User not logged in - redirecting to login");
-    header('Location: ../login.php');
-    exit();
-}
-
-// Enforce role-based authorization at the dashboard level.
-$user_id = $_SESSION['user_id'];
-
-// Special-case/backward compatibility: user_id 0 treated as super-admin.
-if ($user_id === 0) {
-    error_log("Hardcoded admin access granted.");
-} else {
-    // Confirm this user record is an admin in the users table.
-    $stmt = $conn->prepare("SELECT role FROM users WHERE id = ?");
-    $stmt->bind_param("i", $user_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if ($result->num_rows === 0 || $result->fetch_assoc()['role'] !== 'admin') {
-        error_log("User ID " . $user_id . " is not an admin - redirecting to index");
-        header('Location: ../index.php');
-        exit();
-    }
-}
-
-error_log("Admin access granted for user ID: " . $user_id);
+requireAdmin();
 
 // Get dashboard stats
 // Total pets in database (all statuses)
