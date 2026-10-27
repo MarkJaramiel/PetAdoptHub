@@ -12,7 +12,7 @@ $active_page = 'applications';
 if (isset($_GET['action']) && $_GET['action'] == 'update' && isset($_GET['app_id']) && isset($_GET['status'])) {
     $app_id = (int)$_GET['app_id'];
     $status = htmlspecialchars(trim($_GET['status']));
-    
+
     $allowed_statuses = ['Pending', 'Approved', 'Rejected'];
     if (in_array($status, $allowed_statuses)) {
         $update_stmt = $conn->prepare("UPDATE applications SET status = ? WHERE id = ?");
@@ -169,6 +169,7 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -180,10 +181,12 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f5f5f5;
         }
+
         .admin-container {
             display: flex;
             gap: 16px;
@@ -191,11 +194,12 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             padding: 16px;
             align-items: flex-start;
         }
+
         .sidebar {
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
             width: 220px;
             height: fit-content;
             position: sticky;
@@ -203,24 +207,29 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             display: flex;
             flex-direction: column;
         }
+
         .sidebar-header {
             display: none;
         }
+
         .sidebar-logo {
             color: #111;
             font-size: 18px;
             margin-bottom: 18px;
             font-weight: 700;
         }
+
         .sidebar-menu {
             list-style: none;
             display: flex;
             flex-direction: column;
             gap: 12px;
         }
+
         .sidebar-menu li {
             margin-bottom: 0;
         }
+
         .sidebar-menu a {
             display: flex;
             align-items: center;
@@ -233,50 +242,61 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             transition: all 0.3s ease;
             font-size: 14px;
         }
+
         .sidebar-menu a:hover {
             color: #333;
             background-color: rgba(255, 138, 91, 0.05);
         }
+
         .sidebar-menu a.active {
             color: #333;
             background-color: #ffe8d6;
             font-weight: 600;
         }
+
         .sidebar-menu i {
             font-size: 16px;
             width: 20px;
             color: #bbb;
         }
+
         .sidebar-menu a.active img {
             filter: invert(52%) sepia(76%) saturate(1031%) hue-rotate(8deg) !important;
             opacity: 1 !important;
         }
+
         .sidebar-menu a.active i {
             color: #ff8a5b;
         }
+
         .sidebar-menu a:hover i {
             color: #ff8a5b;
         }
+
         .sign-out-section {
             margin-top: 20px;
             padding-top: 20px;
             border-top: 1px solid #eee;
         }
+
         .sign-out-section a {
             color: #ff6b42 !important;
             font-weight: 600 !important;
         }
+
         .sign-out-section i {
             color: #ff6b42 !important;
         }
+
         .main-content {
             flex: 1;
             background-color: #fff;
             padding: 24px;
             border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
             min-height: calc(100vh - 32px);
         }
+
         .page-title {
             font-size: 28px;
             font-weight: 700;
@@ -284,6 +304,7 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             margin-bottom: 30px;
             margin: 0 0 30px 0;
         }
+
         .search-box {
             display: flex;
             align-items: center;
@@ -296,10 +317,12 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             max-width: 400px;
             border: 1px solid #ffffff;
         }
+
         .search-box i {
             color: #1a3a52;
             font-size: 16px;
         }
+
         .search-box input {
             flex: 1;
             border: none;
@@ -308,23 +331,28 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             color: #1a3a52;
             background-color: transparent;
         }
+
         .search-box input::placeholder {
             color: #1a3a52;
         }
+
         .applications-table {
             background-color: white;
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
         }
+
         thead {
             background-color: #f9f9f9;
             border-bottom: 2px solid #e0e0e0;
         }
+
         th {
             padding: 20px;
             text-align: left;
@@ -333,47 +361,82 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             font-size: 14px;
             text-transform: capitalize;
         }
-        .sortable-header { cursor: pointer; user-select: none; white-space: nowrap; position: relative; padding-right: 42px; }
-        .sortable-header:hover, .sortable-header.active { color: #ff8a5b; }
-        .sortable-header .sort-indicator { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); display: inline-flex; flex-direction: column; gap: 2px; color: #6b7280; font-size: 11px; line-height: 1; }
-        .sortable-header .sort-indicator i.active { color: #ff8a5b; }
+
+        .sortable-header {
+            cursor: pointer;
+            user-select: none;
+            white-space: nowrap;
+            position: relative;
+            padding-right: 42px;
+        }
+
+        .sortable-header:hover,
+        .sortable-header.active {
+            color: #ff8a5b;
+        }
+
+        .sortable-header .sort-indicator {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: inline-flex;
+            flex-direction: column;
+            gap: 2px;
+            color: #6b7280;
+            font-size: 11px;
+            line-height: 1;
+        }
+
+        .sortable-header .sort-indicator i.active {
+            color: #ff8a5b;
+        }
+
         td {
             padding: 20px;
             border-bottom: 1px solid #f0f0f0;
             color: #555;
             font-size: 14px;
         }
+
         tr:last-child td {
             border-bottom: none;
         }
+
         .applicant-info {
             display: flex;
             flex-direction: column;
             gap: 3px;
         }
+
         .applicant-name {
             font-weight: 600;
             color: #1a3a52;
             font-size: 15px;
         }
+
         .applicant-note {
             color: #888;
             font-size: 12px;
             font-style: italic;
         }
+
         .contact-info {
             display: flex;
             flex-direction: column;
             gap: 3px;
         }
+
         .contact-info a {
             color: #555;
             text-decoration: none;
             font-size: 13px;
         }
+
         .contact-info a:hover {
             color: #ff8a5b;
         }
+
         .status-badge {
             display: inline-block;
             padding: 6px 14px;
@@ -383,74 +446,366 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             text-transform: capitalize;
             width: fit-content;
         }
-        .reschedule-review-modal { display:none; position:fixed; inset:0; z-index:1200; align-items:center; justify-content:center; padding:20px; background:rgba(16,27,38,.58); }
-        .reschedule-review-modal.active { display:flex; }
-        .reschedule-review-dialog { width:min(440px,100%); max-height:90vh; overflow-y:auto; border:1px solid #dce3e8; border-radius:8px; background:#fff; box-shadow:0 20px 60px rgba(16,27,38,.28); }
-        .reschedule-review-dialog-header { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:18px 22px; border-bottom:1px solid #e5eaee; }
-        .reschedule-review-title-wrap { display:flex; align-items:center; gap:12px; min-width:0; }
-        .reschedule-review-title-icon { display:grid; width:38px; height:38px; flex:0 0 38px; place-items:center; border-radius:50%; background:#eaf1f6; color:#1a3a52; }
-        .reschedule-review-title { margin:0; color:#1a3a52; font-size:19px; font-weight:700; }
-        .reschedule-review-close { width:34px; height:34px; border:0; border-radius:6px; background:transparent; color:#52616e; font-size:25px; cursor:pointer; }
-        .reschedule-review-close:hover { background:#f0f3f5; }
-        .reschedule-review-body { display:grid; gap:16px; padding:20px 22px; }
-        .reschedule-review-people { display:grid; grid-template-columns:1fr 1fr; gap:12px; padding:13px; border-radius:6px; background:#f7f9fa; }
-        .reschedule-review-person-label { display:block; margin-bottom:6px; color:#71808c; font-size:10px; font-weight:700; text-transform:uppercase; }
-        .reschedule-review-person-value { color:#243746; font-size:13px; font-weight:700; overflow-wrap:anywhere; }
-        .reschedule-review-schedules { display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:8px; }
-        .reschedule-review-schedule { min-height:82px; padding:12px; border:1px solid #e2e8ec; border-radius:6px; background:#fafbfc; }
-        .reschedule-review-schedule.requested { border-color:#cbdce9; background:#f0f6fa; }
-        .reschedule-review-schedule-label { display:flex; align-items:center; gap:7px; margin-bottom:8px; color:#405564; font-size:11px; font-weight:700; }
-        .reschedule-review-schedule.requested .reschedule-review-schedule-label { color:#245779; }
-        .reschedule-review-schedule-value { color:#263746; font-size:12px; font-weight:600; line-height:1.5; }
-        .reschedule-review-schedule-value { color:#263746; font-size:12px; font-weight:600; line-height:1.5; white-space:pre-line; }
-        .reschedule-review-arrow { color:#71808c; font-size:16px; }
-        .reschedule-review-reason { padding:13px; border-radius:6px; background:#f7f9fa; }
-        .reschedule-review-reason h3 { margin:0 0 7px; color:#405564; font-size:12px; }
-        .reschedule-review-reason p { margin:0; color:#344553; font-size:13px; line-height:1.5; overflow-wrap:anywhere; white-space:pre-wrap; }
-        .reschedule-review-requested-at { display:flex; align-items:center; justify-content:space-between; gap:10px; color:#71808c; font-size:11px; }
-        .reschedule-review-actions { display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:16px 22px 20px; border-top:1px solid #e5eaee; }
-        .reschedule-review-actions form { margin:0; }
-        .reschedule-review-action { display:flex; width:100%; min-height:42px; align-items:center; justify-content:center; gap:7px; border:1px solid; border-radius:6px; background:#fff; font-size:13px; font-weight:700; cursor:pointer; }
-        .reschedule-review-action.reject { border-color:#bd5660; color:#a83d45; }
-        .reschedule-review-action.reject:hover { background:#fff3f3; }
-        .reschedule-review-action.approve { border-color:#287747; background:#287747; color:#fff; }
-        .reschedule-review-action.approve:hover { background:#205f39; }
-        .reschedule-decision-confirm { display:none; position:fixed; inset:0; z-index:1300; align-items:center; justify-content:center; padding:20px; background:rgba(16,27,38,.66); }
-        .reschedule-decision-confirm.active { display:flex; }
-        .reschedule-decision-confirm-card { width:min(390px,100%); padding:24px; border:1px solid #dce3e8; border-radius:8px; background:#fff; box-shadow:0 20px 60px rgba(16,27,38,.3); }
-        .reschedule-decision-confirm-card h3 { margin:0 0 9px; color:#1a3a52; font-size:18px; }
-        .reschedule-decision-confirm-card p { margin:0; color:#596773; font-size:13px; line-height:1.5; }
-        .reschedule-decision-confirm-actions { display:flex; justify-content:flex-end; gap:9px; margin-top:22px; }
-        .reschedule-decision-confirm-actions button { min-height:38px; padding:9px 14px; border:1px solid #cbd3da; border-radius:5px; background:#fff; color:#344553; font-weight:700; cursor:pointer; }
-        .reschedule-decision-confirm-actions .confirm-action { border-color:#287747; background:#287747; color:#fff; }
-        .reschedule-decision-confirm-actions .confirm-action.reject { border-color:#a83d45; background:#a83d45; }
-        @media(max-width:480px) { .reschedule-review-modal { padding:12px; } .reschedule-review-dialog-header,.reschedule-review-body { padding-left:16px; padding-right:16px; } .reschedule-review-actions { padding-left:16px; padding-right:16px; } .reschedule-review-schedules { grid-template-columns:1fr; } .reschedule-review-arrow { justify-self:center; transform:rotate(90deg); } }
+
+        .reschedule-review-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 1200;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(16, 27, 38, .58);
+        }
+
+        .reschedule-review-modal.active {
+            display: flex;
+        }
+
+        .reschedule-review-dialog {
+            width: min(440px, 100%);
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid #dce3e8;
+            border-radius: 8px;
+            background: #fff;
+            box-shadow: 0 20px 60px rgba(16, 27, 38, .28);
+        }
+
+        .reschedule-review-dialog-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 18px 22px;
+            border-bottom: 1px solid #e5eaee;
+        }
+
+        .reschedule-review-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+        }
+
+        .reschedule-review-title-icon {
+            display: grid;
+            width: 38px;
+            height: 38px;
+            flex: 0 0 38px;
+            place-items: center;
+            border-radius: 50%;
+            background: #eaf1f6;
+            color: #1a3a52;
+        }
+
+        .reschedule-review-title {
+            margin: 0;
+            color: #1a3a52;
+            font-size: 19px;
+            font-weight: 700;
+        }
+
+        .reschedule-review-close {
+            width: 34px;
+            height: 34px;
+            border: 0;
+            border-radius: 6px;
+            background: transparent;
+            color: #52616e;
+            font-size: 25px;
+            cursor: pointer;
+        }
+
+        .reschedule-review-close:hover {
+            background: #f0f3f5;
+        }
+
+        .reschedule-review-body {
+            display: grid;
+            gap: 16px;
+            padding: 20px 22px;
+        }
+
+        .reschedule-review-people {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            padding: 13px;
+            border-radius: 6px;
+            background: #f7f9fa;
+        }
+
+        .reschedule-review-person-label {
+            display: block;
+            margin-bottom: 6px;
+            color: #71808c;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .reschedule-review-person-value {
+            color: #243746;
+            font-size: 13px;
+            font-weight: 700;
+            overflow-wrap: anywhere;
+        }
+
+        .reschedule-review-schedules {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .reschedule-review-schedule {
+            min-height: 82px;
+            padding: 12px;
+            border: 1px solid #e2e8ec;
+            border-radius: 6px;
+            background: #fafbfc;
+        }
+
+        .reschedule-review-schedule.requested {
+            border-color: #cbdce9;
+            background: #f0f6fa;
+        }
+
+        .reschedule-review-schedule-label {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            margin-bottom: 8px;
+            color: #405564;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .reschedule-review-schedule.requested .reschedule-review-schedule-label {
+            color: #245779;
+        }
+
+        .reschedule-review-schedule-value {
+            color: #263746;
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        .reschedule-review-schedule-value {
+            color: #263746;
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 1.5;
+            white-space: pre-line;
+        }
+
+        .reschedule-review-arrow {
+            color: #71808c;
+            font-size: 16px;
+        }
+
+        .reschedule-review-reason {
+            padding: 13px;
+            border-radius: 6px;
+            background: #f7f9fa;
+        }
+
+        .reschedule-review-reason h3 {
+            margin: 0 0 7px;
+            color: #405564;
+            font-size: 12px;
+        }
+
+        .reschedule-review-reason p {
+            margin: 0;
+            color: #344553;
+            font-size: 13px;
+            line-height: 1.5;
+            overflow-wrap: anywhere;
+            white-space: pre-wrap;
+        }
+
+        .reschedule-review-requested-at {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            color: #71808c;
+            font-size: 11px;
+        }
+
+        .reschedule-review-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            padding: 16px 22px 20px;
+            border-top: 1px solid #e5eaee;
+        }
+
+        .reschedule-review-actions form {
+            margin: 0;
+        }
+
+        .reschedule-review-action {
+            display: flex;
+            width: 100%;
+            min-height: 42px;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            border: 1px solid;
+            border-radius: 6px;
+            background: #fff;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .reschedule-review-action.reject {
+            border-color: #bd5660;
+            color: #a83d45;
+        }
+
+        .reschedule-review-action.reject:hover {
+            background: #fff3f3;
+        }
+
+        .reschedule-review-action.approve {
+            border-color: #287747;
+            background: #287747;
+            color: #fff;
+        }
+
+        .reschedule-review-action.approve:hover {
+            background: #205f39;
+        }
+
+        .reschedule-decision-confirm {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 1300;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(16, 27, 38, .66);
+        }
+
+        .reschedule-decision-confirm.active {
+            display: flex;
+        }
+
+        .reschedule-decision-confirm-card {
+            width: min(390px, 100%);
+            padding: 24px;
+            border: 1px solid #dce3e8;
+            border-radius: 8px;
+            background: #fff;
+            box-shadow: 0 20px 60px rgba(16, 27, 38, .3);
+        }
+
+        .reschedule-decision-confirm-card h3 {
+            margin: 0 0 9px;
+            color: #1a3a52;
+            font-size: 18px;
+        }
+
+        .reschedule-decision-confirm-card p {
+            margin: 0;
+            color: #596773;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .reschedule-decision-confirm-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 9px;
+            margin-top: 22px;
+        }
+
+        .reschedule-decision-confirm-actions button {
+            min-height: 38px;
+            padding: 9px 14px;
+            border: 1px solid #cbd3da;
+            border-radius: 5px;
+            background: #fff;
+            color: #344553;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .reschedule-decision-confirm-actions .confirm-action {
+            border-color: #287747;
+            background: #287747;
+            color: #fff;
+        }
+
+        .reschedule-decision-confirm-actions .confirm-action.reject {
+            border-color: #a83d45;
+            background: #a83d45;
+        }
+
+        @media(max-width:480px) {
+            .reschedule-review-modal {
+                padding: 12px;
+            }
+
+            .reschedule-review-dialog-header,
+            .reschedule-review-body {
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+
+            .reschedule-review-actions {
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+
+            .reschedule-review-schedules {
+                grid-template-columns: 1fr;
+            }
+
+            .reschedule-review-arrow {
+                justify-self: center;
+                transform: rotate(90deg);
+            }
+        }
+
         .status-pending {
             background-color: #ffb399;
             color: white;
         }
+
         .status-approved {
             background-color: #a8d9a8;
             color: white;
         }
+
         .status-rejected {
             background-color: #ffb3c1;
             color: white;
         }
+
         .status-reschedule {
             background-color: #f6e7bd;
             color: #765719;
         }
+
         .no-results {
             text-align: center;
             padding: 60px 20px;
             color: #999;
         }
+
         .actions {
             display: flex;
             gap: 12px;
             align-items: center;
         }
+
         .action-btn {
             background: none;
             border: none;
@@ -461,11 +816,22 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             padding: 5px;
             position: relative;
         }
-        .action-pending-dot { position:absolute; top:0; right:0; width:7px; height:7px; border:1px solid #fff; border-radius:50%; background:#c64747; }
+
+        .action-pending-dot {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 7px;
+            height: 7px;
+            border: 1px solid #fff;
+            border-radius: 50%;
+            background: #c64747;
+        }
+
         .action-btn:hover {
             color: #ff8a5b;
         }
-        
+
         /* Modal Styles */
         .modal {
             display: none;
@@ -475,13 +841,15 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.5);
+            background-color: rgba(0, 0, 0, 0.5);
             align-items: center;
             justify-content: center;
         }
+
         .modal.active {
             display: flex;
         }
+
         .modal-content {
             background-color: white;
             padding: 0;
@@ -491,10 +859,11 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             max-height: 90vh;
             overflow: hidden;
             position: relative;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
             display: flex;
             flex-direction: column;
         }
+
         .modal-header {
             display: flex;
             justify-content: space-between;
@@ -504,12 +873,14 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             border-radius: 16px 16px 0 0;
             position: relative;
         }
+
         .modal-title {
             font-size: 24px;
             font-weight: 700;
             color: white;
             letter-spacing: -0.5px;
         }
+
         .close-btn {
             background: transparent;
             border: none;
@@ -524,9 +895,11 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             justify-content: center;
             transition: all 0.3s ease;
         }
+
         .close-btn:hover {
             transform: scale(1.1);
         }
+
         .application-detail {
             margin-bottom: 24px;
             padding: 0 40px;
@@ -534,9 +907,11 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             align-items: flex-start;
             gap: 16px;
         }
+
         .application-detail:first-of-type {
             padding-top: 15px;
         }
+
         .detail-icon-edit {
             font-size: 20px;
             color: #ff8a5b;
@@ -548,9 +923,11 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             justify-content: center;
             margin-top: 2px;
         }
+
         .detail-content-edit {
             flex: 1;
         }
+
         .application-label {
             font-weight: 600;
             color: #1a3a52;
@@ -560,6 +937,7 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             letter-spacing: 1px;
             display: block;
         }
+
         .application-value {
             color: #444;
             font-size: 15px;
@@ -569,12 +947,14 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             border-radius: 8px;
             font-weight: 500;
         }
+
         .status-selector {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 12px;
             margin-top: 8px;
         }
+
         .status-btn {
             padding: 12px 16px;
             border: 2px solid #e8e8e8;
@@ -593,6 +973,7 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             position: relative;
             overflow: hidden;
         }
+
         .status-btn::before {
             content: '';
             position: absolute;
@@ -603,49 +984,60 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             transition: left 0.3s ease;
             z-index: -1;
         }
+
         .status-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
+
         .status-btn.pending {
             border-color: #ffb399;
             color: #ff8a5b;
         }
+
         .status-btn.pending::before {
             background: linear-gradient(135deg, #ffb399 0%, #ff9980 100%);
         }
+
         .status-btn.pending.active {
             background: linear-gradient(135deg, #ffb399 0%, #ff9980 100%);
             color: white;
             border-color: transparent;
             box-shadow: 0 6px 16px rgba(255, 138, 91, 0.3);
         }
+
         .status-btn.approved {
             border-color: #a8d9a8;
             color: #4caf50;
         }
+
         .status-btn.approved::before {
             background: linear-gradient(135deg, #a8d9a8 0%, #8dd38d 100%);
         }
+
         .status-btn.approved.active {
             background: linear-gradient(135deg, #a8d9a8 0%, #8dd38d 100%);
             color: white;
             border-color: transparent;
             box-shadow: 0 6px 16px rgba(76, 175, 80, 0.3);
         }
+
         .status-btn.rejected {
             border-color: #ffb3c1;
             color: #f44336;
         }
+
         .status-btn.rejected::before {
             background: linear-gradient(135deg, #ffb3c1 0%, #ff99a8 100%);
         }
+
         .status-btn.rejected.active {
             background: linear-gradient(135deg, #ffb3c1 0%, #ff99a8 100%);
             color: white;
             border-color: transparent;
             box-shadow: 0 6px 16px rgba(244, 67, 54, 0.3);
         }
+
         .modal-buttons {
             display: flex;
             gap: 12px;
@@ -656,6 +1048,7 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             background-color: #fafafa;
             border-radius: 0 0 16px 16px;
         }
+
         .btn-cancel {
             background-color: white;
             color: #1a3a52;
@@ -670,11 +1063,13 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             align-items: center;
             gap: 6px;
         }
+
         .btn-cancel:hover {
             background-color: #f5f5f5;
             border-color: #d0d0d0;
             transform: translateY(-1px);
         }
+
         .btn-save {
             background: linear-gradient(135deg, #ff8a5b 0%, #ff6b42 100%);
             color: white;
@@ -690,13 +1085,16 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             gap: 6px;
             box-shadow: 0 4px 12px rgba(255, 138, 91, 0.2);
         }
+
         .btn-save:hover {
             box-shadow: 0 6px 20px rgba(255, 138, 91, 0.35);
             transform: translateY(-2px);
         }
+
         .btn-save:active {
             transform: translateY(0);
         }
+
         .success-message {
             background-color: #d4edda;
             color: #155724;
@@ -705,6 +1103,7 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             margin-bottom: 20px;
             display: none;
         }
+
         .success-message.show {
             display: block;
         }
@@ -773,8 +1172,15 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         }
 
         @keyframes noticePopupIn {
-            from { opacity: 0; transform: translateY(8px) scale(0.98); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
+            from {
+                opacity: 0;
+                transform: translateY(8px) scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
 
         /* Enhanced Modal Styles */
@@ -1010,17 +1416,20 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                 gap: 12px;
                 padding: 12px;
             }
+
             .sidebar {
                 width: 100%;
                 position: static;
                 height: auto;
             }
+
             .main-content {
                 min-height: auto;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="admin-container">
         <?php include_once '../includes/admin_sidebar.php'; ?>
@@ -1039,12 +1448,11 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             <div class="search-box">
                 <i class="fas fa-search"></i>
                 <form style="display: flex; width: 100%;" method="GET">
-                    <input 
-                        type="text" 
-                        name="search" 
-                        placeholder="Search Applicant..." 
-                        value="<?php echo htmlspecialchars($search_query); ?>"
-                    >
+                    <input
+                        type="text"
+                        name="search"
+                        placeholder="Search Applicant..."
+                        value="<?php echo htmlspecialchars($search_query); ?>">
                 </form>
             </div>
 
@@ -1151,7 +1559,7 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                 <h2 class="modal-title">Update Application Status</h2>
                 <button class="close-btn" onclick="closeEditModal()">&times;</button>
             </div>
-            
+
             <div class="application-detail" style="padding: 0 40px; margin-bottom: 24px; padding-top: 15px;">
                 <div class="detail-icon-edit" style="font-size: 20px; color: #ff8a5b; width: 32px; height: 32px; min-width: 32px; display: flex; align-items: center; justify-content: center; margin-top: 25px;"></i></div>
                 <div class="detail-content-edit" style="flex: 1;">
@@ -1326,137 +1734,146 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     </div>
 
     <script>
-                // Interview Modal Logic
-                function openInterviewForRow(row) {
-                    if (!row) return;
-                    const data = row.dataset;
-                    if (data.requestStatus === 'Pending') {
-                        document.getElementById('reviewApplicantName').textContent = data.applicant || 'Applicant';
-                        document.getElementById('reviewApplicantEmail').textContent = data.email || '';
-                        document.getElementById('reviewPetName').textContent = data.pet || 'Pet';
-                        document.getElementById('reviewCurrentSchedule').textContent = formatInterviewSchedule(data.interviewDate, data.interviewTime);
-                        document.getElementById('reviewRequestedSchedule').textContent = formatInterviewSchedule(data.requestedDate, data.requestedTime);
-                        document.getElementById('reviewRescheduleReason').textContent = data.requestReason || 'No reason provided.';
-                        document.getElementById('reviewApproveAppId').value = data.applicationId || '';
-                        document.getElementById('reviewRejectAppId').value = document.getElementById('reviewApproveAppId').value;
-                        document.getElementById('rescheduleReviewModal').classList.add('active');
-                        return;
-                    }
-                    openInterviewModal(data.applicationId, data.applicant, data.pet);
-                }
+        // Interview Modal Logic
+        function openInterviewForRow(row) {
+            if (!row) return;
+            const data = row.dataset;
+            if (data.requestStatus === 'Pending') {
+                document.getElementById('reviewApplicantName').textContent = data.applicant || 'Applicant';
+                document.getElementById('reviewApplicantEmail').textContent = data.email || '';
+                document.getElementById('reviewPetName').textContent = data.pet || 'Pet';
+                document.getElementById('reviewCurrentSchedule').textContent = formatInterviewSchedule(data.interviewDate, data.interviewTime);
+                document.getElementById('reviewRequestedSchedule').textContent = formatInterviewSchedule(data.requestedDate, data.requestedTime);
+                document.getElementById('reviewRescheduleReason').textContent = data.requestReason || 'No reason provided.';
+                document.getElementById('reviewApproveAppId').value = data.applicationId || '';
+                document.getElementById('reviewRejectAppId').value = document.getElementById('reviewApproveAppId').value;
+                document.getElementById('rescheduleReviewModal').classList.add('active');
+                return;
+            }
+            openInterviewModal(data.applicationId, data.applicant, data.pet);
+        }
 
-                function formatInterviewSchedule(dateValue, timeValue) {
-                    if (!dateValue) return 'No confirmed schedule';
-                    const parts = dateValue.split('-').map(Number);
-                    const dateLabel = new Date(parts[0], parts[1] - 1, parts[2]).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
-                    const timeLabel = timeValue ? new Date('2000-01-01T' + timeValue).toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' }) : '';
-                    return dateLabel + (timeLabel ? '\\n' + timeLabel : '');
-                }
+        function formatInterviewSchedule(dateValue, timeValue) {
+            if (!dateValue) return 'No confirmed schedule';
+            const parts = dateValue.split('-').map(Number);
+            const dateLabel = new Date(parts[0], parts[1] - 1, parts[2]).toLocaleDateString(undefined, {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            const timeLabel = timeValue ? new Date('2000-01-01T' + timeValue).toLocaleTimeString(undefined, {
+                hour: 'numeric',
+                minute: '2-digit'
+            }) : '';
+            return dateLabel + (timeLabel ? '\\n' + timeLabel : '');
+        }
 
-                function closeRescheduleReviewModal() {
-                    document.getElementById('rescheduleReviewModal').classList.remove('active');
-                }
+        function closeRescheduleReviewModal() {
+            document.getElementById('rescheduleReviewModal').classList.remove('active');
+        }
 
-                let pendingRescheduleDecision = null;
+        let pendingRescheduleDecision = null;
 
-                function openRescheduleDecisionConfirm(decision) {
-                    pendingRescheduleDecision = decision;
-                    const isApproval = decision === 'Approved';
-                    const title = document.getElementById('rescheduleDecisionConfirmTitle');
-                    const message = document.getElementById('rescheduleDecisionConfirmMessage');
-                    const confirmButton = document.getElementById('confirmRescheduleDecisionButton');
-                    title.textContent = isApproval ? 'Approve new interview time?' : 'Reject reschedule request?';
-                    message.textContent = isApproval
-                        ? 'The requested date and time will replace the current confirmed interview.'
-                        : 'The request will be declined and the current confirmed interview will remain scheduled.';
-                    confirmButton.textContent = isApproval ? 'Approve schedule' : 'Reject request';
-                    confirmButton.classList.toggle('reject', !isApproval);
-                    document.getElementById('rescheduleDecisionConfirm').classList.add('active');
-                }
+        function openRescheduleDecisionConfirm(decision) {
+            pendingRescheduleDecision = decision;
+            const isApproval = decision === 'Approved';
+            const title = document.getElementById('rescheduleDecisionConfirmTitle');
+            const message = document.getElementById('rescheduleDecisionConfirmMessage');
+            const confirmButton = document.getElementById('confirmRescheduleDecisionButton');
+            title.textContent = isApproval ? 'Approve new interview time?' : 'Reject reschedule request?';
+            message.textContent = isApproval ?
+                'The requested date and time will replace the current confirmed interview.' :
+                'The request will be declined and the current confirmed interview will remain scheduled.';
+            confirmButton.textContent = isApproval ? 'Approve schedule' : 'Reject request';
+            confirmButton.classList.toggle('reject', !isApproval);
+            document.getElementById('rescheduleDecisionConfirm').classList.add('active');
+        }
 
-                function closeRescheduleDecisionConfirm() {
-                    document.getElementById('rescheduleDecisionConfirm').classList.remove('active');
-                    pendingRescheduleDecision = null;
-                }
+        function closeRescheduleDecisionConfirm() {
+            document.getElementById('rescheduleDecisionConfirm').classList.remove('active');
+            pendingRescheduleDecision = null;
+        }
 
-                function submitRescheduleDecision() {
-                    if (!pendingRescheduleDecision) return;
-                    const formId = pendingRescheduleDecision === 'Approved' ? 'reviewApproveForm' : 'reviewRejectForm';
-                    const form = document.getElementById(formId);
-                    if (form) form.submit();
-                }
+        function submitRescheduleDecision() {
+            if (!pendingRescheduleDecision) return;
+            const formId = pendingRescheduleDecision === 'Approved' ? 'reviewApproveForm' : 'reviewRejectForm';
+            const form = document.getElementById(formId);
+            if (form) form.submit();
+        }
 
-                document.getElementById('rescheduleDecisionConfirm').addEventListener('click', function(event) {
-                    if (event.target === this) closeRescheduleDecisionConfirm();
-                });
+        document.getElementById('rescheduleDecisionConfirm').addEventListener('click', function(event) {
+            if (event.target === this) closeRescheduleDecisionConfirm();
+        });
 
-                function openInterviewModal(appId, applicant, pet) {
-                    document.getElementById('interviewAppId').value = appId;
-                    document.getElementById('interviewApplicant').value = applicant;
-                    document.getElementById('interviewPet').value = pet;
-                    document.getElementById('interviewTypeSelect').value = '';
-                    document.getElementById('meetingLink').value = '';
-                    document.querySelector('#interviewForm input[name="interview_date"]').value = '';
-                    document.querySelector('#interviewForm input[name="interview_time"]').value = '';
-                    document.getElementById('meetingLink').required = false;
-                    document.getElementById('meetingLinkGroup').style.display = 'none';
-                    document.getElementById('interviewModal').classList.add('active');
-                }
+        function openInterviewModal(appId, applicant, pet) {
+            document.getElementById('interviewAppId').value = appId;
+            document.getElementById('interviewApplicant').value = applicant;
+            document.getElementById('interviewPet').value = pet;
+            document.getElementById('interviewTypeSelect').value = '';
+            document.getElementById('meetingLink').value = '';
+            document.querySelector('#interviewForm input[name="interview_date"]').value = '';
+            document.querySelector('#interviewForm input[name="interview_time"]').value = '';
+            document.getElementById('meetingLink').required = false;
+            document.getElementById('meetingLinkGroup').style.display = 'none';
+            document.getElementById('interviewModal').classList.add('active');
+        }
 
-                function closeInterviewModal() {
-                    document.getElementById('interviewModal').classList.remove('active');
-                }
+        function closeInterviewModal() {
+            document.getElementById('interviewModal').classList.remove('active');
+        }
 
-                function toggleMeetingLink() {
-                    const interviewType = document.getElementById('interviewTypeSelect').value;
-                    const meetingLinkGroup = document.getElementById('meetingLinkGroup');
-                    const meetingLinkInput = document.getElementById('meetingLink');
-                    
-                    if (interviewType === 'Online') {
-                        meetingLinkGroup.style.display = 'block';
-                        meetingLinkInput.required = true;
-                    } else {
-                        meetingLinkGroup.style.display = 'none';
-                        meetingLinkInput.required = false;
-                        meetingLinkInput.value = '';
-                    }
-                }
+        function toggleMeetingLink() {
+            const interviewType = document.getElementById('interviewTypeSelect').value;
+            const meetingLinkGroup = document.getElementById('meetingLinkGroup');
+            const meetingLinkInput = document.getElementById('meetingLink');
 
-                function submitInterviewForm(event) {
-                    // Optionally show a loading spinner or disable button
-                    // Let the form submit normally (POST)
-                    return true;
-                }
+            if (interviewType === 'Online') {
+                meetingLinkGroup.style.display = 'block';
+                meetingLinkInput.required = true;
+            } else {
+                meetingLinkGroup.style.display = 'none';
+                meetingLinkInput.required = false;
+                meetingLinkInput.value = '';
+            }
+        }
 
-                function closeInterviewNotice() {
-                    document.getElementById('interviewNoticePopup').classList.remove('active');
-                }
+        function submitInterviewForm(event) {
+            // Optionally show a loading spinner or disable button
+            // Let the form submit normally (POST)
+            return true;
+        }
 
-                function showInterviewNotice(success, slotFull = false) {
-                    const popup = document.getElementById('interviewNoticePopup');
-                    const title = document.getElementById('interviewNoticeTitle');
-                    const message = document.getElementById('interviewNoticeMessage');
-                    const icon = popup.querySelector('.notice-popup-icon');
+        function closeInterviewNotice() {
+            document.getElementById('interviewNoticePopup').classList.remove('active');
+        }
 
-                    if (slotFull) {
-                        title.textContent = 'Time Slot Full';
-                        message.textContent = 'This date and time already has three interviews. Choose another slot.';
-                        icon.innerHTML = '<i class="fas fa-clock"></i>';
-                        icon.style.background = '#fff1e8';
-                        icon.style.color = '#d96835';
-                    } else if (success) {
-                        title.textContent = 'Interview Scheduled';
-                        message.textContent = 'The interview date and time were saved successfully.';
-                        icon.innerHTML = '<i class="fas fa-check"></i>';
-                    } else {
-                        title.textContent = 'Unable to Schedule';
-                        message.textContent = 'The interview could not be saved. Please check the form and try again.';
-                        icon.innerHTML = '<i class="fas fa-exclamation"></i>';
-                        icon.style.background = '#fff1e8';
-                        icon.style.color = '#d96835';
-                    }
-                    popup.classList.add('active');
-                }
+        function showInterviewNotice(success, slotFull = false) {
+            const popup = document.getElementById('interviewNoticePopup');
+            const title = document.getElementById('interviewNoticeTitle');
+            const message = document.getElementById('interviewNoticeMessage');
+            const icon = popup.querySelector('.notice-popup-icon');
+
+            if (slotFull) {
+                title.textContent = 'Time Slot Full';
+                message.textContent = 'This date and time already has three interviews. Choose another slot.';
+                icon.innerHTML = '<i class="fas fa-clock"></i>';
+                icon.style.background = '#fff1e8';
+                icon.style.color = '#d96835';
+            } else if (success) {
+                title.textContent = 'Interview Scheduled';
+                message.textContent = 'The interview date and time were saved successfully.';
+                icon.innerHTML = '<i class="fas fa-check"></i>';
+            } else {
+                title.textContent = 'Unable to Schedule';
+                message.textContent = 'The interview could not be saved. Please check the form and try again.';
+                icon.innerHTML = '<i class="fas fa-exclamation"></i>';
+                icon.style.background = '#fff1e8';
+                icon.style.color = '#d96835';
+            }
+            popup.classList.add('active');
+        }
+
+
         let currentAppId = null;
         let selectedStatus = null;
 
@@ -1701,16 +2118,16 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         function editApplication(appId, fullname, petName, currentStatus) {
             currentAppId = appId;
             selectedStatus = currentStatus;
-            
+
             document.getElementById('editApplicantName').textContent = fullname;
             document.getElementById('editPetName').textContent = petName;
-            
+
             // Reset buttons
             document.querySelectorAll('.status-btn').forEach(btn => btn.classList.remove('active'));
-            
+
             // Set active button based on current status
             document.querySelector(`.status-btn.${currentStatus.toLowerCase()}`).classList.add('active');
-            
+
             document.getElementById('editModal').classList.add('active');
         }
 
@@ -1787,14 +2204,14 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         // Close modal on Escape key
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
-                        const decisionConfirm = document.getElementById('rescheduleDecisionConfirm');
-                        if (decisionConfirm.classList.contains('active')) {
-                            closeRescheduleDecisionConfirm();
-                        } else {
-                            closeViewModal();
-                            closeEditModal();
-                            closeRescheduleReviewModal();
-                        }
+                const decisionConfirm = document.getElementById('rescheduleDecisionConfirm');
+                if (decisionConfirm.classList.contains('active')) {
+                    closeRescheduleDecisionConfirm();
+                } else {
+                    closeViewModal();
+                    closeEditModal();
+                    closeRescheduleReviewModal();
+                }
             }
         });
     </script>
@@ -1810,11 +2227,11 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                 const indicator = header.querySelector('.sort-indicator');
                 header.classList.toggle('active', isActive);
                 if (!indicator) return;
-                indicator.innerHTML = isActive
-                    ? (applicationSortDirection === 'asc'
-                        ? '<i class="fas fa-chevron-up active"></i><i class="fas fa-chevron-down"></i>'
-                        : '<i class="fas fa-chevron-up"></i><i class="fas fa-chevron-down active"></i>')
-                    : '<i class="fas fa-chevron-up"></i><i class="fas fa-chevron-down"></i>';
+                indicator.innerHTML = isActive ?
+                    (applicationSortDirection === 'asc' ?
+                        '<i class="fas fa-chevron-up active"></i><i class="fas fa-chevron-down"></i>' :
+                        '<i class="fas fa-chevron-up"></i><i class="fas fa-chevron-down active"></i>') :
+                    '<i class="fas fa-chevron-up"></i><i class="fas fa-chevron-down"></i>';
             });
         }
 
@@ -1830,10 +2247,15 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             rows.sort(function(first, second) {
                 const firstValue = (first.dataset[key] || '').toLocaleLowerCase();
                 const secondValue = (second.dataset[key] || '').toLocaleLowerCase();
-                return firstValue.localeCompare(secondValue, undefined, { numeric: true, sensitivity: 'base' }) * direction;
+                return firstValue.localeCompare(secondValue, undefined, {
+                    numeric: true,
+                    sensitivity: 'base'
+                }) * direction;
             });
 
-            rows.forEach(function(row) { applicationTableBody.appendChild(row); });
+            rows.forEach(function(row) {
+                applicationTableBody.appendChild(row);
+            });
             updateApplicationSortIndicators(key);
         }
 
@@ -1846,4 +2268,5 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         updateApplicationSortIndicators(applicationSortKey);
     </script>
 </body>
+
 </html>
