@@ -109,6 +109,24 @@ $stmt->close();
         .status-pending { background: #fff3d6; color: #9a6700; }
         .status-approved { background: #dcfce7; color: #166534; }
         .status-rejected { background: #fee2e2; color: #991b1b; }
+        .approval-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .approval-filters input,
+        .approval-filters select {
+            min-height: 42px;
+            padding: 9px 12px;
+            border: 1px solid #d9e0e7;
+            border-radius: 8px;
+            background: #fff;
+            color: #1a3a52;
+            font: inherit;
+        }
+        .approval-filters input { flex: 1 1 260px; }
+        .approval-filters select { flex: 0 1 180px; }
         .actions {
             display: flex; gap: 8px; flex-wrap: wrap;
         }
@@ -150,6 +168,14 @@ $stmt->close();
             <?php if (empty($pending_users)): ?>
                 <div class="empty-state">No users found.</div>
             <?php else: ?>
+                <div class="approval-filters">
+                    <input type="search" id="userApprovalSearch" placeholder="Search name, username, email, or phone" aria-label="Search users">
+                    <select id="userApprovalStatus" aria-label="Filter users by status">
+                        <option value="">All statuses</option>
+                        <option value="pending">Pending</option>
+                        <option value="approved">Approved</option>
+                    </select>
+                </div>
                 <table>
                     <thead>
                         <tr>
@@ -170,8 +196,14 @@ $stmt->close();
                                 if ($statusClass === 'pending') { $statusClass = 'status-pending'; }
                                 elseif ($statusClass === 'approved') { $statusClass = 'status-approved'; }
                                 else { $statusClass = 'status-rejected'; }
+                                $searchText = implode(' ', [
+                                    $user['fullname'] ?? '',
+                                    $user['username'] ?? '',
+                                    $user['email'] ?? '',
+                                    $user['phone'] ?? ''
+                                ]);
                             ?>
-                            <tr>
+                            <tr data-search="<?php echo htmlspecialchars($searchText, ENT_QUOTES, 'UTF-8'); ?>" data-status="<?php echo htmlspecialchars(strtolower($status), ENT_QUOTES, 'UTF-8'); ?>">
                                 <td><?php echo htmlspecialchars($user['fullname']); ?></td>
                                 <td><?php echo htmlspecialchars($user['username']); ?></td>
                                 <td><?php echo htmlspecialchars($user['email']); ?></td>
@@ -202,9 +234,37 @@ $stmt->close();
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+                <div class="empty-state" id="userApprovalNoMatches" hidden>No users match the selected filters.</div>
             <?php endif; ?>
         </div>
     </main>
 </div>
+<script>
+    const userApprovalSearch = document.getElementById('userApprovalSearch');
+    const userApprovalStatus = document.getElementById('userApprovalStatus');
+    const userApprovalRows = document.querySelectorAll('tbody tr[data-search]');
+    const userApprovalNoMatches = document.getElementById('userApprovalNoMatches');
+
+    function filterUserApprovals() {
+        const searchTerm = userApprovalSearch.value.trim().toLocaleLowerCase();
+        const selectedStatus = userApprovalStatus.value;
+        let visibleCount = 0;
+
+        userApprovalRows.forEach(function(row) {
+            const matchesSearch = row.dataset.search.toLocaleLowerCase().includes(searchTerm);
+            const matchesStatus = !selectedStatus || row.dataset.status === selectedStatus;
+            const isVisible = matchesSearch && matchesStatus;
+            row.hidden = !isVisible;
+            if (isVisible) visibleCount++;
+        });
+
+        userApprovalNoMatches.hidden = visibleCount > 0;
+    }
+
+    if (userApprovalSearch && userApprovalStatus && userApprovalNoMatches) {
+        userApprovalSearch.addEventListener('input', filterUserApprovals);
+        userApprovalStatus.addEventListener('change', filterUserApprovals);
+    }
+</script>
 </body>
 </html>
