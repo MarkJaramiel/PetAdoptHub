@@ -181,6 +181,8 @@ function displaySupplyCategory($category, $item_name) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($page_title); ?></title>
+    <link rel="icon" type="image/png"
+        href="<?= htmlspecialchars(rtrim(SITE_URL, '/') . '/images/icon%20logo.png', ENT_QUOTES, 'UTF-8') ?>">
     <link rel="stylesheet" href="../css/fontawesome-fallback.css">
     <style>
         * { box-sizing: border-box; }

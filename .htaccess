@@ -1,2 +1,15 @@
 RewriteEngine On
 RewriteRule ^uploads/valid_ids(/|$) - [F,L,NC]
+
+# Keep API URLs stable for existing fetches and form submissions.
+RewriteRule ^(api|admin/api)(/|$) - [L]
+
+# Redirect page requests to the extensionless URL.
+RewriteCond %{REQUEST_METHOD} ^(GET|HEAD)$
+RewriteCond %{THE_REQUEST} \s/+(.+?)\.php(?:[?\s]) [NC]
+RewriteRule ^(.+)\.php$ $1 [R=301,L,NE]
+
+# Serve existing PHP pages when requested without the extension.
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.+?)/?$ $1.php [L]
