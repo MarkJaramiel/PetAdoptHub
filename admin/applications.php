@@ -1499,26 +1499,28 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                                     </td>
                                     <td>
                                         <div class="actions">
-                                            <button class="action-btn" title="View" onclick="viewApplication(
-                                                <?php echo $app['id']; ?>,
-                                                '<?php echo htmlspecialchars(addslashes($app['fullname'])); ?>',
-                                                '<?php echo htmlspecialchars(addslashes($app['email'])); ?>',
-                                                '<?php echo htmlspecialchars(addslashes($app['phone'])); ?>',
-                                                '<?php echo htmlspecialchars(addslashes($app['name'])); ?>',
-                                                '<?php echo htmlspecialchars(addslashes($app['pet_experience'])); ?>',
-                                                '<?php echo htmlspecialchars(addslashes($app['home_type'])); ?>',
-                                                '<?php echo htmlspecialchars(addslashes($app['other_pets'])); ?>',
-                                                '<?php echo htmlspecialchars(addslashes($app['work_schedule'])); ?>',
-                                                '<?php echo htmlspecialchars(addslashes($app['reason_for_adoption'])); ?>',
-                                                '<?php echo htmlspecialchars(addslashes($app['status'])); ?>',
-                                                '<?php echo htmlspecialchars(addslashes($app['valid_id'] ?? "")); ?>',
-                                                '<?php echo htmlspecialchars(addslashes($app['willing_vet'] ?? "")); ?>',
-                                                '<?php echo htmlspecialchars(addslashes($app['fb_profile'] ?? "")); ?>',
-                                                '<?php echo htmlspecialchars(addslashes($app['interview_type'] ?? "")); ?>',
-                                                '<?php echo htmlspecialchars(addslashes($app['interview_date'] ?? "")); ?>',
-                                                '<?php echo htmlspecialchars(addslashes($app['interview_time'] ?? "")); ?>',
-                                                '<?php echo htmlspecialchars(addslashes($app['meeting_link'] ?? "")); ?>'
-                                            )">
+                                            <button class="action-btn" title="View" data-application="<?php
+                                                echo htmlspecialchars(json_encode([
+                                                    (int)$app['id'],
+                                                    (string)($app['fullname'] ?? ''),
+                                                    (string)($app['email'] ?? ''),
+                                                    (string)($app['phone'] ?? ''),
+                                                    (string)($app['name'] ?? ''),
+                                                    (string)($app['pet_experience'] ?? ''),
+                                                    (string)($app['home_type'] ?? ''),
+                                                    (string)($app['other_pets'] ?? ''),
+                                                    (string)($app['work_schedule'] ?? ''),
+                                                    (string)($app['reason_for_adoption'] ?? ''),
+                                                    (string)($app['status'] ?? ''),
+                                                    (string)($app['valid_id'] ?? ''),
+                                                    (string)($app['willing_vet'] ?? ''),
+                                                    (string)($app['fb_profile'] ?? ''),
+                                                    (string)($app['interview_type'] ?? ''),
+                                                    (string)($app['interview_date'] ?? ''),
+                                                    (string)($app['interview_time'] ?? ''),
+                                                    (string)($app['meeting_link'] ?? '')
+                                                ], JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_TAG | JSON_HEX_AMP | JSON_INVALID_UTF8_SUBSTITUTE), ENT_QUOTES, 'UTF-8');
+                                            ?>" onclick="viewApplicationFromButton(this)">
                                                 <i class="fas fa-eye"></i>
                                             </button>
                                             <button class="action-btn" title="Edit" onclick="editApplication(<?php echo $app['id']; ?>, '<?php echo htmlspecialchars(addslashes($app['fullname'])); ?>', '<?php echo htmlspecialchars(addslashes($app['name'])); ?>', '<?php echo htmlspecialchars(addslashes($app['status'])); ?>')">
@@ -1877,14 +1879,9 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         let currentAppId = null;
         let selectedStatus = null;
 
-        // Handle image load errors for offline/missing valid IDs
-        function handleImageError(imgElement, appId) {
-            // Hide the image and show the fallback placeholder
-            imgElement.style.display = 'none';
-            const fallback = document.getElementById(`validIdFallback_${appId}`);
-            if (fallback) {
-                fallback.style.display = 'block';
-            }
+        function viewApplicationFromButton(button) {
+            const applicationDetails = JSON.parse(button.dataset.application);
+            viewApplication(...applicationDetails);
         }
 
         function normalizeValidIdPath(validId) {
@@ -1922,22 +1919,13 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             const validIdIsFile = normalizedValidId && (normalizedValidId.includes('uploads/valid_ids/') || normalizedValidId.includes('/uploads/valid_ids/'));
 
             if (validIdIsFile) {
-                const imageSource = normalizedValidId.startsWith('http') ? normalizedValidId : '../' + normalizedValidId;
-                validIdHtml = `
-                    <div style="position: relative; display: inline-block;">
-                        <img src='${imageSource}' alt='Valid ID' 
-                            style='max-width:320px;max-height:180px;border-radius:8px;margin-bottom:8px;display:block;' 
-                            id='validIdImg_${appId}'
-                            onerror="handleImageError(this, '${appId}');">
-                        <div id='validIdFallback_${appId}' style='display:none; max-width:320px; padding:20px; background:#f5f5f5; border-radius:8px; text-align:center; color:#999; font-size:14px;'>
-                            <i class='fas fa-file' style='font-size:48px; color:#ddd; margin-bottom:10px; display:block;'></i>
-                            <p style='margin:0;'>Valid ID Document</p>
-                            <p style='margin:5px 0 0 0; font-size:12px; color:#bbb;'>(Offline or file not accessible)</p>
-                        </div>
-                    </div>
-                `;
+                const documentUrl = `api/view_valid_id.php?app_id=${encodeURIComponent(appId)}`;
+                const isPdf = /\.pdf$/i.test(normalizedValidId);
+                validIdHtml = isPdf
+                    ? `<iframe src="${documentUrl}" title="Valid ID document" style="width:100%;max-width:640px;height:480px;border:0;border-radius:8px;"></iframe>`
+                    : `<img src="${documentUrl}" alt="Valid ID" style="max-width:100%;max-height:480px;border-radius:8px;display:block;">`;
             } else if (normalizedValidId) {
-                validIdHtml = normalizedValidId;
+                validIdHtml = 'ID document is stored in an unsupported location.';
             } else {
                 validIdHtml = 'Not provided';
             }
@@ -1950,6 +1938,10 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             } else {
                 willingToVetHtml = 'Not provided';
             }
+
+            const escapedPetExperience = String(petExperience || 'Not provided').replace(/[&<>"']/g, function(character) {
+                return {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[character];
+            });
 
             const detailsHTML = `
                 <!-- Applicant Summary -->
@@ -2041,9 +2033,7 @@ $applications = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                     <div class="application-detail">
                         <div class="detail-content">
                             <div class="application-label">Previous Pet Experience</div>
-                            <div class="application-value" style="background: ${petExperience === 'yes' || petExperience === 'Yes' ? '#e8f5e9' : '#fff3e0'};"
-                                ${petExperience || 'Not provided'}
-                            </div>
+                            <div class="application-value" style="white-space: pre-wrap;">${escapedPetExperience}</div>
                         </div>
                     </div>
                 </div>
